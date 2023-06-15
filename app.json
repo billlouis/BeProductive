@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "BeProductive",
-    "slug": "BeProductive",
+    "slug": "beproductive",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "356f5395-1761-4b08-8d74-83015dd5537a"
+      }
+    },
+    "owner": "juiiko"
   }
 }

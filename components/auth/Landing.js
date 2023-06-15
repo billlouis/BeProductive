@@ -1,7 +1,7 @@
 import React from 'react'
 import {Text,View,Button} from 'react-native'
 
-export default function landing({navigation}) {
+export default function Landing({navigation}) {
   return (
     <View style ={{flex : 1, justifyContent: 'Center'}}>
         <Button title ="Register" onPress={() => navigation.navigate("Register")}/>

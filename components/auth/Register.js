@@ -4,7 +4,7 @@ import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore'
 
-export default class register extends Component {
+export default class Register extends Component {
     constructor(props){
         super(props);
         this.state = {

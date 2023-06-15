@@ -3,7 +3,7 @@ import {View, Button, TextInput} from 'react-native'
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth';
 
-export default class login extends Component {
+export default class Login extends Component {
     constructor(props){
         super(props);
         this.state = {
