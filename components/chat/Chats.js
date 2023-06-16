@@ -17,7 +17,7 @@ const Chats = () => {
 
         return new File([data],"userPhoto.jpg",{type:'image/jpeg'})
     } 
-
+    
     useEffect(() => {     
         if(!user){
             navigate("/");
