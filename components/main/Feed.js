@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
       flex: 1
   },
   containerImage: {
-      flex: 1 / 3
+      flex: 1
 
   },
   image: {

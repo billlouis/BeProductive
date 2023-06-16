@@ -14,7 +14,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { fetchUser , fetchUserPosts, fetchUserFollowing} from '../redux/actions/index'
+import { fetchUser , fetchUserPosts, fetchUserFollowing, clearData} from '../redux/actions/index'
 import firebase from 'firebase/compat/app'
 import SearchScreen from './main/Search'
 import FeedScreen from './main/Feed'
@@ -31,6 +31,7 @@ const EmptyScreen = () =>{
 }
 export class main extends Component {
     componentDidMount(){
+        this.props.clearData();
         this.props.fetchUser();
         this.props.fetchUserPosts();
         this.props.fetchUserFollowing();
@@ -88,6 +89,6 @@ export class main extends Component {
 const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser
 })
-const mapDispatchProps = (dispatch) => bindActionCreators({fetchUser, fetchUserPosts, fetchUserFollowing},dispatch)
+const mapDispatchProps = (dispatch) => bindActionCreators({fetchUser, fetchUserPosts, fetchUserFollowing, clearData},dispatch)
 
 export default connect(mapStateToProps, mapDispatchProps)(main);
