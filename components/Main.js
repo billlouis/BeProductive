@@ -16,14 +16,14 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchUser , fetchUserPosts} from '../redux/actions/index'
 
+import SearchScreen from './main/Search'
 import FeedScreen from './main/Feed'
 import ProfileScreen from './main/Profile'
 import NotifScreen from './main/Notification_tab'
 import AgendaScreen from './main/Agenda_tab'
 import { shadow } from 'react-native-paper';
 
-import Chats from './chat/Chats';
-import { AuthProvider } from "./chat/AuthContext"
+
 
 const Tab = createBottomTabNavigator();
 const EmptyScreen = () =>{
@@ -61,7 +61,13 @@ export class main extends Component {
                 })}
                 
             >
-
+                <Tab.Screen name="Search" component={SearchScreen} navigation={this.props.navigation}
+                    options={{
+                        tabBarIcon: ({color,size}) => (
+                            <MaterialCommunityIcons name="magnify" color={color}/>
+                        ),
+                    }}
+/>
                 <Tab.Screen name="Profile" component={ProfileScreen}/>
                 <Tab.Screen name="Feed" component={FeedScreen}/>
                 <Tab.Screen name="Notification" component={NotifScreen}
