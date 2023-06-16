@@ -60,11 +60,6 @@ export class main extends Component {
 
                 <Tab.Screen name="Feed" component={FeedScreen}/>
                 <Tab.Screen name="Notification" component={NotifScreen}
-                    listeners={({navigation}) => ({tabPress: event=>{
-                            event.preventDefault();
-                            navigation.navigate("Add")
-                        }
-                    })}
                 />
                 <Tab.Screen name="Agenda" component={AgendaScreen}/>
 
