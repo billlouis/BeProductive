@@ -9,13 +9,24 @@ function Profile(props) {
   const [following, setFollowing] = useState(false)
   useEffect(()=> {
     const {currentUser, posts} = props;
-    console.log({currentUser,posts})
+    //console.log({currentUser,posts})
     if(props.route.params.uid === firebase.auth().currentUser.uid){
       setUser(currentUser)
       setUserPosts(posts)
     }
     else{
-      
+      firebase.firestore()
+        .collection('users')
+        .doc(props.route.params.uid)
+        .get()
+        .then((snapshot) => {
+            if(snapshot.exists){
+                setUser(snapshot.data());
+            }
+            else{
+                console.log('Does not exits')
+            }
+        })
       firebase.firestore()
         .collection('posts')
         .doc(props.route.params.uid)
@@ -31,18 +42,7 @@ function Profile(props) {
             //console.log(posts)
             setUserPosts(posts)
         })
-      firebase.firestore()
-        .collection('users')
-        .doc(props.route.params.uid)
-        .get()
-        .then((snapshot) => {
-            if(snapshot.exists){
-                setUser(snapshot.data());
-            }
-            else{
-                console.log('Does not exits')
-            }
-        })
+      
     }
     if(props.following.indexOf(props.route.params.uid)>-1){
       setFollowing(true);
@@ -54,6 +54,7 @@ function Profile(props) {
   }, [props.route.params.uid, props.following])
 
   const onFollow = () => {
+    //console.log("followed")
     firebase.firestore()
     .collection("following")
     .doc(firebase.auth().currentUser.uid)
@@ -79,21 +80,21 @@ function Profile(props) {
         <Text> {user.email} </Text>
 
         {props.route.params.uid !== firebase.auth().currentUser.uid ? (
-        <View>
-          {following ? (
-            <Button 
-            title = "Following"
-            onPress={() => onUnfollow()}
-            />
-          ): 
-          (
-            <Button
-              title = "Follow"
-              onPress = {()=>onFollow()}
-            />
-          )}
-        </View>
-        ) : null}
+                    <View>
+                        {following ? (
+                            <Button
+                                title="Following"
+                                onPress={() => onUnfollow()}
+                            />
+                        ) :
+                            (
+                                <Button
+                                    title="Follow"
+                                    onPress={() => onFollow()}
+                                />
+                            )}
+                    </View>
+                ) : null}
       </View>
       <View style = {styles.containerGallery}>
         <FlatList 
