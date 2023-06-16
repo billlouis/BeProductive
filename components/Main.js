@@ -14,8 +14,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { fetchUser , fetchUserPosts} from '../redux/actions/index'
-
+import { fetchUser , fetchUserPosts, fetchUserFollowing} from '../redux/actions/index'
+import firebase from 'firebase/compat/app'
 import SearchScreen from './main/Search'
 import FeedScreen from './main/Feed'
 import ProfileScreen from './main/Profile'
@@ -33,6 +33,7 @@ export class main extends Component {
     componentDidMount(){
         this.props.fetchUser();
         this.props.fetchUserPosts();
+        this.props.fetchUserFollowing();
     }
     render() {
         return (
@@ -55,20 +56,21 @@ export class main extends Component {
                         if(rn === "Feed") iconName = "home-outline";
                         else if(rn === "Notification") iconName = "bell-outline";
                         else if(rn === "Agenda") iconName = "calendar-outline";
-
+                        else if(rn === "Search") iconName = "magnify";
+                        else if(rn === "Profile") iconName = "account-outline";
                         return <MaterialCommunityIcons name = {iconName} color="white" size ={30}/>
                      },
                 })}
                 
             >
-                <Tab.Screen name="Search" component={SearchScreen} navigation={this.props.navigation}
-                    options={{
-                        tabBarIcon: ({color,size}) => (
-                            <MaterialCommunityIcons name="magnify" color={color}/>
-                        ),
-                    }}
-/>
-                <Tab.Screen name="Profile" component={ProfileScreen}/>
+                <Tab.Screen name="Search" component={SearchScreen} navigation={this.props.navigation}/>
+                <Tab.Screen name="Profile" component={ProfileScreen}
+                    listeners={({navigation}) => ({tabPress: event=>{
+                        event.preventDefault();
+                        navigation.navigate("Profile", {uid: firebase.auth().currentUser.uid})
+                        }
+                    })}
+                />
                 <Tab.Screen name="Feed" component={FeedScreen}/>
                 <Tab.Screen name="Notification" component={NotifScreen}
                     listeners={({navigation}) => ({tabPress: event=>{
@@ -86,6 +88,6 @@ export class main extends Component {
 const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser
 })
-const mapDispatchProps = (dispatch) => bindActionCreators({fetchUser, fetchUserPosts},dispatch)
+const mapDispatchProps = (dispatch) => bindActionCreators({fetchUser, fetchUserPosts, fetchUserFollowing},dispatch)
 
 export default connect(mapStateToProps, mapDispatchProps)(main);
