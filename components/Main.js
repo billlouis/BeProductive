@@ -1,10 +1,4 @@
 import React, { Component } from 'react'
-import {
-    BrowserRouter as Router,
-    Route,
-    Link,
-    Routes
-} from 'react-router-dom'
 import {View,Text} from 'react-native'
 import Icon from '@mdi/react'
 import { mdiHomeOutline, mdiSetCenter, mdiSolid } from '@mdi/js';
@@ -22,9 +16,6 @@ import NotifScreen from './main/Notification_tab'
 import AgendaScreen from './main/Agenda_tab'
 import { shadow } from 'react-native-paper';
 
-import Chats from './chat/Chats';
-import { AuthProvider } from "./chat/AuthContext"
-
 const Tab = createBottomTabNavigator();
 const EmptyScreen = () =>{
     return(null)
@@ -35,14 +26,7 @@ export class main extends Component {
     }
     render() {
         return (
-            <Router>
-                <Routes>
-                <Route path="/chats" element={
-                    <AuthProvider>
-                    <Chats/>
-                    </AuthProvider>
-                    }/>
-                <Route path = "/" element={<Tab.Navigator 
+            <Tab.Navigator 
                 initialRouteName="Feed" 
                 labeled = {false} 
                 screenOptions={({route}) => ({
@@ -84,10 +68,7 @@ export class main extends Component {
                 />
                 <Tab.Screen name="Agenda" component={AgendaScreen}/>
 
-            </Tab.Navigator>}/>
-            
-            </Routes>
-            </Router>
+            </Tab.Navigator>
         )
     }
 }
