@@ -11,7 +11,7 @@ import { mdiHomeOutline, mdiSetCenter, mdiSolid } from '@mdi/js';
 import { mdiBellOutline } from '@mdi/js';
 import { mdiCalendarBlankOutline } from '@mdi/js';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchUser } from '../redux/actions/index'
@@ -35,47 +35,35 @@ export class main extends Component {
     }
     render() {
         return (
-            <Router>
-                <Routes>
-                <Route path="/chats" element={
-                    <AuthProvider>
-                    <Chats/>
-                    </AuthProvider>
-                    }/>
-                <Route path = "/" element={<Tab.Navigator 
+            <Tab.Navigator 
                 initialRouteName="Feed" 
                 labeled = {false} 
                 screenOptions={({route}) => ({
                     tabBarShowLabel: false,
                     tabBarStyle: {
                         backgroundColor: "#3BE2B0", 
-                        width: 230, 
-                        height: 70,
+                        width: 230, height: 70,
                         alignSelf: "center",
                         marginBottom: 50,
-                        borderRadius: 50,
-                        borderColor: "white",
-                        borderWidth: 2,
-                        shadowColor: "black",
-                        shadowRadius: 10,
-                        shadowOffset: {width: 0, height: 4},
-                        shadowOpacity: 0.6
+                        borderRadius: 50, borderColor: "white", borderWidth: 2,
+                        shadowColor: "black", shadowRadius: 10, shadowOffset: {width: 0, height: 4}, shadowOpacity: 0.6
                     },  
-                    // tabBarIcon: () => {
-                    //     let iconName, rn = route.name;
+                     tabBarIcon: () => {
+                    let iconName, rn = route.name;
 
-                    //     if(rn === "Feed") iconName = mdiHomeOutline;
-                    //     else if(rn === "Notification") iconName = mdiBellOutline;
-                    //     else if(rn === "Agenda") iconName = mdiCalendarBlankOutline;
+                        if(rn === "Feed") iconName = "home-outline";
+                        else if(rn === "Notification") iconName = "bell-outline";
+                        else if(rn === "Agenda") iconName = "calendar-outline";
 
-                    //     return <Icon path = {iconName} color="white" size ={1.3}/>
-                    // },
+                        return <MaterialCommunityIcons name = {iconName} color="white" size ={30}/>
+                     },
                 })}
                 
             >
-
+                
+                <Tab.Screen name="Profile" component={ProfileScreen}/>
                 <Tab.Screen name="Feed" component={FeedScreen}/>
-                <Tab.Screen name="Notification" component={EmptyScreen}
+                <Tab.Screen name="Notification" component={NotifScreen}
                     listeners={({navigation}) => ({tabPress: event=>{
                             event.preventDefault();
                             navigation.navigate("Add")
@@ -84,10 +72,7 @@ export class main extends Component {
                 />
                 <Tab.Screen name="Agenda" component={AgendaScreen}/>
 
-            </Tab.Navigator>}/>
-            
-            </Routes>
-            </Router>
+            </Tab.Navigator>
         )
     }
 }
