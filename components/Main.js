@@ -1,21 +1,22 @@
 import React, { Component } from 'react'
 import {View,Text} from 'react-native'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import Icon from '@mdi/react'
+import { mdiHomeOutline, mdiSetCenter, mdiSolid } from '@mdi/js';
+import { mdiBellOutline } from '@mdi/js';
+import { mdiCalendarBlankOutline } from '@mdi/js';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchUser } from '../redux/actions/index'
 
 import FeedScreen from './main/Feed'
-
 import ProfileScreen from './main/Profile'
+import NotifScreen from './main/Notification_tab'
+import AgendaScreen from './main/Agenda_tab'
+import { shadow } from 'react-native-paper';
 
-<<<<<<< HEAD
-const Tab = createMaterialBottomTabNavigator();
-=======
 const Tab = createBottomTabNavigator();
->>>>>>> ec4715501fa83e67b79ef9e49b84ea2820028314
 const EmptyScreen = () =>{
     return(null)
 }
@@ -25,18 +26,6 @@ export class main extends Component {
     }
     render() {
         return (
-<<<<<<< HEAD
-            <Tab.Navigator initialRouteName='Feed' labeled = {false}>
-                <Tab.Screen name="Feed" component={FeedScreen}
-                    options={{
-                    tabBarIcon: ({color,size}) => (
-                        <MaterialCommunityIcons name = "home" color={color} size ={26}/>
-                    )
-                }}/>
-                <Tab.Screen name="AddContainer" component={EmptyScreen}
-                    listeners={({navigation})=> ({
-                        tabPress: event=>{
-=======
             <Tab.Navigator 
                 initialRouteName="Feed" 
                 labeled = {false} 
@@ -56,44 +45,29 @@ export class main extends Component {
                         shadowOffset: {width: 0, height: 4},
                         shadowOpacity: 0.6
                     },  
-                    tabBarIcon: () => {
-                        let iconName, rn = route.name;
+                    // tabBarIcon: () => {
+                    //     let iconName, rn = route.name;
 
-                        if(rn === "Feed") iconName = mdiHomeOutline;
-                        else if(rn === "Notification") iconName = mdiBellOutline;
-                        else if(rn === "Agenda") iconName = mdiCalendarBlankOutline;
+                    //     if(rn === "Feed") iconName = mdiHomeOutline;
+                    //     else if(rn === "Notification") iconName = mdiBellOutline;
+                    //     else if(rn === "Agenda") iconName = mdiCalendarBlankOutline;
 
-                        return <Icon path = {iconName} color="white" size ={1.3}/>
-                    },
+                    //     return <Icon path = {iconName} color="white" size ={1.3}/>
+                    // },
                 })}
                 
             >
 
                 <Tab.Screen name="Feed" component={FeedScreen}/>
-                <Tab.Screen name="Notification" component={NotifScreen}
+                <Tab.Screen name="Notification" component={EmptyScreen}
                     listeners={({navigation}) => ({tabPress: event=>{
->>>>>>> ec4715501fa83e67b79ef9e49b84ea2820028314
                             event.preventDefault();
                             navigation.navigate("Add")
                         }
                     })}
-<<<<<<< HEAD
-                    options={{
-                    tabBarIcon: ({color,size}) => (
-                        <MaterialCommunityIcons name = "camera" color={color} size ={26}/>
-                    )
-                }}/>
-                <Tab.Screen name="Profile" component={ProfileScreen}
-                    options={{
-                    tabBarIcon: ({color,size}) => (
-                        <MaterialCommunityIcons name = "account" color={color} size ={26}/>
-                    )
-                }}/>
-=======
                 />
                 <Tab.Screen name="Agenda" component={AgendaScreen}/>
 
->>>>>>> ec4715501fa83e67b79ef9e49b84ea2820028314
             </Tab.Navigator>
         )
     }

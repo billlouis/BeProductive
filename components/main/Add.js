@@ -23,7 +23,7 @@ export default function Add({navigation}){
     return <View/>;
   }
   if(hasCameraPermission === false){
-    return <Text>No access</Text>
+    //return <Text>No access</Text>
   }
 
   const takePicture = async () => {
