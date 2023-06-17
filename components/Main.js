@@ -21,6 +21,7 @@ import FeedScreen from './main/Feed'
 import ProfileScreen from './main/Profile'
 import NotifScreen from './main/Notification_tab'
 import AgendaScreen from './main/Agenda_tab'
+import AddTaskScreen from './main/Addtask';
 import { shadow } from 'react-native-paper';
 
 
@@ -51,13 +52,14 @@ export class main extends Component {
                         shadowColor: "black", shadowRadius: 10, shadowOffset: {width: 0, height: 4}, shadowOpacity: 0.6
                     },  
                      tabBarIcon: () => {
-                    let iconName, rn = route.name;
+                        let iconName, rn = route.name;
 
                         if(rn === "Feed") iconName = "home-outline";
                         else if(rn === "Notification") iconName = "bell-outline";
                         else if(rn === "Agenda") iconName = "calendar-outline";
                         else if(rn === "Search") iconName = "magnify";
                         else if(rn === "Profile") iconName = "account-outline";
+                        else if(rn === "AddTask") iconName = "magnify"
                         return <MaterialCommunityIcons name = {iconName} color="white" size ={30}/>
                      },
                 })}
@@ -80,7 +82,15 @@ export class main extends Component {
                     })}
                 />
                 <Tab.Screen name="Agenda" component={AgendaScreen}/>
-
+                <Tab.Screen name="AddTask" component={AddTaskScreen}
+                    listeners={({navigation}) => ({tabPress: event=>{
+                        event.preventDefault();
+                        navigation.navigate("AddTask")
+                    }
+                    })}
+                
+                
+                />
             </Tab.Navigator>
         )
     }
