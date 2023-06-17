@@ -42,7 +42,7 @@ export default class Landing_Login extends Component {
           <Text style = {styles.text}>Login with credentials</Text>
         </Pressable>
         <Text style = {styles.signup}>Or sign up <Text style = 
-        {{color: 'blue', fontWeight:'bold', textDecorationLine:'underline'}}onPress={() => this.props.navigation.navigate("Register")}>here</Text></Text>
+        {{color: 'blue', fontWeight:'bold', textDecorationLine:'underline'}} onPress={() => this.props.navigation.navigate("Register")}>here</Text></Text>
     </View>
   )}
 }

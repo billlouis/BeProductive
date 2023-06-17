@@ -21,6 +21,7 @@ import FeedScreen from './main/Feed'
 import ProfileScreen from './main/Profile'
 import NotifScreen from './main/Notification_tab'
 import AgendaScreen from './main/Agenda_tab'
+import ChatScreen from './main/Chat'
 import { shadow } from 'react-native-paper';
 
 
