@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
+import { Stack, FAB } from "@react-native-material/core";
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -24,23 +25,28 @@ const TopTab = createMaterialTopTabNavigator();
 
 const Flex = (navigation) => {
     return (
-        <View style={{flexDirection: 'row', height: 600, justifyContent:'space-around'}}>
-            <View style={[{flex: 1}, styles.container, {flexDirection: 'column'}]}>
-                <View style={{flex: 1, backgroundColor: 'grey', borderTopLeftRadius: 150, borderTopRightRadius: 150}} />
-                <View style={{flex: 10, backgroundColor: 'grey'}} />
-                <View style={{flex: 1, backgroundColor: 'grey', borderBottomLeftRadius: 150, borderBottomRightRadius: 150, alignItems: "center"}}>
-                    <TouchableOpacity onPress= {()=>navigation.navigate()}>
-                        <MaterialCommunityIcons name = "arrow-right" color="white" size ={30}/>
-                    </TouchableOpacity>
+        <View>
+            <View style={{flexDirection: 'row', height: 700, justifyContent:'space-around'}}>
+                <View style={[{flex: 1}, styles.container, {flexDirection: 'column'}]}>
+                    <View style={{flex: 1, backgroundColor: 'grey', borderTopLeftRadius: 150, borderTopRightRadius: 150}} />
+                    <View style={{flex: 10, backgroundColor: 'grey'}} />
+                    <View style={{flex: 1, backgroundColor: 'grey', borderBottomLeftRadius: 150, borderBottomRightRadius: 150, alignItems: "center"}}>
+                        <TouchableOpacity onPress= {()=>navigation.navigate()}>
+                            <MaterialCommunityIcons name = "arrow-right" color="white" size ={30}/>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
+                <View style={{flex: 6}}>
+                    <TopTab.Navigator initialLayout="Yourself" screenOptions={{tabBarLabelStyle: {fontSize: 12, textAlign:"left"}}}>
+                        <TopTab.Screen name="Yourself" component={YourselfScreen} options={{ tabBarLabel: 'Yourself' }}/>
+                        <TopTab.Screen name="Feeds" component={FeedScreen} options={{ tabBarLabel: 'Feeds' }}/>
+                    </TopTab.Navigator>
                 </View>
             </View>
-
-            <View style={{flex: 6}}>
-                <TopTab.Navigator initialLayout="Yourself" screenOptions={{tabBarLabelStyle: {fontSize: 12, textAlign:"left"}}}>
-                    <TopTab.Screen name="Yourself" component={YourselfScreen} options={{ tabBarLabel: 'Yourself' }}/>
-                    <TopTab.Screen name="Feeds" component={FeedScreen} options={{ tabBarLabel: 'Feeds' }}/>
-                </TopTab.Navigator>
-            </View>
+            <Stack center>
+                <FAB icon={props => <MaterialCommunityIcons name="plus-thick" color="white" />} color="#3BE2B0" />
+            </Stack>
         </View>
     );
 };
