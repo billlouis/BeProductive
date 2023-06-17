@@ -58,23 +58,23 @@ export class main extends Component {
                         if(rn === "Home") iconName = "home-outline";
                         else if(rn === "Notification") iconName = "bell-outline";
                         else if(rn === "Agenda") iconName = "calendar-outline";
-                        else if(rn === "Search") iconName = "magnify";
-                        else if(rn === "Profile") iconName = "account-outline";
-                        else if(rn === "AddTask") iconName = "magnify"
+                        // else if(rn === "Search") iconName = "magnify";
+                        // else if(rn === "Profile") iconName = "account-outline";
+                        // else if(rn === "AddTask") iconName = "magnify"
                         return <MaterialCommunityIcons name = {iconName} color="white" size ={30}/>
                      },
                 })}
                 
             >
-                <Tab.Screen name="Search" component={SearchScreen} navigation={this.props.navigation}/>
+                {/* <Tab.Screen name="Search" component={SearchScreen} navigation={this.props.navigation}/>
                 <Tab.Screen name="Profile" component={ProfileScreen}
                     listeners={({navigation}) => ({tabPress: event=>{
                         event.preventDefault();
                         navigation.navigate("Profile", {uid: firebase.auth().currentUser.uid})
                         }
                     })}
-                />
-                <Tab.Screen name="Home" component={HomeScreen}/>
+                /> */}
+                <Tab.Screen name="Home" component={HomeScreen} navigation={this.props.navigation}/>
                 <Tab.Screen name="Notification" component={NotifScreen}
                     listeners={({navigation}) => ({tabPress: event=>{
                             event.preventDefault();
@@ -85,16 +85,16 @@ export class main extends Component {
                 <Tab.Screen name="Agenda" component={AgendaScreen}/>
 
                 {/* this one might need to stack on top of the " yourself" tab */}
-                <Tab.Screen name="AddTask" component={AddTaskScreen}
+                {/* <Tab.Screen name="AddTask" component={AddTaskScreen}
                     listeners={({navigation}) => ({tabPress: event=>{
                         event.preventDefault();
                         navigation.navigate("AddTask")
                     }
-                    })}
+                    })} */}
                     
                     
-                    navigation={this.props.navigation}
-                />
+                    {/* navigation={this.props.navigation}
+                /> */}
                 
             </Tab.Navigator>
         )

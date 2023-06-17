@@ -109,4 +109,4 @@ const mapStateToProps = (store) => ({
 
 
 })
-export default connect(mapStateToProps, null)(Feed);
+export default connect(mapStateToProps, null)(yourself);
