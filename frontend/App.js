@@ -32,7 +32,7 @@ import LoginScreen from './components/auth/Login'
 import MainScreen from './components/Main'
 import AddScreen from './components/main/Add'
 import SaveScreen from './components/main/Save'
-
+import ChatScreen from './components/main/Chat'
 
 
 
