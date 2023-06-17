@@ -1,29 +1,58 @@
 import React ,{useState, useEffect} from 'react';
 import {StyleSheet,Text, SafeAreaView,View, Button, Image,KeyboardAvoidingView,ScrollView,TextInput,TouchableOpacity,Alert} from 'react-native';
 
-
+//added for date picker
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { Directions } from 'react-native-gesture-handler';
 
 export default function Add_task({navigation}){
-  //dummy
-  const TaskInit={
-    title:null
-  }
+  //title state
+  const [title,setTitle] = useState();
+  const [notes,setNotes] = useState();
+  const [category,setCategory] = useState();
+  //pick datetime state
+  const [date, setDate] = useState(new Date(1687238030000));
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
 
-  //task state
-  const [Task,SetTask] = useState(TaskInit);
 
+  //event handlers
+  const onChangeDate = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    setDate(currentDate);
+  };
 
+  const showMode = (currentMode) => {
+    if (Platform.OS === 'android') {
+      setShow(true);
+      // for iOS, add a button that closes the picker
+    }
+    setMode(currentMode);
+  };
 
-  //handlers
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+
   const handletitlechange= (t)=>{
-    SetTask(
-      {
-        ...Task,
-        title:t,
-      }
-    )
+    setTitle(t);
   }
 
+  const handlenoteschange= (n)=>{
+    setNotes(n);
+  }
+
+  const handlecategorychange= (c)=>{
+    setCategory(c);
+  }
+
+
+  ///not yet done
   const handleaddtask = ()=>{
 
 
@@ -40,16 +69,39 @@ export default function Add_task({navigation}){
           <ScrollView>
 
           <Text style={styles.title}>Task Title</Text>
-          <TextInput style={styles.titleinput} placeholder={'Title'} value={Task.title} onChangeText={text => handletitlechange(text)}></TextInput>
+          <TextInput style={styles.titleinput} placeholder={'Title'} value={title} onChangeText={text => handletitlechange(text)}></TextInput>
 
           <Text style={styles.title}>Notes</Text>
           <TextInput
             style={styles.titleinput}
-            // value={define a new state}
+            value={notes}
             placeholder={'Add some notes here...'}
             multiline={true}
             numberOfLines={4}
           />
+
+          <Text>Due</Text>
+          <View style={styles.datepicker}>
+            <Button onPress={showDatepicker} title={date.toLocaleString().split(", ")[0]} />
+            <Button onPress={showTimepicker} title={date.toLocaleString().split(", ")[1]} />
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode={mode}
+                is24Hour={true}
+                onChange={onChangeDate}
+              />
+            )}
+          </View>
+
+          <Text>Category</Text>
+          <View style={styles.category}>
+          <TextInput  placeholder={'Choose...'} value={category} onChangeText={text => handlecategorychange(text)}></TextInput>
+          </View>
+
+
+
           </ScrollView>
 
           {/* placed outside of scroll view to fix the position */}
@@ -67,11 +119,11 @@ const styles=StyleSheet.create({
 
 
 
-  //mine
+  
   container:{
     flex:1
   },
-
+  //title
   AddTaskWrapper:{
     flex:1,
 
@@ -100,8 +152,22 @@ const styles=StyleSheet.create({
     color:"white",
     textAlign: 'center',
     fontSize: 20,
-  }
+  },
 
+
+  //date picker
+  datepicker:{
+    flexDirection:'row',
+    justifyContent:'center',
+  },
+
+  category:{
+    marginTop: 20,
+    paddingVertical: 10,
+    backgroundColor: '#f3f7ff',
+    textAlign: 'left',
+    fontSize: 20,
+  },
 
 
 })

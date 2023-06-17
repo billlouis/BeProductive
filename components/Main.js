@@ -94,6 +94,7 @@ export class main extends Component {
                     
                     navigation={this.props.navigation}
                 />
+                
             </Tab.Navigator>
         )
     }
