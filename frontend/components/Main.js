@@ -17,7 +17,7 @@ import { bindActionCreators } from 'redux'
 import { fetchUser , fetchUserPosts, fetchUserFollowing, clearData} from '../redux/actions/index'
 import firebase from 'firebase/compat/app'
 import SearchScreen from './main/Search'
-import FeedScreen from './main/Feed'
+import HomeScreen from './main/Home'
 import ProfileScreen from './main/Profile'
 import NotifScreen from './main/Notification_tab'
 import AgendaScreen from './main/Agenda_tab'
@@ -40,7 +40,7 @@ export class main extends Component {
     render() {
         return (
             <Tab.Navigator 
-                initialRouteName="Feed" 
+                initialRouteName="Home" 
                 labeled = {false} 
                 screenOptions={({route}) => ({
                     tabBarShowLabel: false,
@@ -55,7 +55,7 @@ export class main extends Component {
                      tabBarIcon: () => {
                         let iconName, rn = route.name;
 
-                        if(rn === "Feed") iconName = "home-outline";
+                        if(rn === "Home") iconName = "home-outline";
                         else if(rn === "Notification") iconName = "bell-outline";
                         else if(rn === "Agenda") iconName = "calendar-outline";
                         else if(rn === "Search") iconName = "magnify";
@@ -74,7 +74,7 @@ export class main extends Component {
                         }
                     })}
                 />
-                <Tab.Screen name="Feed" component={FeedScreen}/>
+                <Tab.Screen name="Home" component={HomeScreen}/>
                 <Tab.Screen name="Notification" component={NotifScreen}
                     listeners={({navigation}) => ({tabPress: event=>{
                             event.preventDefault();
