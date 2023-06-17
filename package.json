@@ -12,11 +12,13 @@
     "@expo/webpack-config": "^18.0.1",
     "@mdi/js": "^7.2.96",
     "@mdi/react": "^1.6.1",
+    "@react-native-community/datetimepicker": "6.7.3",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/material-bottom-tabs": "^6.2.15",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.16",
+    "@rneui/themed": "^4.0.0-rc.7",
     "axios": "^1.4.0",
     "expo": "~48.0.18",
     "expo-camera": "^13.2.1",
@@ -36,8 +38,7 @@
     "react-redux": "^8.1.0",
     "react-router-dom": "^6.13.0",
     "redux": "^4.2.1",
-    "redux-thunk": "^2.4.2",
-    "@react-native-community/datetimepicker": "6.7.3"
+    "redux-thunk": "^2.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

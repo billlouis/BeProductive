@@ -3,9 +3,30 @@ import {StyleSheet,Text, SafeAreaView,View, Button, Image,KeyboardAvoidingView,S
 
 //added for date picker
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Directions } from 'react-native-gesture-handler';
+
+//added for suggestion group
+import { ButtonGroup } from '@rneui/themed';
 
 export default function Add_task({navigation}){
+  //this is the default setting of the suggestion
+  //the suggestion category for the user should be updated in the useEffect
+  const [categorySuggestion,setCategorySuggestion] = useState(['Signals', 'Software\n studio', 'Linear']);
+
+  useEffect(() => {
+    //notes:
+    //here we later try to do async loading of the most frequent category
+    //try to refer to the add.js for the camera async call
+    //the empty array at the second array means there is no dependency of calling the useeffect again 
+    //ie no rerender because of state changes will result in the useeffect being call again
+    //ie it is only called once at initial render
+    
+    //async update the users favourite category
+    setCategorySuggestion(['Signals wowo', 'Software\n studio', 'Linear','cb']);
+
+  },[]);
+
+
+
   //title state
   const [title,setTitle] = useState();
   const [notes,setNotes] = useState();
@@ -14,6 +35,9 @@ export default function Add_task({navigation}){
   const [date, setDate] = useState(new Date(1687238030000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
+
+  //pick category state //the state is the indexing of the button chosen
+  const [selectedIndex, setSelectedIndex] = useState();
 
 
   //event handlers
@@ -49,6 +73,11 @@ export default function Add_task({navigation}){
 
   const handlecategorychange= (c)=>{
     setCategory(c);
+  }
+
+  const ontapcategorybutton= (index)=>{
+    setSelectedIndex(index);
+    setCategory(categorySuggestion[index]);
   }
 
 
@@ -98,6 +127,18 @@ export default function Add_task({navigation}){
           <Text>Category</Text>
           <View style={styles.category}>
           <TextInput  placeholder={'Choose...'} value={category} onChangeText={text => handlecategorychange(text)}></TextInput>
+          
+          <View>
+    <ButtonGroup
+      buttons={categorySuggestion}
+      selectedIndex={selectedIndex}
+      onPress={(value) => {
+        ontapcategorybutton(value);
+      }}
+      containerStyle={{ marginBottom: 20 }}
+    />
+
+  </View>
           </View>
 
 
