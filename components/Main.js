@@ -82,14 +82,17 @@ export class main extends Component {
                     })}
                 />
                 <Tab.Screen name="Agenda" component={AgendaScreen}/>
+
+                {/* this one might need to stack on top of the " yourself" tab */}
                 <Tab.Screen name="AddTask" component={AddTaskScreen}
                     listeners={({navigation}) => ({tabPress: event=>{
                         event.preventDefault();
                         navigation.navigate("AddTask")
                     }
                     })}
-                
-                
+                    
+                    
+                    navigation={this.props.navigation}
                 />
             </Tab.Navigator>
         )

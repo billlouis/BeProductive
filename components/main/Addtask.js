@@ -1,9 +1,10 @@
 import React ,{useState, useEffect} from 'react';
-import {StyleSheet,Text, SafeAreaView,View, Button, Image,KeyboardAvoidingView,TextInput,TouchableOpacity,Alert} from 'react-native';
+import {StyleSheet,Text, SafeAreaView,View, Button, Image,KeyboardAvoidingView,ScrollView,TextInput,TouchableOpacity,Alert} from 'react-native';
 
 
-export default function Add_task(){
-  //dummy 
+
+export default function Add_task({navigation}){
+  //dummy
   const TaskInit={
     title:null
   }
@@ -11,7 +12,7 @@ export default function Add_task(){
   //task state
   const [Task,SetTask] = useState(TaskInit);
 
-  
+
 
   //handlers
   const handletitlechange= (t)=>{
@@ -24,49 +25,55 @@ export default function Add_task(){
   }
 
   const handleaddtask = ()=>{
-    
-    
+
+
   }
 
 
+
+
   return(
-      <SafeAreaView style={StyleSheet.container}>
-        <KeyboardAvoidingView 
+        <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? "padding":"height"}
-          style={styles.AddTaskWrapper} 
+          style={styles.AddTaskWrapper}
         >
+          <ScrollView>
 
           <Text style={styles.title}>Task Title</Text>
           <TextInput style={styles.titleinput} placeholder={'Title'} value={Task.title} onChangeText={text => handletitlechange(text)}></TextInput>
 
+          <Text style={styles.title}>Notes</Text>
+          <TextInput
+            style={styles.titleinput}
+            // value={define a new state}
+            placeholder={'Add some notes here...'}
+            multiline={true}
+            numberOfLines={4}
+          />
+          </ScrollView>
 
-          {/* <TextInput style={styles.notessection} placeholder={'Title'}></TextInput> */}
-
-
-          <TouchableOpacity onPress={()=>handleaddtask()}>
+          {/* placed outside of scroll view to fix the position */}
+          <TouchableOpacity onPress={()=>handleaddtask()}> 
             <View style={styles.continuebutton}>
               <Text style={styles.continuetext}>{"Continue >>>"}</Text>
             </View>
           </TouchableOpacity>
 
-
         </KeyboardAvoidingView>
-      </SafeAreaView>
-
-
-
   );
 }
 
 const styles=StyleSheet.create({
 
 
+
   //mine
   container:{
-
+    flex:1
   },
 
   AddTaskWrapper:{
+    flex:1,
 
   },
 
@@ -84,7 +91,7 @@ const styles=StyleSheet.create({
 
   // the continue button
   continuebutton:{
-    marginTop: 20,
+    marginTop: 40,
     paddingVertical: 20,
     backgroundColor: "#187C04",
   },
@@ -99,99 +106,3 @@ const styles=StyleSheet.create({
 
 })
 
-
-
-
-
-
-
-
-
-// import React, {useState, useEffect} from 'react';
-// import {StyleSheet,Text, View, Button, Image} from 'react-native'
-
-// export default function Add({navigation}){
-//   const [hasCameraPermission, setHasCameraPermission] = useState(null);
-//   const [type, setType] = useState(Camera.Constants.Type.Back);
-//   const [camera, setCamera] = useState(null);
-//   const [image, setImage] = useState(null);
-//   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
-//   useEffect(() => {
-//     (async ()=> {
-//       const cameraStatus = await Camera.requestPermissionsAsync();
-//       setHasCameraPermission(cameraStatus === 'granted');
-      
-//       const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
-//       setHasGalleryPermission(galleryStatus === 'granted');
-
-//     })();
-//   }, []);
-
-//   if (hasCameraPermission === null || hasGalleryPermission === null){
-//     return <View/>;
-//   }
-//   if(hasCameraPermission === false){
-//     //return <Text>No access</Text>
-//   }
-
-//   const takePicture = async () => {
-//     if(camera){
-//       const data = await camera.takePictureAsync(null);
-//       setImage(data.uri); 
-//       console.log(data.uri)
-//     }
-//   }
-
-//   const pickImage = async () => {
-//     let result = await ImagePicker.launchImageLibraryAsync({
-//       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-//       allowsEditing: true,
-//       aspect: [1,1],
-//       quality: 1,
-//     });
-
-//     console.log(result);
-
-//     if (!result.canceled){
-//       setImage(result.uri);
-//     }
-//   };
-
-//   return (
-//     <View style = {{flex : 1}}>
-//       <View style = {styles.cameraContainer}>
-//         <Camera 
-//           ref = {ref => setCamera(ref)}
-//           style = {styles.fixedRatio}
-//           type = {type}
-//           ratio = {'1:1'}
-//         />
-//       </View>
-//       <Button
-//         title = "Flip Image"
-//         onPress = {() => {
-//           setType(
-//             type === Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back
-//           );
-//         }}>
-
-//       </Button>
-//       <Button title = "Take Picture" onPress={()=> takePicture()}/>
-//       <Button title = "Pick Image" onPress={()=> pickImage()}/>
-//       <Button title = "Save" onPress = {() => navigation.navigate('Save',{image})}/>
-//       {image && <Image source = {{uri:image}} style = {{flex: 1}}/>}
-//     </View>
-//   )
-
-// }
-
-// const styles = StyleSheet.create({
-//   cameraContainer:{
-//     flex:1,
-//     flexDirection: 'row'
-//   },
-//   fixedRatio:{
-//     flex:1,
-//     aspectRatio:1
-//   }
-// })
