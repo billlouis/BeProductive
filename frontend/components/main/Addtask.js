@@ -7,6 +7,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 //added for suggestion group
 import { ButtonGroup } from '@rneui/themed';
 
+import firebase from 'firebase/compat/app'
 export default function Add_task({navigation}){
   //this is the default setting of the suggestion
   //the suggestion category for the user should be updated in the useEffect
@@ -83,8 +84,17 @@ export default function Add_task({navigation}){
 
   ///not yet done
   const handleaddtask = ()=>{
-
-
+    console.log(title,notes,category);
+    firebase.firestore()
+            .collection('users')
+            .doc(firebase.auth().currentUser.uid)
+            .collection('task')
+            .add({
+                title,
+                notes,
+                date,
+                category,
+            })
   }
 
 
@@ -107,6 +117,7 @@ export default function Add_task({navigation}){
             placeholder={'Add some notes here...'}
             multiline={true}
             numberOfLines={4}
+            onChangeText={text => handlenoteschange(text)}
           />
 
           <Text>Due</Text>
