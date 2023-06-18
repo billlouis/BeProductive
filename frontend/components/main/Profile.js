@@ -1,3 +1,4 @@
+import { FontAwesome5 } from '@expo/vector-icons';
 import React, {useState, useEffect} from 'react'
 import {ActivityIndicator, StyleSheet,View, Text, Image, FlatList, Button} from 'react-native'
 import firebase from 'firebase/compat/app'

@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component, } from 'react'
 import {
     BrowserRouter as Router,
     Route,
     Link,
     Routes
 } from 'react-router-dom'
-import {View,Text} from 'react-native'
+import {View,Text, Dimensions} from 'react-native'
 import Icon from '@mdi/react'
 import { mdiHomeOutline, mdiSetCenter, mdiSolid } from '@mdi/js';
 import { mdiBellOutline } from '@mdi/js';
@@ -50,9 +50,11 @@ export class main extends Component {
                         backgroundColor: "#3BE2B0", 
                         width: 230, height: 70,
                         position: 'absolute',
-                        marginHorizontal:86, //make the navbar centered
+                        margin: 'auto',
                         marginBottom: 20,
-                        borderRadius: 50, borderColor: "white", borderWidth: 2,
+                        borderRadius: 50, 
+                        marginLeft: (Dimensions.get('window').width / 2) - 115,
+                        borderColor: "white", borderWidth: 2,
                         shadowColor: "black", shadowRadius: 10, shadowOffset: {width: 0, height: 4}, shadowOpacity: 0.6
                     },  
                      tabBarIcon: () => {
