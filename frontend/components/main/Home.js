@@ -18,6 +18,7 @@ import FriendDrawer from './Friendlist'
 import { Button } from 'react-native-paper';
 //import AddTaskScreen from './main/Addtask';
 import firebase from 'firebase/compat/app'
+
 const EmptyScreen = () =>{
     return(null)
 }
@@ -37,7 +38,12 @@ const Flex = ({navigation}) => {
                     </View>
                     <View style={styles.sidebar_middle}>
                         <View style = {styles.sidebar_innermiddle}>
-                            <MaterialCommunityIcons name = "account-multiple-plus-outline" color="white" size ={20} style={styles.addIcon}/>
+                            <View style={{flex: 10}}/>
+                            <View style={styles.addIcon}>
+                                <TouchableOpacity onPress= {()=>navigation.navigate("Search")}>
+                                    <MaterialCommunityIcons name = "account-multiple-plus-outline" color="white" size ={20}/>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
                     <View style={styles.sidebar_bottom}>
@@ -49,7 +55,7 @@ const Flex = ({navigation}) => {
                 </View>
                 <View style = {styles.spaces}/>
                 <View style={{flex: 6}}>
-                    <TopTab.Navigator initialLayout="Yourself" screenOptions={{tabBarLabelStyle: {fontSize: 12, textAlign:"left"}}}>
+                    <TopTab.Navigator initialLayout="Yourself" screenOptions={{tabBarLabelStyle: {fontSize: 12, textAlign:"left"}, tabBarIndicatorStyle: {backgroundColor: '#1CD69D'}}}>
                         <TopTab.Screen name="Yourself" component={YourselfScreen} options={{ tabBarLabel: 'Yourself' }}/>
                         <TopTab.Screen name="Feeds" component={FeedScreen} options={{ tabBarLabel: 'Feeds' }}/>
                     </TopTab.Navigator>
@@ -63,7 +69,7 @@ const styles = StyleSheet.create({
     sidebar: {
       flex: 1,
       marginTop: 30,
-      backgroundColor: 'aliceblue',
+      backgroundColor: 'white',
       flexDirection: 'column', 
       borderRadius:100
     },
@@ -88,7 +94,7 @@ const styles = StyleSheet.create({
     },
     sidebar_middle:{
         flex: 15, 
-        backgroundColor: 'grey'
+        backgroundColor: 'grey',
     },
     sidebar_innermiddle:{
         flex:1, 
@@ -98,7 +104,8 @@ const styles = StyleSheet.create({
         marginRight:5, 
         marginTop:10, 
         marginBottom:10,
-        alignItems:"center"
+        alignItems:"center",
+        flexDirection: "column"
     },
     sidebar_bottom:{
         flex: 1, 
@@ -118,9 +125,13 @@ const styles = StyleSheet.create({
     addIcon:{
         backgroundColor:"#3BE2B0", 
         borderRadius:100, 
-        width:30, 
-        height:30, 
-        alignSelf:"center"
+        width:35, 
+        alignSelf:"center",
+        padding:7,
+        flex:0.35,
+        marginBottom:10,
+        borderColor:"white",
+        borderWidth: 1
     }
     
   });
