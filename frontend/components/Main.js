@@ -23,6 +23,7 @@ import NotifScreen from './main/Notification_tab'
 import AgendaScreen from './main/Agenda_tab'
 import ChatScreen from './main/Chat'
 import AddTaskScreen from './main/Addtask';
+import CommentScreen from './main/Comments';
 import { shadow } from 'react-native-paper';
 
 
@@ -48,8 +49,9 @@ export class main extends Component {
                     tabBarStyle: {
                         backgroundColor: "#3BE2B0", 
                         width: 230, height: 70,
-                        alignSelf: "center",
-                        marginBottom: 50,
+                        position: 'absolute',
+                        marginHorizontal:86, //make the navbar centered
+                        marginBottom: 20,
                         borderRadius: 50, borderColor: "white", borderWidth: 2,
                         shadowColor: "black", shadowRadius: 10, shadowOffset: {width: 0, height: 4}, shadowOpacity: 0.6
                     },  
@@ -64,6 +66,14 @@ export class main extends Component {
                         // else if(rn === "AddTask") iconName = "magnify"
                         return <MaterialCommunityIcons name = {iconName} color="white" size ={30}/>
                      },
+                     tabBarOptions:{
+                        style:{
+                            backgroundColor: 'transparent',
+                        },
+                        tabBarActiveTintColor: 'yellow',
+                        tabBarInactiveTintColor: 'white',
+                     }
+                
                 })}
                 
             >
@@ -79,7 +89,7 @@ export class main extends Component {
                 <Tab.Screen name="Notification" component={NotifScreen}
                     listeners={({navigation}) => ({tabPress: event=>{
                             event.preventDefault();
-                            navigation.navigate("Add")
+                            navigation.navigate("Notification")
                         }
                     })}
                 />

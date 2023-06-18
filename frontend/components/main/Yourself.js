@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react'
-import {StyleSheet,View, Text, Image, FlatList, Button} from 'react-native'
+import {StyleSheet,View, Text, Image, FlatList, Button, TouchableOpacity} from 'react-native'
 import firebase from 'firebase/compat/app'
 import {connect} from 'react-redux'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+
 import 'firebase/compat/firestore';
 function yourself(props) {
     const [posts, setPosts] = useState([]);
@@ -77,6 +79,9 @@ function yourself(props) {
 
                 />
             </View>
+            <TouchableOpacity onPress= {()=>props.navigation.navigate("Add")}>
+                <MaterialCommunityIcons name = "plus" style = {styles.add} color="white" size ={60}/>
+            </TouchableOpacity>
         </View>
 
     )
@@ -99,7 +104,15 @@ const styles = StyleSheet.create({
     image: {
         flex: 1,
         aspectRatio: 1 / 1
-    }
+    },
+    add: {
+        position: 'absolute',
+        bottom: 0,
+        right: 30,
+        backgroundColor: '#3be2b0',
+        borderRadius: 100,
+  
+    },
 })
 const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser,

@@ -75,8 +75,15 @@ export default function Chat(){
 
 const styles = StyleSheet.create({
   text:{
-    margin: 20,
-    fontSize: 30,
+    backgroundColor: 'grey',
+    borderRadius: 40,
+    paddingVertical:10,
+    paddingHorizontal: 15,
+    alignSelf: 'flex-end',
+    textAlign: 'right',
+    margin: 5,
+    marginRight: 15,
+    fontSize: 15,
   },
   textentry:{
     height: 50,
