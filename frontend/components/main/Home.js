@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {View, Text, StyleSheet, TouchableOpacity, Pressable} from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity, Pressable, Dimensions, SafeAreaView, StatusBar} from 'react-native'
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -19,7 +19,7 @@ import ChatScreen from './Chat'
 import FriendDrawer from './Friendlist'
 import { Button } from 'react-native-paper';
 //import AddTaskScreen from './main/Addtask';
-
+import firebase from 'firebase/compat/app'
 const EmptyScreen = () =>{
     return(null)
 }
@@ -29,12 +29,18 @@ const TopTab = createMaterialTopTabNavigator();
 const Flex = ({navigation}) => {
 
     return (
+<<<<<<< HEAD
 
         <View style={{flexDirection: 'row', height: 600, justifyContent:'space-around'}}>
             <View style={[{flex: 1}, styles.container, {flexDirection: 'column',  backgroundColor: 'blue', borderRadius:100}]}>
+=======
+      <SafeAreaView style = {styles.testContainer}>
+        <View style={{flexDirection: 'row', height: Dimensions.get("window").height, justifyContent:'space-around'}}>
+            <View style={[{flex: 1}, styles.container, {flexDirection: 'column', borderRadius:100}]}>
+>>>>>>> b446347c6df36e4848c8bed5986aecaf7cfb1bf1
                 <View style={{flex: 1, backgroundColor: 'grey', borderTopLeftRadius: 150, borderTopRightRadius: 150}} />
                 <View style = {{flex:2, backgroundColor: 'grey'}}>
-                  <TouchableOpacity component = {ProfileScreen} onPress= {()=>navigation.navigate("Chat")}
+                  <TouchableOpacity component = {ProfileScreen} onPress= {()=>navigation.navigate("Profile",{uid: firebase.auth().currentUser.uid})}
                   style = {{borderRadius: 100, backgroundColor:'red', width:50, height:50, alignSelf: 'center'}}>
                   </TouchableOpacity>
                 </View>
@@ -61,6 +67,7 @@ const Flex = ({navigation}) => {
             
             {/* <Text style = {styles.add}>Hello</Text> */}
         </View>
+        </SafeAreaView>
     );
 };
 
@@ -69,6 +76,10 @@ const styles = StyleSheet.create({
       flex: 1,
       marginTop: 8,
       backgroundColor: 'aliceblue',
+    },
+    testContainer:{
+      flex: 1,
+        marginTop:StatusBar.currentHeight
     },
     box: {
       width: 50,
