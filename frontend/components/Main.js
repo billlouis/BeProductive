@@ -80,7 +80,6 @@ export class main extends Component {
                 })}
                 
             >
-                <Tab.Screen name="Search" component={SearchScreen} />
                 <Tab.Screen name="Home" component={HomeScreen} navigation={this.props.navigation} options = {{headerShown :false}}/>
                 <Tab.Screen name="Notification" component={NotifScreen}
                     listeners={({navigation}) => ({tabPress: event=>{
