@@ -155,8 +155,6 @@ function Profile(props) {
         </TouchableOpacity>
         </View>
         }
-        
-        
         <Image source={{uri: user.downloadURL==null?"https://bit.ly/fcc-running-cats":image}} style={{height: 150, width: 150, marginTop: 100, alignSelf: 'center', borderRadius: 150/2}}/>
         {props.route.params.uid !== firebase.auth().currentUser.uid ? (
           <View style={{alignSelf:'center'}}>
@@ -194,6 +192,19 @@ function Profile(props) {
                     />
                 </View>} */}
       </View>
+      {/* <View style = {[utils.borderTopGray]}>
+        <FlatList 
+        numColumns={3}
+        horizontal={false}
+        data = {userPost}
+        renderItem={({item}) => (
+          <View style ={styles.containerImage}>
+            <Image style = {styles.imagetoday} source ={{uri: item.downloadURL}}/>
+          </View>
+        )}
+        />
+      </View> */}
+      <Text style={{paddingLeft: 10}}>Today</Text>
       <View style = {[utils.borderTopGray]}>
         <FlatList 
         numColumns={3}
@@ -201,7 +212,22 @@ function Profile(props) {
         data = {userPost}
         renderItem={({item}) => (
           <View style ={styles.containerImage}>
-            <Image style = {styles.image} source ={{uri: item.downloadURL}}/>
+            {/* {console.log(item.creation.toDate().toDateString().slice(0,15))}
+            {console.log(Date().slice(0,15))} */}
+            {item.creation.toDate().toDateString().slice(0,14)==Date().slice(0,14) && <Image style = {styles.imagetoday} source ={{uri: item.downloadURL}}/>}
+          </View>
+        )}
+        />
+      </View>
+      <Text style={{paddingLeft: 10}}>Past few days</Text>
+      <View style = {[utils.borderTopGray]}>
+        <FlatList 
+        numColumns={3}
+        horizontal={false}
+        data = {userPost}
+        renderItem={({item}) => (
+          <View style ={styles.containerImage}>
+            {item.creation.toDate().toDateString().slice(0,14)!=Date().slice(0,14) && <Image style = {styles.image} source ={{uri: item.downloadURL}}/>}
           </View>
         )}
         />
@@ -226,6 +252,10 @@ const styles = StyleSheet.create({
   },
   containerImage:{
     flex: 1/3,
+    aspectRatio: 1/1
+  },
+  imagetoday:{
+    flex:1,
     aspectRatio: 1/1
   },
   backgroundImage: {
