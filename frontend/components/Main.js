@@ -26,8 +26,30 @@ import AddTaskScreen from './main/Addtask';
 import CommentScreen from './main/Comments';
 import { shadow } from 'react-native-paper';
 
+const Drawer = createDrawerNavigator();
+function CustomDrawerContent(props) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <DrawerItem
+        label="Close drawer"
+        onPress={() => props.navigation.closeDrawer()}
+      />
+      <DrawerItem
+        label="Toggle drawer"
+        onPress={() => props.navigation.toggleDrawer()}
+      />
+    </DrawerContentScrollView>
+  );
+}
 
+const DrawerHome = () => (
+  <Drawer.Navigator>
+      <Drawer.Screen name = "ChatS" component={ChatScreen}></Drawer.Screen>
+      
+  </Drawer.Navigator>
 
+)
 const Tab = createBottomTabNavigator();
 const EmptyScreen = () =>{
     return(null)
@@ -75,6 +97,7 @@ export class main extends Component {
                 })}
                 
             >
+                <Tab.Screen name="Search" component={SearchScreen} />
                 <Tab.Screen name="Home" component={HomeScreen} navigation={this.props.navigation} options = {{headerShown :false}}/>
                 <Tab.Screen name="Notification" component={NotifScreen}
                     listeners={({navigation}) => ({tabPress: event=>{

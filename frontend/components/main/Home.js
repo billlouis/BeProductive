@@ -8,7 +8,6 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 //import { fetchUser , fetchUserPosts, fetchUserFollowing, clearData} from '../redux/actions/index'
 //import firebase from 'firebase/compat/app'
-
 import SearchScreen from './Search'
 import FeedScreen from './Feed'
 import ProfileScreen from './Profile'

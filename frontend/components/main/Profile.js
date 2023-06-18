@@ -68,15 +68,43 @@ function Profile(props) {
   const onFollow = () => {
     //console.log("followed")
     firebase.firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .collection("following")
+    .doc(props.route.params.uid)
+    .set({})
+
+    firebase.firestore()
+    .collection("users")
+    .doc(props.route.params.uid)
+    .collection("followers")
+    .doc(firebase.auth().currentUser.uid)
+    .set({})
+
+    firebase.firestore()
     .collection("following")
     .doc(firebase.auth().currentUser.uid)
     .collection("userFollowing")
     .doc(props.route.params.uid)
     .set({})
-
     //props.sendNotification(user.notificationToken, "New Follower", `${props.currentUser.name} Started following you`, { type: 'profile', user: firebase.auth().currentUser.uid })
   }
+  
   const onUnfollow = () => {
+    firebase.firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .collection("following")
+    .doc(props.route.params.uid)
+    .delete()
+
+    firebase.firestore()
+    .collection("users")
+    .doc(props.route.params.uid)
+    .collection("followers")
+    .doc(firebase.auth().currentUser.uid)
+    .delete()
+
     firebase.firestore()
     .collection("following")
     .doc(firebase.auth().currentUser.uid)
@@ -125,12 +153,12 @@ function Profile(props) {
       </ImageBackground>
       <View style = {styles.containerInfo}>
 
-{/*         {props.route.params.uid !== firebase.auth().currentUser.uid ? (
+        {props.route.params.uid !== firebase.auth().currentUser.uid ? (
                     <View>
                         {following ? (
                             <Button
                                 title="Following"
-                                onPress={() => onUnfollow()}
+                               onPress={() => onUnfollow()}
                             />
                         ) :
                             (
@@ -147,7 +175,7 @@ function Profile(props) {
                         title="Logout"
                         onPress={() => onLogout()}
                     />
-                </View>} */}
+                </View>}
       </View>
       <View style = {[utils.borderTopGray]}>
         <FlatList 

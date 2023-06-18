@@ -119,7 +119,5 @@ const mapStateToProps = (store) => ({
     following: store.userState.following,
     feed: store.usersState.feed,
     usersFollowingLoaded: store.usersState.usersFollowingLoaded,
-
-
 })
 export default connect(mapStateToProps, null)(yourself);
