@@ -1,10 +1,4 @@
 import React, { Component, } from 'react'
-import {
-    BrowserRouter as Router,
-    Route,
-    Link,
-    Routes
-} from 'react-router-dom'
 import {View,Text, Dimensions} from 'react-native'
 import Icon from '@mdi/react'
 import { mdiHomeOutline, mdiSetCenter, mdiSolid } from '@mdi/js';
@@ -26,30 +20,6 @@ import AddTaskScreen from './main/Addtask';
 import CommentScreen from './main/Comments';
 import { shadow } from 'react-native-paper';
 
-const Drawer = createDrawerNavigator();
-function CustomDrawerContent(props) {
-  return (
-    <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
-      <DrawerItem
-        label="Close drawer"
-        onPress={() => props.navigation.closeDrawer()}
-      />
-      <DrawerItem
-        label="Toggle drawer"
-        onPress={() => props.navigation.toggleDrawer()}
-      />
-    </DrawerContentScrollView>
-  );
-}
-
-const DrawerHome = () => (
-  <Drawer.Navigator>
-      <Drawer.Screen name = "ChatS" component={ChatScreen}></Drawer.Screen>
-      
-  </Drawer.Navigator>
-
-)
 const Tab = createBottomTabNavigator();
 const EmptyScreen = () =>{
     return(null)
