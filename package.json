@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "form-data": "^4.0.0",
-    "react-native-calendar-events": "^2.2.0"
-  }
-}
