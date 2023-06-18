@@ -10,7 +10,7 @@ function Profile(props) {
   const [user, setUser] = useState(null)
   const [following, setFollowing] = useState(false)
   const [background, setBackground] = useState("https://bit.ly/fcc-running-cats")
-  const [name, setName] = useState(null)
+  
   useEffect(()=> {
     const {currentUser, posts} = props;
     //console.log({currentUser,posts})
@@ -26,7 +26,6 @@ function Profile(props) {
         .then((snapshot) => {
             if(snapshot.exists){
                 setUser(snapshot.data());
-                setName(user.name)
             }
             else{
                 console.log('Does not exits')
@@ -90,12 +89,9 @@ function Profile(props) {
             <MaterialCommunityIcons name = "arrow-left" color="white" size ={30}/>
         </TouchableOpacity>
         <Image source={{uri: background}} style={{height: 150, width: 150, marginTop: 100, alignSelf: 'center', borderRadius: 150/2}}/>
-        <Text style={{textAlign: 'center', fontFamily: 'serif', fontSize: 15, paddingLeft: 15}}> {name}
-        <TouchableOpacity onPress= {()=>props.navigation.navigate("Home")} style={{width: 20, height: 20}}>
-            <MaterialCommunityIcons name = "pencil" color="grey" size ={15}/>
+        <TouchableOpacity onPress= {()=>props.navigation.navigate("Home")} style={{alignSelf: 'center', height: 40}}>
+        <Text> {user.name} <MaterialCommunityIcons name = "pencil" color="grey" size ={20}/></Text>
         </TouchableOpacity>
-        </Text>
-        
       </ImageBackground>
       <View style = {styles.containerInfo}>
 
