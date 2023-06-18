@@ -1,32 +1,72 @@
-import React, { useEffect, useRef } from 'react';
-import { View, Text } from 'react-native';
-import { Calendar } from '@fullcalendar/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import listPlugin from '@fullcalendar/list';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+//import RNCalendarEvents from 'react-native-calendar-events';
 
-export default function Agenda() {
-  const calendarRef = useRef(null);
+import {Agenda} from 'react-native-calendars';
+import {Card, Avatar} from 'react-native-paper';
+import { now } from 'xdate';
 
-  useEffect(() => {
-    const calendarEl = calendarRef.current;
-    const calendar = new Calendar(calendarEl, {
-      plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
-      aspectRatio:2.75,
-      initialView: 'dayGridMonth',
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,listWeek'
-      },
+
+export default function Calendarr() {
+
+  const timeToString = (time) => {
+    const date = new Date(time);
+    //console.log(date.toISOString());
+    return date.toISOString().split('T')[0];
+  };
+  
+  const [items, setItems] = useState({});
+
+  const loadItems = (day) => {
+    for (let i = -15; i < 85; i++) {
+      const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+      const strTime = timeToString(time);
+      if (!items[strTime]) {
+        items[strTime] = [];
+        const numItems = Math.floor(Math.random() * 3 + 1);
+        for (let j = 0; j < numItems; j++) {
+          items[strTime].push({
+            name: 'Item for ' + strTime + ' #' + j,
+            height: Math.max(50, Math.floor(Math.random() * 150)),
+          });
+        }
+      }
+    }
+    const newItems = {};
+    Object.keys(items).forEach((key) => {
+      newItems[key] = items[key];
     });
-    calendar.render();
-  }, []);
+    setItems(newItems);
+  };
+
+  const renderItem = (item) => {
+    return (
+      <TouchableOpacity style={{marginRight: 10, marginTop: 17}}>
+        <Card>
+          <Card.Content>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <Text>{item.name}</Text>
+              <Avatar.Text label="J" />
+            </View>
+          </Card.Content>
+        </Card>
+      </TouchableOpacity>
+    );
+  };
 
   return (
-    <View>
-      <Text>Agenda</Text>
-      <View ref={calendarRef}/>
+    <View style={{flex: 1}}>
+      <Agenda
+        items={items}
+        loadItemsForMonth={loadItems}
+        selected={(new Date()).toISOString().split('T')[0]}
+        renderItem={renderItem}
+      />
     </View>
   );
 }

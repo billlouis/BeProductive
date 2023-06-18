@@ -4,6 +4,8 @@ import {View, Text, StyleSheet, TouchableOpacity, Pressable} from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
+
+
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 //import { fetchUser , fetchUserPosts, fetchUserFollowing, clearData} from '../redux/actions/index'
@@ -25,7 +27,9 @@ const EmptyScreen = () =>{
 const TopTab = createMaterialTopTabNavigator();
 
 const Flex = ({navigation}) => {
+
     return (
+
         <View style={{flexDirection: 'row', height: 600, justifyContent:'space-around'}}>
             <View style={[{flex: 1}, styles.container, {flexDirection: 'column',  backgroundColor: 'blue', borderRadius:100}]}>
                 <View style={{flex: 1, backgroundColor: 'grey', borderTopLeftRadius: 150, borderTopRightRadius: 150}} />
@@ -41,6 +45,9 @@ const Flex = ({navigation}) => {
                     </TouchableOpacity>
                 </View>
             </View>
+            
+
+            
             <View style = {{flex: 0.2}}></View>
             <View style={{flex: 6}}>
               

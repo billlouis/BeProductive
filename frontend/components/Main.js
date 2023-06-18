@@ -20,11 +20,13 @@ import SearchScreen from './main/Search'
 import HomeScreen from './main/Home'
 import ProfileScreen from './main/Profile'
 import NotifScreen from './main/Notification_tab'
-import AgendaScreen from './main/Agenda_tab'
+import Calendarr from './main/Agenda_tab'
 import ChatScreen from './main/Chat'
 import AddTaskScreen from './main/Addtask';
 import CommentScreen from './main/Comments';
 import { shadow } from 'react-native-paper';
+// import { createDrawerNavigator } from '@react-navigation/drawer';
+// import { NavigationContainer } from '@react-navigation/native';
 
 
 
@@ -40,6 +42,7 @@ export class main extends Component {
         this.props.fetchUserFollowing();
     }
     render() {
+        //const Drawer = createDrawerNavigator();
         return (
             <Tab.Navigator 
                 initialRouteName="Home" 
@@ -83,8 +86,7 @@ export class main extends Component {
                     })}
                     
                 />
-                <Tab.Screen name="Agenda" component={AgendaScreen} />
-
+                <Tab.Screen name="Agenda" component={Calendarr} />
             </Tab.Navigator>
         )
     }
