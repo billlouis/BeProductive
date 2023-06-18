@@ -202,9 +202,8 @@ function Profile(props) {
         
       </ImageBackground>
       <View style = {styles.containerInfo}>
-
         {props.route.params.uid !== firebase.auth().currentUser.uid ? (
-                    <View>
+                    <View style={{position:'absolute',right:0,top:0}}>
                         {following ? (
                             <Button
                                 title="Following"
@@ -218,14 +217,14 @@ function Profile(props) {
                                 />
                             )}
                     </View>
-                ) : 
+                ) : null}
                 
-                <View>
+                {/*<View>
                     <Button
                         title="Logout"
                         onPress={() => onLogout()}
                     />
-                </View>}
+                            </View>*/}
       </View>
       {/* <View style = {[utils.borderTopGray]}>
         <FlatList 
