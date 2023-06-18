@@ -111,7 +111,9 @@ export class Friendlist extends Component {
                                 <View style={styles.middle}>
                                     <View style={{flex: 10}}/>
                                     <View style={styles.addIcon}>
-                                        <TouchableOpacity onPress= {()=>navigation.navigate("Search")}>
+                                        <TouchableOpacity onPress= {()=>{
+             
+                                            navigation.navigate("Search")}}>
                                             <MaterialCommunityIcons name = "account-multiple-plus-outline" color="white" size ={25}/>
                                         </TouchableOpacity>
                                     </View>
