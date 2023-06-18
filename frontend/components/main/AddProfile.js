@@ -23,7 +23,7 @@ export default function Add({navigation}){
     return <View/>;
   }
   if(hasCameraPermission === false){
-    return <Text>No access</Text>
+    //return <Text>No access</Text>
   }
 
   const takePicture = async () => {
@@ -70,7 +70,7 @@ export default function Add({navigation}){
       </Button>
       <Button title = "Take Picture" onPress={()=> takePicture()}/>
       <Button title = "Pick Image" onPress={()=> pickImage()}/>
-      <Button title = "Save" onPress = {() => navigation.navigate('Save',{image})}/>
+      <Button title = "SaveProfile" onPress = {() => navigation.navigate('SaveProfile',{image})}/>
       {image && <Image source = {{uri:image}} style = {{flex: 1}}/>}
     </View>
   )

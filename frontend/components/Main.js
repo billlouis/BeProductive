@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component, } from 'react'
 import {
     BrowserRouter as Router,
     Route,
     Link,
     Routes
 } from 'react-router-dom'
-import {View,Text} from 'react-native'
+import {View,Text, Dimensions} from 'react-native'
 import Icon from '@mdi/react'
 import { mdiHomeOutline, mdiSetCenter, mdiSolid } from '@mdi/js';
 import { mdiBellOutline } from '@mdi/js';
@@ -50,9 +50,16 @@ export class main extends Component {
                         backgroundColor: "#3BE2B0", 
                         width: 230, height: 70,
                         position: 'absolute',
+<<<<<<< HEAD
                         marginHorizontal:86, //make the navbar centered
                         marginBottom: 70,
                         borderRadius: 50, borderColor: "white", borderWidth: 2,
+=======
+                        marginBottom: 20,
+                        borderRadius: 50, 
+                        marginLeft: (Dimensions.get('window').width / 2) - 115,
+                        borderColor: "white", borderWidth: 2,
+>>>>>>> d61aac8af7345f14a891cdf4b1d0ed1c1678c212
                         shadowColor: "black", shadowRadius: 10, shadowOffset: {width: 0, height: 4}, shadowOpacity: 0.6
                     },  
                      tabBarIcon: () => {
@@ -61,9 +68,6 @@ export class main extends Component {
                         if(rn === "Home") iconName = "home-outline";
                         else if(rn === "Notification") iconName = "bell-outline";
                         else if(rn === "Agenda") iconName = "calendar-outline";
-                        // else if(rn === "Search") iconName = "magnify";
-                        // else if(rn === "Profile") iconName = "account-outline";
-                        // else if(rn === "AddTask") iconName = "magnify"
                         return <MaterialCommunityIcons name = {iconName} color="white" size ={30}/>
                      },
                      tabBarOptions:{
@@ -77,14 +81,6 @@ export class main extends Component {
                 })}
                 
             >
-                {/* <Tab.Screen name="Search" component={SearchScreen} navigation={this.props.navigation}/>
-                <Tab.Screen name="Profile" component={ProfileScreen}
-                    listeners={({navigation}) => ({tabPress: event=>{
-                        event.preventDefault();
-                        navigation.navigate("Profile", {uid: firebase.auth().currentUser.uid})
-                        }
-                    })}
-                /> */}
                 <Tab.Screen name="Home" component={HomeScreen} navigation={this.props.navigation} options = {{headerShown :false}}/>
                 <Tab.Screen name="Notification" component={NotifScreen}
                     listeners={({navigation}) => ({tabPress: event=>{
@@ -92,22 +88,16 @@ export class main extends Component {
                             navigation.navigate("Notification")
                         }
                     })}
+<<<<<<< HEAD
                     options = {{headerShown :false}}
                 />
                 <Tab.Screen name="Agenda" component={AgendaScreen} options = {{headerShown :false}}/>
+=======
+                    
+                />
+                <Tab.Screen name="Agenda" component={AgendaScreen} />
+>>>>>>> d61aac8af7345f14a891cdf4b1d0ed1c1678c212
 
-                {/* this one might need to stack on top of the " yourself" tab */}
-                {/* <Tab.Screen name="AddTask" component={AddTaskScreen}
-                    listeners={({navigation}) => ({tabPress: event=>{
-                        event.preventDefault();
-                        navigation.navigate("AddTask")
-                    }
-                    })} */}
-                    
-                    
-                    {/* navigation={this.props.navigation}
-                /> */}
-                
             </Tab.Navigator>
         )
     }

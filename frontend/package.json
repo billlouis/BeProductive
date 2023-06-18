@@ -9,7 +9,14 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/vector-icons": "^13.0.0",
     "@expo/webpack-config": "^18.0.1",
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-brands-svg-icons": "^6.4.0",
+    "@fortawesome/free-regular-svg-icons": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@fortawesome/react-native-fontawesome": "^0.3.0",
     "@mdi/js": "^7.2.96",
     "@mdi/react": "^1.6.1",
     "@react-native-community/datetimepicker": "6.7.3",
@@ -30,6 +37,7 @@
     "expo-status-bar": "~1.4.4",
     "expo-updates": "~0.16.4",
     "firebase": "^9.22.2",
+    "fortawesome": "^0.0.1-security",
     "react": "18.2.0",
     "react-chat-engine": "^1.11.28",
     "react-dom": "^18.2.0",
