@@ -1,5 +1,5 @@
 // import React, { Component } from 'react'
-// import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
+// import {Modal, Dimensions, TouchableWithoutFeedback, View, Text, StyleSheet} from 'react-native'
 
 // import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 // import { createDrawerNavigator } from '@react-navigation/drawer';

@@ -131,12 +131,14 @@ const styles = StyleSheet.create({
     },
     add: {
         position: 'absolute',
-        bottom: 100,
-        right: 30,
+        bottom: 120,
+        right: 20,
         backgroundColor: '#3be2b0',
         borderRadius: 100,
-        padding: 10,
-  
+        padding: 8,
+        paddingLeft: 10,
+        borderColor:"white",
+        borderWidth:1,
     },
     like_button:{
         borderRadius: 100,

@@ -6,6 +6,7 @@ import { container, text, utils } from '../styles';
 import 'firebase/compat/firestore';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
+
 function Profile(props) {
   const [userPost, setUserPosts] = useState([])
   const [user, setUser] = useState(null)
@@ -54,6 +55,13 @@ function Profile(props) {
             })
 
             setUser({ uid: props.route.params.uid, ...snapshot.data() });
+            if(snapshot.data().downloadURL!=null){
+              setImage(snapshot.data().downloadURL)
+            }
+            if(snapshot.data().backgroundURL!=null)
+            {
+              setBackground(snapshot.data().backgroundURL)
+            }
         }
         setLoading(false)
         })
@@ -88,20 +96,87 @@ function Profile(props) {
   const onFollow = () => {
     //console.log("followed")
     firebase.firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .collection("following")
+    .doc(props.route.params.uid)
+    .set({})
+
+    firebase.firestore()
+    .collection("users")
+    .doc(props.route.params.uid)
+    .collection("followers")
+    .doc(firebase.auth().currentUser.uid)
+    .set({})
+
+    firebase.firestore()
     .collection("following")
     .doc(firebase.auth().currentUser.uid)
     .collection("userFollowing")
     .doc(props.route.params.uid)
     .set({})
 
-    //props.sendNotification(user.notificationToken, "New Follower", `${props.currentUser.name} Started following you`, { type: 'profile', user: firebase.auth().currentUser.uid })
+    firebase.firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .collection("followers").doc(props.route.params.uid).get().then((snapshot) => {
+      if(snapshot._delegate._document!==null){
+        firebase.firestore()
+        .collection("users")
+        .doc(props.route.params.uid)
+        .collection("friends")
+        .doc(firebase.auth().currentUser.uid)
+        .set({})
+
+        firebase.firestore()
+        .collection("users")
+        .doc(firebase.auth().currentUser.uid)
+        .collection("friends")
+        .doc(props.route.params.uid)
+        .set({})
+      }
+      else{
+        console.log("nayy")
+      }
+
+    })
+      //props.sendNotification(user.notificationToken, "New Follower", `${props.currentUser.name} Started following you`, { type: 'profile', user: firebase.auth().currentUser.uid })
   }
+  
   const onUnfollow = () => {
+    firebase.firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .collection("following")
+    .doc(props.route.params.uid)
+    .delete()
+
+    firebase.firestore()
+    .collection("users")
+    .doc(props.route.params.uid)
+    .collection("followers")
+    .doc(firebase.auth().currentUser.uid)
+    .delete()
+
     firebase.firestore()
     .collection("following")
     .doc(firebase.auth().currentUser.uid)
     .collection("userFollowing")
     .doc(props.route.params.uid)
+    .delete()
+
+    firebase.firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .collection("friends")
+    .doc(props.route.params.uid)
+    .delete()
+    
+    firebase.firestore()
+    .collection("users")
+    .doc(props.route.params.uid)
+    .collection("friends")
+    .doc(firebase.auth().currentUser.uid)
     .delete()
   }
 
@@ -128,16 +203,25 @@ function Profile(props) {
 
   return (
     <View style = {styles.container}>
+      
       <ImageBackground style={styles.backgroundImage}source={{uri: background}}>
         <TouchableOpacity onPress= {()=>props.navigation.navigate("Home")} style={{width: 40, paddingLeft:5, paddingTop: 5}}>
             <MaterialCommunityIcons name = "arrow-left" color="white" size ={30}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress= {()=>props.navigation.navigate("Home")} style={{width: 40, paddingLeft:5, paddingTop: 5, position:'absolute', alignSelf:'flex-end'}}>
-            <MaterialCommunityIcons name = "cog" color="white" size ={30}/>
+        { props.route.params.uid === firebase.auth().currentUser.uid &&
+          <View style={{position:'absolute', alignSelf: 'flex-end'}}>
+          <TouchableOpacity onPress= {()=>onLogout()} style={{width: 40, paddingLeft:5, paddingTop: 5, alignSelf:'flex-end', bottom: 0}}>
+            <MaterialCommunityIcons name = "logout" color="white" size ={30}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress= {()=>props.navigation.navigate("AddBackground")} style={{width: 40, paddingLeft:5, paddingTop: 5, position:'absolute', alignSelf:'flex-end', bottom:0}}>
+        </View>
+        }
+        {props.route.params.uid === firebase.auth().currentUser.uid &&
+        <View style={{position:'absolute', alignSelf: 'flex-end',bottom: 0}}>
+        <TouchableOpacity onPress= {()=>props.navigation.navigate("AddBackground")} style={{width: 40, paddingLeft:5, paddingTop: 5, alignSelf:'flex-end'}}>
             <MaterialCommunityIcons name = "pencil-box-outline" color="white" size ={30}/>
         </TouchableOpacity>
+        </View>
+        }
         <Image source={{uri: user.downloadURL==null?"https://bit.ly/fcc-running-cats":image}} style={{height: 150, width: 150, marginTop: 100, alignSelf: 'center', borderRadius: 150/2}}/>
         {props.route.params.uid !== firebase.auth().currentUser.uid ? (
           <View style={{alignSelf:'center'}}>
@@ -150,13 +234,12 @@ function Profile(props) {
         
       </ImageBackground>
       <View style = {styles.containerInfo}>
-
-{/*         {props.route.params.uid !== firebase.auth().currentUser.uid ? (
-                    <View>
+        {props.route.params.uid !== firebase.auth().currentUser.uid ? (
+                    <View style={{position:'absolute',right:0,top:0}}>
                         {following ? (
                             <Button
                                 title="Following"
-                                onPress={() => onUnfollow()}
+                               onPress={() => onUnfollow()}
                             />
                         ) :
                             (
@@ -166,15 +249,28 @@ function Profile(props) {
                                 />
                             )}
                     </View>
-                ) : 
+                ) : null}
                 
-                <View>
+                {/*<View>
                     <Button
                         title="Logout"
                         onPress={() => onLogout()}
                     />
-                </View>} */}
+                            </View>*/}
       </View>
+      {/* <View style = {[utils.borderTopGray]}>
+        <FlatList 
+        numColumns={3}
+        horizontal={false}
+        data = {userPost}
+        renderItem={({item}) => (
+          <View style ={styles.containerImage}>
+            <Image style = {styles.imagetoday} source ={{uri: item.downloadURL}}/>
+          </View>
+        )}
+        />
+      </View> */}
+      <Text style={{paddingLeft: 10}}>Today</Text>
       <View style = {[utils.borderTopGray]}>
         <FlatList 
         numColumns={3}
@@ -182,7 +278,22 @@ function Profile(props) {
         data = {userPost}
         renderItem={({item}) => (
           <View style ={styles.containerImage}>
-            <Image style = {styles.image} source ={{uri: item.downloadURL}}/>
+            {/* {console.log(item.creation.toDate().toDateString().slice(0,15))}
+            {console.log(Date().slice(0,15))} */}
+            {item.creation.toDate().toDateString().slice(0,14)==Date().slice(0,14) && <Image style = {styles.imagetoday} source ={{uri: item.downloadURL}}/>}
+          </View>
+        )}
+        />
+      </View>
+      <Text style={{paddingLeft: 10}}>Past few days</Text>
+      <View style = {[utils.borderTopGray]}>
+        <FlatList 
+        numColumns={3}
+        horizontal={false}
+        data = {userPost}
+        renderItem={({item}) => (
+          <View style ={styles.containerImage}>
+            {item.creation.toDate().toDateString().slice(0,14)!=Date().slice(0,14) && <Image style = {styles.image} source ={{uri: item.downloadURL}}/>}
           </View>
         )}
         />
@@ -209,9 +320,14 @@ const styles = StyleSheet.create({
     flex: 1/3,
     aspectRatio: 1/1
   },
+  imagetoday:{
+    flex:1,
+    aspectRatio: 1/1
+  },
   backgroundImage: {
     height: 250, 
-    alignSelf:'stretch'
+    alignSelf:'stretch',
+    position: 'relative'
   }
 
 })

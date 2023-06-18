@@ -1,10 +1,4 @@
 import React, { Component, } from 'react'
-import {
-    BrowserRouter as Router,
-    Route,
-    Link,
-    Routes
-} from 'react-router-dom'
 import {View,Text, Dimensions} from 'react-native'
 import Icon from '@mdi/react'
 import { mdiHomeOutline, mdiSetCenter, mdiSolid } from '@mdi/js';
@@ -27,8 +21,6 @@ import CommentScreen from './main/Comments';
 import { shadow } from 'react-native-paper';
 // import { createDrawerNavigator } from '@react-navigation/drawer';
 // import { NavigationContainer } from '@react-navigation/native';
-
-
 
 const Tab = createBottomTabNavigator();
 const EmptyScreen = () =>{
@@ -53,7 +45,7 @@ export class main extends Component {
                         backgroundColor: "#3BE2B0", 
                         width: 230, height: 70,
                         position: 'absolute',
-                        marginBottom: 20,
+                        marginBottom: 40,
                         borderRadius: 50, 
                         marginLeft: (Dimensions.get('window').width / 2) - 115,
                         borderColor: "white", borderWidth: 2, borderTopWidth:3,
@@ -98,9 +90,10 @@ export class main extends Component {
                             navigation.navigate("Notification")
                         }
                     })}
-                    
+                    options = {{headerShown :false}}
                 />
                 <Tab.Screen name="Agenda" component={Calendarr} />
+                <Tab.Screen name="Agenda" component={AgendaScreen} />
             </Tab.Navigator>
         )
     }
