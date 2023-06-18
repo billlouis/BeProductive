@@ -72,27 +72,40 @@ export class main extends Component {
                         backgroundColor: "#3BE2B0", 
                         width: 230, height: 70,
                         position: 'absolute',
-                        marginBottom: 20,
+                        marginBottom: 40,
                         borderRadius: 50, 
                         marginLeft: (Dimensions.get('window').width / 2) - 115,
-                        borderColor: "white", borderWidth: 2,
+                        borderColor: "white", borderWidth: 2, borderTopWidth:3,
                         shadowColor: "black", shadowRadius: 10, shadowOffset: {width: 0, height: 4}, shadowOpacity: 0.6
                     },  
-                     tabBarIcon: () => {
+                     tabBarIcon: ({focused, color, size}) => {
                         let iconName, rn = route.name;
 
-                        if(rn === "Home") iconName = "home-outline";
-                        else if(rn === "Notification") iconName = "bell-outline";
-                        else if(rn === "Agenda") iconName = "calendar-outline";
-                        return <MaterialCommunityIcons name = {iconName} color="white" size ={30}/>
+                        if(rn === "Home"){
+                            iconName = focused 
+                            ? "home"
+                            : "home-outline"
+                        }
+                        else if(rn === "Notification"){
+                            iconName = focused 
+                            ? "bell"
+                            : "bell-outline"
+                        }
+                        else if(rn === "Agenda"){
+                            iconName = focused 
+                            ? "calendar"
+                            : "calendar-outline"
+                        }
+                        return <MaterialCommunityIcons style = {{borderRadius: 100, backgroundColor: color, padding:8}} name = {iconName} color={'white'} size ={30}/>
                      },
                      tabBarOptions:{
                         style:{
                             backgroundColor: 'transparent',
                         },
-                        tabBarActiveTintColor: 'yellow',
-                        tabBarInactiveTintColor: 'white',
-                     }
+                        
+                     },
+                    tabBarActiveTintColor: '#0F7D5C',
+                    tabBarInactiveTintColor: '',
                 
                 })}
                 
@@ -105,9 +118,9 @@ export class main extends Component {
                             navigation.navigate("Notification")
                         }
                     })}
-                    
+                    options = {{headerShown :false}}
                 />
-                <Tab.Screen name="Agenda" component={AgendaScreen} />
+                <Tab.Screen name="Agenda" component={AgendaScreen} options = {{headerShown :false}}/>
 
             </Tab.Navigator>
         )

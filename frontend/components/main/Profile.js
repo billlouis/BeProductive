@@ -1,4 +1,3 @@
-import { FontAwesome5 } from '@expo/vector-icons';
 import React, {useState, useEffect} from 'react'
 import {StyleSheet,View, Text, Image, FlatList, Button,ImageBackground,TouchableOpacity,ActivityIndicator} from 'react-native'
 import firebase from 'firebase/compat/app'
@@ -15,6 +14,7 @@ function Profile(props) {
   const [image, setImage] = useState("https://bit.ly/fcc-running-cats")
   
   const [loading, setLoading] = useState(true)
+    
 
   useEffect(()=> {
     const {currentUser, posts} = props;
@@ -23,7 +23,25 @@ function Profile(props) {
       setUser(currentUser)
       setUserPosts(posts)
       setLoading(false)
-    }
+      firebase.firestore()
+      .collection('users')
+      .doc(props.route.params.uid)
+      .get()
+      .then((snapshot) => {
+        if (snapshot.exists) {
+          if(snapshot.data().downloadURL!=null){
+            setImage(snapshot.data().downloadURL)
+          }
+          if(snapshot.data().backgroundURL!=null)
+          {
+            setBackground(snapshot.data().backgroundURL)
+          }
+          
+      }
+      setLoading(false)
+      })
+      }
+
     else{
       firebase.firestore()
         .collection('users')
@@ -63,8 +81,10 @@ function Profile(props) {
     else{
       setFollowing(false);
     }
+    // firebase.firestore()
+    // .collection('users')
+    // .
   }, [props.route.params.uid, props.following, props.currentUser, props.posts])
-
   const onFollow = () => {
     //console.log("followed")
     firebase.firestore()
@@ -140,7 +160,13 @@ function Profile(props) {
         <TouchableOpacity onPress= {()=>props.navigation.navigate("Home")} style={{width: 40, paddingLeft:5, paddingTop: 5}}>
             <MaterialCommunityIcons name = "arrow-left" color="white" size ={30}/>
         </TouchableOpacity>
-        <Image source={{uri: user.downloadURL==null?image:user.downloadURL}} style={{height: 150, width: 150, marginTop: 100, alignSelf: 'center', borderRadius: 150/2}}/>
+        <TouchableOpacity onPress= {()=>props.navigation.navigate("Home")} style={{width: 40, paddingLeft:5, paddingTop: 5, position:'absolute', alignSelf:'flex-end'}}>
+            <MaterialCommunityIcons name = "cog" color="white" size ={30}/>
+        </TouchableOpacity>
+        <TouchableOpacity onPress= {()=>props.navigation.navigate("AddBackground")} style={{width: 40, paddingLeft:5, paddingTop: 5, position:'absolute', alignSelf:'flex-end', bottom:0}}>
+            <MaterialCommunityIcons name = "pencil-box-outline" color="white" size ={30}/>
+        </TouchableOpacity>
+        <Image source={{uri: user.downloadURL==null?"https://bit.ly/fcc-running-cats":image}} style={{height: 150, width: 150, marginTop: 100, alignSelf: 'center', borderRadius: 150/2}}/>
         {props.route.params.uid !== firebase.auth().currentUser.uid ? (
           <View style={{alignSelf:'center'}}>
           <Text> {user.name}</Text> 

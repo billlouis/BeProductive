@@ -79,8 +79,8 @@ function yourself(props) {
 
                 />
             </View>
-            <TouchableOpacity onPress= {()=>props.navigation.navigate("Task")}>
-                <MaterialCommunityIcons name = "plus" style = {styles.add} color="white" size ={60}/>
+            <TouchableOpacity onPress= {()=>props.navigation.navigate("Addtask")}>
+                <MaterialCommunityIcons name = "plus" style = {styles.add} color="white" size ={50}/>
             </TouchableOpacity>
         </View>
 
@@ -107,11 +107,14 @@ const styles = StyleSheet.create({
     },
     add: {
         position: 'absolute',
-        bottom: 100,
-        right: 30,
+        bottom: 120,
+        right: 20,
         backgroundColor: '#3be2b0',
         borderRadius: 100,
-  
+        padding: 2,
+        paddingLeft:5,
+        borderColor:"white",
+        borderWidth:1,
     },
 })
 const mapStateToProps = (store) => ({
