@@ -60,7 +60,7 @@ export class main extends Component {
                         else if(rn === "Agenda") iconName = "calendar-outline";
                         else if(rn === "Search") iconName = "magnify";
                         else if(rn === "Profile") iconName = "account-outline";
-                        else if(rn === "AddTask") iconName = "magnify"
+                        else if(rn === "Task") iconName = "magnify"
                         return <MaterialCommunityIcons name = {iconName} color="white" size ={30}/>
                      },
                 })}
@@ -82,19 +82,15 @@ export class main extends Component {
                         }
                     })}
                 />
-                <Tab.Screen name="Agenda" component={AgendaScreen}/>
-
-                {/* this one might need to stack on top of the " yourself" tab */}
-                <Tab.Screen name="AddTask" component={AddTaskScreen}
+                <Tab.Screen name="Task" component={AddTaskScreen}
                     listeners={({navigation}) => ({tabPress: event=>{
-                        event.preventDefault();
-                        navigation.navigate("AddTask")
-                    }
+                            event.preventDefault();
+                            navigation.navigate("AddTask")
+                        }
                     })}
-                    
-                    
-                    navigation={this.props.navigation}
                 />
+ 
+                <Tab.Screen name="Agenda" component={AgendaScreen}/>
                 
             </Tab.Navigator>
         )

@@ -49,10 +49,11 @@ export default function Add_task({navigation}){
   };
 
   const showMode = (currentMode) => {
-    if (Platform.OS === 'android') {
-      setShow(true);
-      // for iOS, add a button that closes the picker
-    }
+    // if (Platform.OS === 'android') {
+    //   setShow(true);
+    //   // for iOS, add a button that closes the picker
+    // }
+    setShow(true);
     setMode(currentMode);
   };
 
@@ -102,7 +103,7 @@ export default function Add_task({navigation}){
 
   return(
         <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? "padding":"height"}
+          behavior="height"
           style={styles.AddTaskWrapper}
         >
           <ScrollView>
