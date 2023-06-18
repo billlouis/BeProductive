@@ -32,16 +32,13 @@ import LoginScreen from './components/auth/Login'
 import MainScreen from './components/Main'
 import AddScreen from './components/main/Add'
 import SaveScreen from './components/main/Save'
-<<<<<<< HEAD
 import AddProfileScreen from './components/main/Add'
 import SaveProfileScreen from './components/main/Save'
 import CommentScreen from './components/main/Comments';
 
-=======
 import ChatScreen from './components/main/Chat'
 import CommentScreen from './components/main/Comments'
 import ProfileScreen from './components/main/Profile'
->>>>>>> e2ca68b57fc6ae2be072e29a84976ace1e7fc0fb
 
 
 
