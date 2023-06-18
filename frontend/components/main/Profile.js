@@ -5,6 +5,14 @@ import {connect} from 'react-redux'
 import { container, text, utils } from '../styles';
 import 'firebase/compat/firestore';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import {
+  Menu,
+  MenuProvider,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+
 
 function Profile(props) {
   const [userPost, setUserPosts] = useState([])
@@ -156,16 +164,25 @@ function Profile(props) {
 
   return (
     <View style = {styles.container}>
+      
       <ImageBackground style={styles.backgroundImage}source={{uri: background}}>
         <TouchableOpacity onPress= {()=>props.navigation.navigate("Home")} style={{width: 40, paddingLeft:5, paddingTop: 5}}>
             <MaterialCommunityIcons name = "arrow-left" color="white" size ={30}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress= {()=>props.navigation.navigate("Home")} style={{width: 40, paddingLeft:5, paddingTop: 5, position:'absolute', alignSelf:'flex-end'}}>
-            <MaterialCommunityIcons name = "cog" color="white" size ={30}/>
+        { props.route.params.uid === firebase.auth().currentUser.uid &&
+          <View style={{position:'absolute', alignSelf: 'flex-end'}}>
+          <TouchableOpacity onPress= {()=>onLogout()} style={{width: 40, paddingLeft:5, paddingTop: 5, alignSelf:'flex-end', bottom: 0}}>
+            <MaterialCommunityIcons name = "logout" color="white" size ={30}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress= {()=>props.navigation.navigate("AddBackground")} style={{width: 40, paddingLeft:5, paddingTop: 5, position:'absolute', alignSelf:'flex-end', bottom:0}}>
+        </View>
+        }
+        {props.route.params.uid === firebase.auth().currentUser.uid &&
+        <View style={{position:'absolute', alignSelf: 'flex-end',bottom: 0}}>
+        <TouchableOpacity onPress= {()=>props.navigation.navigate("AddBackground")} style={{width: 40, paddingLeft:5, paddingTop: 5, alignSelf:'flex-end'}}>
             <MaterialCommunityIcons name = "pencil-box-outline" color="white" size ={30}/>
         </TouchableOpacity>
+        </View>
+        }
         <Image source={{uri: user.downloadURL==null?"https://bit.ly/fcc-running-cats":image}} style={{height: 150, width: 150, marginTop: 100, alignSelf: 'center', borderRadius: 150/2}}/>
         {props.route.params.uid !== firebase.auth().currentUser.uid ? (
           <View style={{alignSelf:'center'}}>
@@ -203,6 +220,19 @@ function Profile(props) {
                     />
                 </View>}
       </View>
+      {/* <View style = {[utils.borderTopGray]}>
+        <FlatList 
+        numColumns={3}
+        horizontal={false}
+        data = {userPost}
+        renderItem={({item}) => (
+          <View style ={styles.containerImage}>
+            <Image style = {styles.imagetoday} source ={{uri: item.downloadURL}}/>
+          </View>
+        )}
+        />
+      </View> */}
+      <Text style={{paddingLeft: 10}}>Today</Text>
       <View style = {[utils.borderTopGray]}>
         <FlatList 
         numColumns={3}
@@ -210,7 +240,22 @@ function Profile(props) {
         data = {userPost}
         renderItem={({item}) => (
           <View style ={styles.containerImage}>
-            <Image style = {styles.image} source ={{uri: item.downloadURL}}/>
+            {/* {console.log(item.creation.toDate().toDateString().slice(0,15))}
+            {console.log(Date().slice(0,15))} */}
+            {item.creation.toDate().toDateString().slice(0,14)==Date().slice(0,14) && <Image style = {styles.imagetoday} source ={{uri: item.downloadURL}}/>}
+          </View>
+        )}
+        />
+      </View>
+      <Text style={{paddingLeft: 10}}>Past few days</Text>
+      <View style = {[utils.borderTopGray]}>
+        <FlatList 
+        numColumns={3}
+        horizontal={false}
+        data = {userPost}
+        renderItem={({item}) => (
+          <View style ={styles.containerImage}>
+            {item.creation.toDate().toDateString().slice(0,14)!=Date().slice(0,14) && <Image style = {styles.image} source ={{uri: item.downloadURL}}/>}
           </View>
         )}
         />
@@ -237,9 +282,14 @@ const styles = StyleSheet.create({
     flex: 1/3,
     aspectRatio: 1/1
   },
+  imagetoday:{
+    flex:1,
+    aspectRatio: 1/1
+  },
   backgroundImage: {
     height: 250, 
-    alignSelf:'stretch'
+    alignSelf:'stretch',
+    position: 'relative'
   }
 
 })

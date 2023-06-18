@@ -90,8 +90,7 @@ export class main extends Component {
                     })}
                     options = {{headerShown :false}}
                 />
-                <Tab.Screen name="Agenda" component={AgendaScreen} options = {{headerShown :false}}/>
-
+                <Tab.Screen name="Agenda" component={AgendaScreen} />
             </Tab.Navigator>
         )
     }
