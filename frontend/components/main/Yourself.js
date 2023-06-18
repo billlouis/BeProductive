@@ -79,7 +79,7 @@ function yourself(props) {
 
                 />
             </View>
-            <TouchableOpacity onPress= {()=>props.navigation.navigate("Add")}>
+            <TouchableOpacity onPress= {()=>props.navigation.navigate("Addtask")}>
                 <MaterialCommunityIcons name = "plus" style = {styles.add} color="white" size ={60}/>
             </TouchableOpacity>
         </View>

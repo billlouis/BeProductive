@@ -51,7 +51,7 @@ export class main extends Component {
                         width: 230, height: 70,
                         position: 'absolute',
                         marginHorizontal:86, //make the navbar centered
-                        marginBottom: 20,
+                        marginBottom: 70,
                         borderRadius: 50, borderColor: "white", borderWidth: 2,
                         shadowColor: "black", shadowRadius: 10, shadowOffset: {width: 0, height: 4}, shadowOpacity: 0.6
                     },  
@@ -85,15 +85,16 @@ export class main extends Component {
                         }
                     })}
                 /> */}
-                <Tab.Screen name="Home" component={HomeScreen} navigation={this.props.navigation}/>
+                <Tab.Screen name="Home" component={HomeScreen} navigation={this.props.navigation} options = {{headerShown :false}}/>
                 <Tab.Screen name="Notification" component={NotifScreen}
                     listeners={({navigation}) => ({tabPress: event=>{
                             event.preventDefault();
                             navigation.navigate("Notification")
                         }
                     })}
+                    options = {{headerShown :false}}
                 />
-                <Tab.Screen name="Agenda" component={AgendaScreen}/>
+                <Tab.Screen name="Agenda" component={AgendaScreen} options = {{headerShown :false}}/>
 
                 {/* this one might need to stack on top of the " yourself" tab */}
                 {/* <Tab.Screen name="AddTask" component={AddTaskScreen}
