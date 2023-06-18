@@ -29,8 +29,14 @@ function Profile(props) {
       .get()
       .then((snapshot) => {
         if (snapshot.exists) {
-          console.log(snapshot.data())
-          setImage(snapshot.data().downloadURL)
+          if(snapshot.data().downloadURL!=null){
+            setImage(snapshot.data().downloadURL)
+          }
+          if(snapshot.data().backgroundURL!=null)
+          {
+            setBackground(snapshot.data().backgroundURL)
+          }
+          
       }
       setLoading(false)
       })
@@ -125,6 +131,12 @@ function Profile(props) {
       <ImageBackground style={styles.backgroundImage}source={{uri: background}}>
         <TouchableOpacity onPress= {()=>props.navigation.navigate("Home")} style={{width: 40, paddingLeft:5, paddingTop: 5}}>
             <MaterialCommunityIcons name = "arrow-left" color="white" size ={30}/>
+        </TouchableOpacity>
+        <TouchableOpacity onPress= {()=>props.navigation.navigate("Home")} style={{width: 40, paddingLeft:5, paddingTop: 5, position:'absolute', alignSelf:'flex-end'}}>
+            <MaterialCommunityIcons name = "cog" color="white" size ={30}/>
+        </TouchableOpacity>
+        <TouchableOpacity onPress= {()=>props.navigation.navigate("AddBackground")} style={{width: 40, paddingLeft:5, paddingTop: 5, position:'absolute', alignSelf:'flex-end', bottom:0}}>
+            <MaterialCommunityIcons name = "pencil-box-outline" color="white" size ={30}/>
         </TouchableOpacity>
         <Image source={{uri: user.downloadURL==null?"https://bit.ly/fcc-running-cats":image}} style={{height: 150, width: 150, marginTop: 100, alignSelf: 'center', borderRadius: 150/2}}/>
         {props.route.params.uid !== firebase.auth().currentUser.uid ? (
