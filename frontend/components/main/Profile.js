@@ -62,6 +62,13 @@ function Profile(props) {
             })
 
             setUser({ uid: props.route.params.uid, ...snapshot.data() });
+            if(snapshot.data().downloadURL!=null){
+              setImage(snapshot.data().downloadURL)
+            }
+            if(snapshot.data().backgroundURL!=null)
+            {
+              setBackground(snapshot.data().backgroundURL)
+            }
         }
         setLoading(false)
         })
