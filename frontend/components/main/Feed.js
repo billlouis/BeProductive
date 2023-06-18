@@ -112,7 +112,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#3be2b0',
         borderRadius: 100,
         padding: 10,
-  
+        shadowColor: "black", 
+        shadowRadius: 10, 
+        shadowOffset: {width: 0, height: 4}, 
+        shadowOpacity: 0.6
     },
 })
 const mapStateToProps = (store) => ({

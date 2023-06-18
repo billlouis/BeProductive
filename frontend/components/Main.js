@@ -50,16 +50,10 @@ export class main extends Component {
                         backgroundColor: "#3BE2B0", 
                         width: 230, height: 70,
                         position: 'absolute',
-<<<<<<< HEAD
-                        marginHorizontal:86, //make the navbar centered
-                        marginBottom: 70,
-                        borderRadius: 50, borderColor: "white", borderWidth: 2,
-=======
-                        marginBottom: 20,
+                        marginBottom: 40,
                         borderRadius: 50, 
                         marginLeft: (Dimensions.get('window').width / 2) - 115,
                         borderColor: "white", borderWidth: 2,
->>>>>>> d61aac8af7345f14a891cdf4b1d0ed1c1678c212
                         shadowColor: "black", shadowRadius: 10, shadowOffset: {width: 0, height: 4}, shadowOpacity: 0.6
                     },  
                      tabBarIcon: () => {
@@ -88,15 +82,9 @@ export class main extends Component {
                             navigation.navigate("Notification")
                         }
                     })}
-<<<<<<< HEAD
                     options = {{headerShown :false}}
                 />
                 <Tab.Screen name="Agenda" component={AgendaScreen} options = {{headerShown :false}}/>
-=======
-                    
-                />
-                <Tab.Screen name="Agenda" component={AgendaScreen} />
->>>>>>> d61aac8af7345f14a891cdf4b1d0ed1c1678c212
 
             </Tab.Navigator>
         )
