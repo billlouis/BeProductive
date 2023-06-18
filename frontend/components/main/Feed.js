@@ -9,7 +9,7 @@ function Feed(props) {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        if (props.usersFollowingLoaded == props.following.length && props.following.length !== 0) {
+        if (props.usersFollowingLoaded === props.following.length && props.following.length !== 0) {
 
             props.feed.sort(function (x, y) {
                 return x.creation - y.creation;
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     },
     add: {
         position: 'absolute',
-        bottom: 100,
+        bottom: 0,
         right: 30,
         backgroundColor: '#3be2b0',
         borderRadius: 100,

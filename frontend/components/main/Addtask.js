@@ -7,7 +7,12 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 //added for suggestion group
 import { ButtonGroup } from '@rneui/themed';
 
-import firebase from 'firebase/compat/app'
+//the actions to update the state
+import { addTasks } from '../../redux/actions';
+
+
+
+
 export default function Add_task({navigation}){
   //this is the default setting of the suggestion
   //the suggestion category for the user should be updated in the useEffect
@@ -85,17 +90,20 @@ export default function Add_task({navigation}){
 
   ///not yet done
   const handleaddtask = ()=>{
-    console.log(title,notes,category);
-    firebase.firestore()
-            .collection('users')
-            .doc(firebase.auth().currentUser.uid)
-            .collection('task')
-            .add({
-                title,
-                notes,
-                date,
-                category,
-            })
+    //console.log(notes);
+
+    //the firebase updating db action call is moved to the actions/index.js
+
+    addTasks([{
+      title,
+      notes,
+      date,
+      category,
+  }]);
+            //then call then dispatch changes to pass the item to it 
+            //by right we should do async in actions
+            //for now we use a flag in the state to tell other people that there is a new item in there
+            //so that they know when to reload
   }
 
 

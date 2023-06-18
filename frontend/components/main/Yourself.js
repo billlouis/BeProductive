@@ -18,7 +18,22 @@ function yourself(props) {
             setPosts(props.feed);
         }
         //console.log(posts)
-    }, [props.usersFollowingLoaded,props.feed])
+    }, [props.usersFollowingLoaded,props.feed]);
+
+    const onSomething = (userId, postId) => {
+        firebase.firestore()
+            .collection("users")
+            .doc(userId)
+            .collection("task")
+            .doc(postId)
+            .collection("likes")
+            .doc(firebase.auth().currentUser.uid)
+            .set({})
+    }
+
+
+
+
     const onLikePress = (userId, postId) => {
         firebase.firestore()
             .collection("posts")
