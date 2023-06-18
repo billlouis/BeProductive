@@ -32,6 +32,8 @@ import LoginScreen from './components/auth/Login'
 import MainScreen from './components/Main'
 import AddScreen from './components/main/Add'
 import SaveScreen from './components/main/Save'
+import AddProfileScreen from './components/main/Add'
+import SaveProfileScreen from './components/main/Save'
 import CommentScreen from './components/main/Comments';
 
 
@@ -95,6 +97,8 @@ export class App extends Component {
             <Stack.Screen name = "Add" component={AddScreen} navigation = {this.props.navigation}/>
             <Stack.Screen name = "Save" component={SaveScreen} navigation = {this.props.navigation}/>
             <Stack.Screen name = "Comment" component={CommentScreen} navigation = {this.props.navigation}/>
+            <Stack.Screen name = "AddProfile" component={AddProfileScreen} navigation = {this.props.navigation}/>
+            <Stack.Screen name = "SaveProfile" component={SaveProfileScreen} navigation = {this.props.navigation} options={{headerShown:false}}/>
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react'
-import {StyleSheet,View, Text, Image, FlatList, Button} from 'react-native'
+import {StyleSheet,View, Text, Image, FlatList, Button,ImageBackground,TouchableOpacity} from 'react-native'
 import firebase from 'firebase/compat/app'
 import {connect} from 'react-redux'
 import 'firebase/compat/firestore';
+
+
 function Profile(props) {
   const [userPost, setUserPosts] = useState([])
   const [user, setUser] = useState(null)
@@ -80,7 +82,13 @@ function Profile(props) {
   }
   return (
     <View style = {styles.container}>
+      <ImageBackground style={{height: 300, alignSelf:'stretch'}}source={{uri: 'https://bit.ly/fcc-running-cats'}}>
+          <TouchableOpacity style={{width: 50}} onPress={() => props.navigation.navigate("Feed")}>
+            <Text>Go Back</Text>
+          </TouchableOpacity>
+        </ImageBackground>
       <View style = {styles.containerInfo}>
+
         <Text> {user.name} </Text>
         <Text> {user.email} </Text>
 

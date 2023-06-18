@@ -65,13 +65,13 @@ export class main extends Component {
                 
             >
                 <Tab.Screen name="Search" component={SearchScreen} navigation={this.props.navigation}/>
-                <Tab.Screen name="Profile" component={ProfileScreen}
+                <Tab.Screen name="Profile" options={{ headerShown: false }} component={ProfileScreen}
                     listeners={({navigation}) => ({tabPress: event=>{
                         event.preventDefault();
                         navigation.navigate("Profile", {uid: firebase.auth().currentUser.uid})
                         }
                     })}
-                />
+                    />
                 <Tab.Screen name="Feed" component={FeedScreen}/>
                 <Tab.Screen name="Notification" component={NotifScreen}
                     listeners={({navigation}) => ({tabPress: event=>{
