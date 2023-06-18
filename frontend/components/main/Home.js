@@ -14,7 +14,7 @@ import FeedScreen from './Feed'
 import ProfileScreen from './Profile'
 import YourselfScreen from './Yourself'
 import ChatScreen from './Chat'
-import FriendDrawer from './Friendlist'
+import {Friendlist} from './Friendlist'
 import { Button } from 'react-native-paper';
 //import AddTaskScreen from './main/Addtask';
 import firebase from 'firebase/compat/app'
@@ -25,7 +25,33 @@ const EmptyScreen = () =>{
 
 const TopTab = createMaterialTopTabNavigator();
 
+const popuplist = [
+    {
+        id:1,
+        name: "Task"
+    },
+    {
+        id:2,
+        name: "Message"
+    },
+    {
+        id:3,
+        name: "Note"
+    }
+]
+
 const Flex = ({navigation}) => {
+
+    let popref = React.createRef()
+
+    const onShowPopup = () => {
+        popref.show()
+    }
+
+    const onClosePopup = () => {
+        popref.close()
+    }
+
     return (
         <SafeAreaView style = {styles.testContainer}>
             <View style={styles.toptab_flexbox}>
@@ -47,11 +73,16 @@ const Flex = ({navigation}) => {
                         </View>
                     </View>
                     <View style={styles.sidebar_bottom}>
-                        <TouchableOpacity onPress= {()=>navigation.navigate()}>
+                        <TouchableOpacity onPress= {onShowPopup}>
                             <MaterialCommunityIcons name = "arrow-right" color="white" size ={30}/>
                         </TouchableOpacity>
+                        <Friendlist
+                            title="Demo Popup"
+                            ref={(target) => popref = target}
+                            onTouchOutside={onClosePopup}
+                            data={popuplist}
+                        />
                     </View>
-                    <View style={{flex: 1}}/>
                 </View>
                 <View style = {styles.spaces}/>
                 <View style={{flex: 6}}>
@@ -69,7 +100,9 @@ const styles = StyleSheet.create({
     sidebar: {
       flex: 1,
       marginTop: 30,
-      backgroundColor: 'white',
+      marginBottom: 40,
+      backgroundColor: '#9C9C9C',
+      borderRadius:100,
       flexDirection: 'column', 
       borderRadius:100
     },
@@ -86,15 +119,12 @@ const styles = StyleSheet.create({
         flex: 0.2
     },
     sidebar_top:{
-        flex:1.3, 
-        backgroundColor: 'grey', 
+        flex:1.3,  
         borderTopLeftRadius: 150, 
         borderTopRightRadius: 150, 
-        borderColor:"grey"
     },
     sidebar_middle:{
         flex: 15, 
-        backgroundColor: 'grey',
     },
     sidebar_innermiddle:{
         flex:1, 
@@ -108,12 +138,10 @@ const styles = StyleSheet.create({
         flexDirection: "column"
     },
     sidebar_bottom:{
-        flex: 1, 
-        backgroundColor: 'grey', 
+        flex: 1,  
         borderBottomLeftRadius: 150, 
         borderBottomRightRadius: 150, 
         alignItems: "center", 
-        borderColor:"grey"
     },
     accountIcon:{
         borderRadius: 100, 
