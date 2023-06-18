@@ -46,7 +46,7 @@ export default function Save(props) {
         .update({
             downloadURL,
         }).then((function () {
-            props.navigation.popToTop()
+            props.navigation.navigate("Profile",{uid: firebase.auth().currentUser.uid})
         })) 
     }
 
