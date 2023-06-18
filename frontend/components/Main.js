@@ -50,7 +50,6 @@ export class main extends Component {
                         backgroundColor: "#3BE2B0", 
                         width: 230, height: 70,
                         position: 'absolute',
-                        margin: 'auto',
                         marginBottom: 20,
                         borderRadius: 50, 
                         marginLeft: (Dimensions.get('window').width / 2) - 115,
@@ -76,13 +75,6 @@ export class main extends Component {
                 })}
                 
             >
-                <Tab.Screen name="Profile" component={ProfileScreen} options = {{headerShown :false}}
-                    listeners={({navigation}) => ({tabPress: event=>{
-                        event.preventDefault();
-                        navigation.navigate("Profile", {uid: firebase.auth().currentUser.uid})
-                        }
-                    })}
-                screenOptions={{headerShown:false}}/>
                 <Tab.Screen name="Home" component={HomeScreen} navigation={this.props.navigation} options = {{headerShown :false}}/>
                 <Tab.Screen name="Notification" component={NotifScreen}
                     listeners={({navigation}) => ({tabPress: event=>{
@@ -93,7 +85,6 @@ export class main extends Component {
                     
                 />
                 <Tab.Screen name="Agenda" component={AgendaScreen} />
-                <Tab.Screen name="Search" component={SearchScreen} />
 
             </Tab.Navigator>
         )

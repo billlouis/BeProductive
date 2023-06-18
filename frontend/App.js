@@ -102,7 +102,7 @@ export class App extends Component {
             <Stack.Screen name = "SaveProfile" component={SaveProfileScreen} navigation = {this.props.navigation}/>
             <Stack.Screen name = "Comment" component={CommentScreen} navigation = {this.props.navigation}/>
             <Stack.Screen name = "Chat" component={ChatScreen} navigation = {this.props.navigation}/>
-            <Stack.Screen name = "Profile" component={ProfileScreen} navigation = {this.props.navigation}/>
+            <Stack.Screen name = "Profile" component={ProfileScreen} navigation = {this.props.navigation} options = {{headerShown :false}}/>
             <Stack.Screen name = "Task" component={TaskScreen} navigation = {this.props.navigation}/>
           </Stack.Navigator>
         </NavigationContainer>
