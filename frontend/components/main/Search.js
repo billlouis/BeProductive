@@ -1,5 +1,5 @@
 import React , { useState }from 'react'
-import { View, Text, TextInput, FlatList, TouchableOpacity } from 'react-native'
+import { Button, View, Text, TextInput, FlatList, TouchableOpacity } from 'react-native'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 export default function Search(props) {
@@ -36,6 +36,8 @@ export default function Search(props) {
                    
                 )}
             />
+
+            <Button onPress={() => props.navigation.navigate("Chat")} title="Chat"></Button>
         </View>
     )
 }

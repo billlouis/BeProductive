@@ -14,7 +14,11 @@
     "@mdi/react": "^1.6.1",
     "@react-native-community/datetimepicker": "6.7.3",
     "@react-native-community/masked-view": "^0.1.11",
+<<<<<<< HEAD
     "@react-native-material/core": "^1.3.7",
+=======
+    "@react-native-firebase/messaging": "^18.0.0",
+>>>>>>> e2ca68b57fc6ae2be072e29a84976ace1e7fc0fb
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/drawer": "^6.6.2",
     "@react-navigation/material-bottom-tabs": "^6.2.15",
