@@ -17,10 +17,11 @@ import { bindActionCreators } from 'redux'
 import { fetchUser , fetchUserPosts, fetchUserFollowing, clearData} from '../redux/actions/index'
 import firebase from 'firebase/compat/app'
 import SearchScreen from './main/Search'
-import FeedScreen from './main/Feed'
+import HomeScreen from './main/Home'
 import ProfileScreen from './main/Profile'
 import NotifScreen from './main/Notification_tab'
 import AgendaScreen from './main/Agenda_tab'
+import AddTaskScreen from './main/Addtask';
 import { shadow } from 'react-native-paper';
 
 
@@ -39,7 +40,7 @@ export class main extends Component {
     render() {
         return (
             <Tab.Navigator 
-                initialRouteName="Feed" 
+                initialRouteName="Home" 
                 labeled = {false} 
                 screenOptions={({route}) => ({
                     tabBarShowLabel: false,
@@ -52,27 +53,38 @@ export class main extends Component {
                         shadowColor: "black", shadowRadius: 10, shadowOffset: {width: 0, height: 4}, shadowOpacity: 0.6
                     },  
                      tabBarIcon: () => {
-                    let iconName, rn = route.name;
+                        let iconName, rn = route.name;
 
-                        if(rn === "Feed") iconName = "home-outline";
+                        if(rn === "Home") iconName = "home-outline";
                         else if(rn === "Notification") iconName = "bell-outline";
                         else if(rn === "Agenda") iconName = "calendar-outline";
-                        else if(rn === "Search") iconName = "magnify";
-                        else if(rn === "Profile") iconName = "account-outline";
+                        // else if(rn === "Search") iconName = "magnify";
+                        // else if(rn === "Profile") iconName = "account-outline";
+                        // else if(rn === "AddTask") iconName = "magnify"
                         return <MaterialCommunityIcons name = {iconName} color="white" size ={30}/>
                      },
                 })}
                 
             >
+<<<<<<< HEAD
                 <Tab.Screen name="Search" component={SearchScreen} navigation={this.props.navigation}/>
                 <Tab.Screen name="Profile" options={{ headerShown: false }} component={ProfileScreen}
+=======
+                {/* <Tab.Screen name="Search" component={SearchScreen} navigation={this.props.navigation}/>
+                <Tab.Screen name="Profile" component={ProfileScreen}
+>>>>>>> 6a8d048caeb2570e4914fe0f4c2eff78569638e6
                     listeners={({navigation}) => ({tabPress: event=>{
                         event.preventDefault();
                         navigation.navigate("Profile", {uid: firebase.auth().currentUser.uid})
                         }
                     })}
+<<<<<<< HEAD
                     />
                 <Tab.Screen name="Feed" component={FeedScreen}/>
+=======
+                /> */}
+                <Tab.Screen name="Home" component={HomeScreen} navigation={this.props.navigation}/>
+>>>>>>> 6a8d048caeb2570e4914fe0f4c2eff78569638e6
                 <Tab.Screen name="Notification" component={NotifScreen}
                     listeners={({navigation}) => ({tabPress: event=>{
                             event.preventDefault();
@@ -82,6 +94,18 @@ export class main extends Component {
                 />
                 <Tab.Screen name="Agenda" component={AgendaScreen}/>
 
+                {/* this one might need to stack on top of the " yourself" tab */}
+                {/* <Tab.Screen name="AddTask" component={AddTaskScreen}
+                    listeners={({navigation}) => ({tabPress: event=>{
+                        event.preventDefault();
+                        navigation.navigate("AddTask")
+                    }
+                    })} */}
+                    
+                    
+                    {/* navigation={this.props.navigation}
+                /> */}
+                
             </Tab.Navigator>
         )
     }

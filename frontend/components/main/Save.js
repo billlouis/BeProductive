@@ -47,7 +47,8 @@ export default function Save(props) {
         .add({
             downloadURL,
             caption,
-            creation: firebase.firestore.FieldValue.serverTimestamp()
+            creation: firebase.firestore.FieldValue.serverTimestamp(),
+            likesCount : 0
         }).then((function () {
             props.navigation.popToTop()
         })) 
