@@ -1,21 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 //import RNCalendarEvents from 'react-native-calendar-events';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
 
 import {Agenda} from 'react-native-calendars';
 import {Card, Avatar} from 'react-native-paper';
-import { now } from 'xdate';
 
 
 export default function Calendarr() {
 
+  const [items, setItems] = useState([]);
+
   const timeToString = (time) => {
     const date = new Date(time);
-    //console.log(date.toISOString());
     return date.toISOString().split('T')[0];
   };
   
-  const [items, setItems] = useState({});
+  
 
   const loadItems = (day) => {
     for (let i = -15; i < 85; i++) {
