@@ -5,13 +5,6 @@ import {connect} from 'react-redux'
 import { container, text, utils } from '../styles';
 import 'firebase/compat/firestore';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import {
-  Menu,
-  MenuProvider,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-} from 'react-native-popup-menu';
 
 
 function Profile(props) {
@@ -115,7 +108,32 @@ function Profile(props) {
     .collection("userFollowing")
     .doc(props.route.params.uid)
     .set({})
-    //props.sendNotification(user.notificationToken, "New Follower", `${props.currentUser.name} Started following you`, { type: 'profile', user: firebase.auth().currentUser.uid })
+
+    firebase.firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .collection("followers").doc(props.route.params.uid).get().then((snapshot) => {
+      if(snapshot._delegate._document!==null){
+        firebase.firestore()
+        .collection("users")
+        .doc(props.route.params.uid)
+        .collection("friends")
+        .doc(firebase.auth().currentUser.uid)
+        .set({})
+
+        firebase.firestore()
+        .collection("users")
+        .doc(firebase.auth().currentUser.uid)
+        .collection("friends")
+        .doc(props.route.params.uid)
+        .set({})
+      }
+      else{
+        console.log("nayy")
+      }
+
+    })
+      //props.sendNotification(user.notificationToken, "New Follower", `${props.currentUser.name} Started following you`, { type: 'profile', user: firebase.auth().currentUser.uid })
   }
   
   const onUnfollow = () => {
@@ -138,6 +156,20 @@ function Profile(props) {
     .doc(firebase.auth().currentUser.uid)
     .collection("userFollowing")
     .doc(props.route.params.uid)
+    .delete()
+
+    firebase.firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .collection("friends")
+    .doc(props.route.params.uid)
+    .delete()
+    
+    firebase.firestore()
+    .collection("users")
+    .doc(props.route.params.uid)
+    .collection("friends")
+    .doc(firebase.auth().currentUser.uid)
     .delete()
   }
 
