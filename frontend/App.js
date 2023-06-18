@@ -38,7 +38,7 @@ import SaveProfileScreen from './components/main/SaveProfile'
 import ChatScreen from './components/main/Chat'
 import CommentScreen from './components/main/Comments'
 import ProfileScreen from './components/main/Profile'
-
+import TaskScreen from './components/main/Addtask'
 
 
 
@@ -103,6 +103,7 @@ export class App extends Component {
             <Stack.Screen name = "Comment" component={CommentScreen} navigation = {this.props.navigation}/>
             <Stack.Screen name = "Chat" component={ChatScreen} navigation = {this.props.navigation}/>
             <Stack.Screen name = "Profile" component={ProfileScreen} navigation = {this.props.navigation}/>
+            <Stack.Screen name = "Task" component={TaskScreen} navigation = {this.props.navigation}/>
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

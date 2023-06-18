@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
-import {StyleSheet,View, Text, Image, FlatList, Button,ImageBackground,TouchableOpacity} from 'react-native'
+import {StyleSheet,View, Text, Image, FlatList, Button,ImageBackground,TouchableOpacity,ActivityIndicator} from 'react-native'
 import firebase from 'firebase/compat/app'
 import {connect} from 'react-redux'
+import { container, text, utils } from '../styles';
 import 'firebase/compat/firestore';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -12,12 +13,15 @@ function Profile(props) {
   const [background, setBackground] = useState("https://bit.ly/fcc-running-cats")
   const [image, setImage] = useState("https://bit.ly/fcc-running-cats")
   
+  const [loading, setLoading] = useState(true)
+
   useEffect(()=> {
     const {currentUser, posts} = props;
     //console.log({currentUser,posts})
     if(props.route.params.uid === firebase.auth().currentUser.uid){
       setUser(currentUser)
       setUserPosts(posts)
+      setLoading(false)
     }
     else{
       firebase.firestore()
@@ -25,18 +29,20 @@ function Profile(props) {
         .doc(props.route.params.uid)
         .get()
         .then((snapshot) => {
-            if(snapshot.exists){
-                setUser(snapshot.data());
-            }
-            else{
-                console.log('Does not exits')
-            }
+          if (snapshot.exists) {
+            props.navigation.setOptions({
+                title: snapshot.data().username,
+            })
+
+            setUser({ uid: props.route.params.uid, ...snapshot.data() });
+        }
+        setLoading(false)
         })
       firebase.firestore()
         .collection('posts')
         .doc(props.route.params.uid)
         .collection('userPosts')
-        .orderBy("creation","asc")
+        .orderBy("creation","desc")
         .get()
         .then((snapshot) => {
             let posts = snapshot.docs.map(doc => {
@@ -56,7 +62,7 @@ function Profile(props) {
     else{
       setFollowing(false);
     }
-  }, [props.route.params.uid, props.following, image])
+  }, [props.route.params.uid, props.following, props.currentUser, props.posts])
 
   const onFollow = () => {
     //console.log("followed")
@@ -66,6 +72,8 @@ function Profile(props) {
     .collection("userFollowing")
     .doc(props.route.params.uid)
     .set({})
+
+    //props.sendNotification(user.notificationToken, "New Follower", `${props.currentUser.name} Started following you`, { type: 'profile', user: firebase.auth().currentUser.uid })
   }
   const onUnfollow = () => {
     firebase.firestore()
@@ -80,8 +88,21 @@ function Profile(props) {
     firebase.auth().signOut();
   }
 
-  if(user === null){
-    return <View/>
+  if (loading) {
+    return (
+        <View style={{ height: '100%', justifyContent: 'center', margin: 'auto' }}>
+            <ActivityIndicator style={{ alignSelf: 'center', marginBottom: 20 }} size="large" color="#00ff00" />
+            <Text style={[text.notAvailable]}>Loading</Text>
+        </View>
+    )
+  }
+  if (user === null) {
+    return (
+        <View style={{ height: '100%', justifyContent: 'center', margin: 'auto' }}>
+            {/* <FontAwesome5 style={{ alignSelf: 'center', marginBottom: 20 }} name="dizzy" size={40} color="black" /> */}
+            <Text style={[text.notAvailable]}>User Not Found</Text>
+        </View>
+    )
   }
 
   return (
@@ -127,9 +148,8 @@ function Profile(props) {
                     />
                 </View>} */}
       </View>
-      <Text></Text>
-      <View style = {styles.containerGallery}>
-       <FlatList 
+      <View style = {[utils.borderTopGray]}>
+        <FlatList 
         numColumns={3}
         horizontal={false}
         data = {userPost}
