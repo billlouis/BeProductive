@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity, Pressable} from 'react-native'
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -13,7 +13,9 @@ import SearchScreen from './Search'
 import FeedScreen from './Feed'
 import ProfileScreen from './Profile'
 import YourselfScreen from './Yourself'
+import ChatScreen from './Chat'
 import FriendDrawer from './Friendlist'
+import { Button } from 'react-native-paper';
 //import AddTaskScreen from './main/Addtask';
 
 const EmptyScreen = () =>{
@@ -22,25 +24,35 @@ const EmptyScreen = () =>{
 
 const TopTab = createMaterialTopTabNavigator();
 
-const Flex = (navigation) => {
+const Flex = ({navigation}) => {
     return (
         <View style={{flexDirection: 'row', height: 600, justifyContent:'space-around'}}>
-            <View style={[{flex: 1}, styles.container, {flexDirection: 'column'}]}>
+            <View style={[{flex: 1}, styles.container, {flexDirection: 'column',  backgroundColor: 'blue', borderRadius:100}]}>
                 <View style={{flex: 1, backgroundColor: 'grey', borderTopLeftRadius: 150, borderTopRightRadius: 150}} />
-                <View style={{flex: 10, backgroundColor: 'grey'}} />
-                <View style={{flex: 1, backgroundColor: 'grey', borderBottomLeftRadius: 150, borderBottomRightRadius: 150, alignItems: "center"}}>
+                <View style = {{flex:2, backgroundColor: 'grey'}}>
+                  <TouchableOpacity component = {ProfileScreen} onPress= {()=>navigation.navigate("Chat")}
+                  style = {{borderRadius: 100, backgroundColor:'red', width:50, height:50, alignSelf: 'center'}}>
+                  </TouchableOpacity>
+                </View>
+                <View style={{flex: 18, backgroundColor: 'grey'}} />
+                <View style={{flex: 2, backgroundColor: 'grey', borderBottomLeftRadius: 150, borderBottomRightRadius: 150, alignItems: "center"}}>
                     <TouchableOpacity onPress= {()=>navigation.navigate()}>
                         <MaterialCommunityIcons name = "arrow-right" color="white" size ={30}/>
                     </TouchableOpacity>
                 </View>
             </View>
-
+            <View style = {{flex: 0.2}}></View>
             <View style={{flex: 6}}>
+              
                 <TopTab.Navigator initialLayout="Yourself" screenOptions={{tabBarLabelStyle: {fontSize: 12, textAlign:"left"}}}>
                     <TopTab.Screen name="Yourself" component={YourselfScreen} options={{ tabBarLabel: 'Yourself' }}/>
                     <TopTab.Screen name="Feeds" component={FeedScreen} options={{ tabBarLabel: 'Feeds' }}/>
                 </TopTab.Navigator>
+                
             </View>
+            
+            
+            {/* <Text style = {styles.add}>Hello</Text> */}
         </View>
     );
 };
@@ -87,5 +99,6 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       fontSize: 24,
     },
+    
   });
 export default Flex;

@@ -123,7 +123,7 @@ function Profile(props) {
       </View>
       <Text></Text>
       <View style = {styles.containerGallery}>
-        <FlatList 
+       <FlatList 
         numColumns={3}
         horizontal={false}
         data = {userPost}
