@@ -44,11 +44,7 @@
     "react-native-paper": "^5.8.0",
     "react-native-reanimated": "^3.3.0",
     "react-native-screens": "^3.21.0",
-<<<<<<< HEAD
-    "react-native-svg": "^13.9.0",
-=======
     "react-native-tab-view": "^3.5.1",
->>>>>>> 6a8d048caeb2570e4914fe0f4c2eff78569638e6
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.11",
     "react-redux": "^8.1.0",

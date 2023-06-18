@@ -59,32 +59,22 @@ export class main extends Component {
                         else if(rn === "Notification") iconName = "bell-outline";
                         else if(rn === "Agenda") iconName = "calendar-outline";
                         // else if(rn === "Search") iconName = "magnify";
-                        // else if(rn === "Profile") iconName = "account-outline";
+                        else if(rn === "Profile") iconName = "account-outline";
                         // else if(rn === "AddTask") iconName = "magnify"
                         return <MaterialCommunityIcons name = {iconName} color="white" size ={30}/>
                      },
                 })}
                 
             >
-<<<<<<< HEAD
                 <Tab.Screen name="Search" component={SearchScreen} navigation={this.props.navigation}/>
-                <Tab.Screen name="Profile" options={{ headerShown: false }} component={ProfileScreen}
-=======
-                {/* <Tab.Screen name="Search" component={SearchScreen} navigation={this.props.navigation}/>
-                <Tab.Screen name="Profile" component={ProfileScreen}
->>>>>>> 6a8d048caeb2570e4914fe0f4c2eff78569638e6
+                <Tab.Screen options={{ headerShown: false }} name="Profile" component={ProfileScreen} 
                     listeners={({navigation}) => ({tabPress: event=>{
                         event.preventDefault();
                         navigation.navigate("Profile", {uid: firebase.auth().currentUser.uid})
                         }
                     })}
-<<<<<<< HEAD
-                    />
-                <Tab.Screen name="Feed" component={FeedScreen}/>
-=======
-                /> */}
+                />
                 <Tab.Screen name="Home" component={HomeScreen} navigation={this.props.navigation}/>
->>>>>>> 6a8d048caeb2570e4914fe0f4c2eff78569638e6
                 <Tab.Screen name="Notification" component={NotifScreen}
                     listeners={({navigation}) => ({tabPress: event=>{
                             event.preventDefault();

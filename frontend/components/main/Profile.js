@@ -3,12 +3,13 @@ import {StyleSheet,View, Text, Image, FlatList, Button,ImageBackground,Touchable
 import firebase from 'firebase/compat/app'
 import {connect} from 'react-redux'
 import 'firebase/compat/firestore';
-
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 function Profile(props) {
   const [userPost, setUserPosts] = useState([])
   const [user, setUser] = useState(null)
   const [following, setFollowing] = useState(false)
+  const [background, setBackground] = useState("https://bit.ly/fcc-running-cats")
   useEffect(()=> {
     const {currentUser, posts} = props;
     //console.log({currentUser,posts})
@@ -82,17 +83,21 @@ function Profile(props) {
   }
   return (
     <View style = {styles.container}>
-      <ImageBackground style={{height: 300, alignSelf:'stretch'}}source={{uri: 'https://bit.ly/fcc-running-cats'}}>
-          <TouchableOpacity style={{width: 50}} onPress={() => props.navigation.navigate("Feed")}>
-            <Text>Go Back</Text>
-          </TouchableOpacity>
-        </ImageBackground>
+      <ImageBackground style={styles.backgroundImage}source={{uri: background}}>
+        <TouchableOpacity onPress= {()=>props.navigation.navigate("Home")} style={{width: 40, paddingLeft:5, paddingTop: 5}}>
+            <MaterialCommunityIcons name = "arrow-left" color="white" size ={30}/>
+        </TouchableOpacity>
+        <Image source={{uri: background}} style={{height: 150, width: 150, marginTop: 100, alignSelf: 'center', borderRadius: 150/2}}/>
+        <Text style={{textAlign: 'center', fontFamily: 'serif', fontSize: 15, paddingLeft: 15}}> {user.name}
+        <TouchableOpacity onPress= {()=>props.navigation.navigate("Home")} style={{width: 20, height: 20}}>
+            <MaterialCommunityIcons name = "pencil" color="grey" size ={15}/>
+        </TouchableOpacity>
+        </Text>
+        
+      </ImageBackground>
       <View style = {styles.containerInfo}>
 
-        <Text> {user.name} </Text>
-        <Text> {user.email} </Text>
-
-        {props.route.params.uid !== firebase.auth().currentUser.uid ? (
+{/*         {props.route.params.uid !== firebase.auth().currentUser.uid ? (
                     <View>
                         {following ? (
                             <Button
@@ -114,8 +119,9 @@ function Profile(props) {
                         title="Logout"
                         onPress={() => onLogout()}
                     />
-                </View>}
+                </View>} */}
       </View>
+      <Text></Text>
       <View style = {styles.containerGallery}>
         <FlatList 
         numColumns={3}
@@ -137,7 +143,7 @@ const styles = StyleSheet.create({
     marginTop:40
   },
   containerInfo:{
-    margin: 20
+    margin: 30
   },
   containerGallery:{
     flex:1
@@ -149,6 +155,10 @@ const styles = StyleSheet.create({
   containerImage:{
     flex: 1/3,
     aspectRatio: 1/1
+  },
+  backgroundImage: {
+    height: 250, 
+    alignSelf:'stretch'
   }
 
 })
