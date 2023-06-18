@@ -10,6 +10,10 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^18.0.1",
+    "@fullcalendar/core": "^6.1.8",
+    "@fullcalendar/daygrid": "^6.1.8",
+    "@fullcalendar/list": "^6.1.8",
+    "@fullcalendar/timegrid": "^6.1.8",
     "@mdi/js": "^7.2.96",
     "@mdi/react": "^1.6.1",
     "@react-native-community/masked-view": "^0.1.11",
@@ -41,5 +45,9 @@
   "devDependencies": {
     "@babel/core": "^7.20.0"
   },
-  "private": true
+  "private": true,
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
