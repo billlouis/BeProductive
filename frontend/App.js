@@ -43,6 +43,7 @@ import CommentScreen from './components/main/Comments'
 import ProfileScreen from './components/main/Profile'
 import TaskScreen from './components/main/Addtask'
 import SearchScreen from './components/main/Search'
+import FriendScreen  from './components/main/Friendlist';
 
 
 
@@ -113,6 +114,7 @@ export class App extends Component {
             <Stack.Screen name = "Profile" component={ProfileScreen} navigation = {this.props.navigation} options = {{headerShown :false}}/>
             <Stack.Screen name = "Task" component={TaskScreen} navigation = {this.props.navigation}/>
             <Stack.Screen name = "Search" component={SearchScreen} navigation = {this.props.navigation}/>
+            {/* <Stack.Screen name = "FriendList" component={FriendScreen} navigation = {this.props.navigation}/> */}
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

@@ -94,6 +94,7 @@ const Flex = ({navigation}) => {
                             ref={(target) => popref = target}
                             onTouchOutside={onClosePopup}
                             data={popuplist}
+                            navigation = {navigation}
                         />
                     </View>
                 </View>

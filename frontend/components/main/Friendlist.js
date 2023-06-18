@@ -94,7 +94,7 @@ export class Friendlist extends Component {
     render(){
         let {show} = this.state
         const {onTouchOutside, title} = this.props
-
+        const {navigation} = this.props
         return(
             <View>
                 <Modal 
@@ -111,11 +111,9 @@ export class Friendlist extends Component {
                                 <View style={styles.middle}>
                                     <View style={{flex: 10}}/>
                                     <View style={styles.addIcon}>
-                                        <TouchableOpacity onPress= {()=>{
-             
-                                            navigation.navigate("Search")}}>
-                                            <MaterialCommunityIcons name = "account-multiple-plus-outline" color="white" size ={25}/>
-                                        </TouchableOpacity>
+                                    <TouchableOpacity onPress= {()=>{navigation.navigate("Search"),this.close()}}>
+                                        <MaterialCommunityIcons name = "account-multiple-plus-outline" color="white" size ={25}/>
+                                    </TouchableOpacity>
                                     </View>
                                 </View>
                             </View>
@@ -180,3 +178,4 @@ const styles = StyleSheet.create({
         borderWidth: 1
     }
 })
+export default Friendlist;
