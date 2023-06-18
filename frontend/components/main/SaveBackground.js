@@ -39,12 +39,12 @@ export default function Save(props) {
         task.on("state_changed",taskProgress,  taskError, taskCompleted);
     }
 
-    const savePostData = (downloadURL) => {
+    const savePostData = (backgroundURL) => {
         firebase.firestore()
         .collection('users')
         .doc(firebase.auth().currentUser.uid)
         .update({
-            downloadURL,
+            backgroundURL,
         }).then((function () {
             props.navigation.navigate("Profile",{uid: firebase.auth().currentUser.uid})
         })) 
