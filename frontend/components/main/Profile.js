@@ -10,6 +10,7 @@ function Profile(props) {
   const [user, setUser] = useState(null)
   const [following, setFollowing] = useState(false)
   const [background, setBackground] = useState("https://bit.ly/fcc-running-cats")
+  const [image, setImage] = useState("https://bit.ly/fcc-running-cats")
   
   useEffect(()=> {
     const {currentUser, posts} = props;
@@ -55,7 +56,7 @@ function Profile(props) {
     else{
       setFollowing(false);
     }
-  }, [props.route.params.uid, props.following])
+  }, [props.route.params.uid, props.following, image])
 
   const onFollow = () => {
     //console.log("followed")
@@ -82,16 +83,23 @@ function Profile(props) {
   if(user === null){
     return <View/>
   }
+
   return (
     <View style = {styles.container}>
       <ImageBackground style={styles.backgroundImage}source={{uri: background}}>
         <TouchableOpacity onPress= {()=>props.navigation.navigate("Home")} style={{width: 40, paddingLeft:5, paddingTop: 5}}>
             <MaterialCommunityIcons name = "arrow-left" color="white" size ={30}/>
         </TouchableOpacity>
-        <Image source={{uri: background}} style={{height: 150, width: 150, marginTop: 100, alignSelf: 'center', borderRadius: 150/2}}/>
-        <TouchableOpacity onPress= {()=>props.navigation.navigate("Home")} style={{alignSelf: 'center', height: 40}}>
-        <Text> {user.name} <MaterialCommunityIcons name = "pencil" color="grey" size ={20}/></Text>
-        </TouchableOpacity>
+        <Image source={{uri: user.downloadURL==null?image:user.downloadURL}} style={{height: 150, width: 150, marginTop: 100, alignSelf: 'center', borderRadius: 150/2}}/>
+        {props.route.params.uid !== firebase.auth().currentUser.uid ? (
+          <View style={{alignSelf:'center'}}>
+          <Text> {user.name}</Text> 
+          </View>
+        ):
+        <TouchableOpacity onPress= {()=>props.navigation.navigate("AddProfile")} style={{alignSelf: 'center', height: 40}}>
+        <Text> {user.name} <MaterialCommunityIcons name = "pencil" color="grey" size ={15}/></Text>
+        </TouchableOpacity> }
+        
       </ImageBackground>
       <View style = {styles.containerInfo}>
 
