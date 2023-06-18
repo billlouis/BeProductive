@@ -32,8 +32,9 @@ import LoginScreen from './components/auth/Login'
 import MainScreen from './components/Main'
 import AddScreen from './components/main/Add'
 import SaveScreen from './components/main/Save'
-import CommentScreen from './components/main/Comments';
-import TaskScreen from './components/main/Addtask'
+import ChatScreen from './components/main/Chat'
+import CommentScreen from './components/main/Comments'
+import ProfileScreen from './components/main/Profile'
 
 
 
@@ -80,7 +81,7 @@ export class App extends Component {
         <NavigationContainer>
           <Stack.Navigator initialRouteName = "Landing">
             <Stack.Screen name = "Landing" component = {LandingScreen} options = {{headerShown:false}}/>
-            <Stack.Screen name = "Register" component = {RegisterScreen} />
+            <Stack.Screen name = "Register" component = {RegisterScreen} options = {{headerShown:false}} />
             <Stack.Screen name = "Login" component = {LoginScreen} />
 
           </Stack.Navigator>
@@ -91,11 +92,12 @@ export class App extends Component {
       <Provider store ={store}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName = "Main">
-            <Stack.Screen name = "Main" component = {MainScreen} options = {{headerShown:false}}/>
+            <Stack.Screen name = "Main" component = {MainScreen} options = {{headerShown :false}} />
             <Stack.Screen name = "Add" component={AddScreen} navigation = {this.props.navigation}/>
             <Stack.Screen name = "Save" component={SaveScreen} navigation = {this.props.navigation}/>
             <Stack.Screen name = "Comment" component={CommentScreen} navigation = {this.props.navigation}/>
-            <Stack.Screen name = "AddTask" component={TaskScreen} navigation = {this.props.navigation}/>
+            <Stack.Screen name = "Chat" component={ChatScreen} navigation = {this.props.navigation}/>
+            <Stack.Screen name = "Profile" component={ProfileScreen} navigation = {this.props.navigation}/>
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

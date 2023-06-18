@@ -2,6 +2,7 @@ import React, {Component, setState} from 'react'
 import {Text, TextInput, View, Pressable, StyleSheet} from 'react-native'
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class Landing_Login extends Component {
     constructor(props){
@@ -38,11 +39,12 @@ export default class Landing_Login extends Component {
             onChangeText={password=> this.setState({password})}
         />
         
-        <Pressable style={styles.button} onPress={() => this.onLogIn()}>
+        {/* changed to touchable opacity from pressable */}
+        <TouchableOpacity style={styles.button} onPress={() => this.onLogIn()}>
           <Text style = {styles.text}>Login with credentials</Text>
-        </Pressable>
+        </TouchableOpacity>
         <Text style = {styles.signup}>Or sign up <Text style = 
-        {{color: 'blue', fontWeight:'bold', textDecorationLine:'underline'}}onPress={() => this.props.navigation.navigate("Register")}>here</Text></Text>
+        {{color: 'blue', fontWeight:'bold', textDecorationLine:'underline'}} onPress={() => this.props.navigation.navigate("Register")}>here</Text></Text>
     </View>
   )}
 }
