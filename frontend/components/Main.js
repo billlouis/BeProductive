@@ -85,7 +85,6 @@ export class main extends Component {
                     
                 />
                 <Tab.Screen name="Agenda" component={AgendaScreen} />
-
             </Tab.Navigator>
         )
     }

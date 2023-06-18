@@ -5,6 +5,14 @@ import {connect} from 'react-redux'
 import { container, text, utils } from '../styles';
 import 'firebase/compat/firestore';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import {
+  Menu,
+  MenuProvider,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+
 
 function Profile(props) {
   const [userPost, setUserPosts] = useState([])
@@ -128,16 +136,27 @@ function Profile(props) {
 
   return (
     <View style = {styles.container}>
+      
       <ImageBackground style={styles.backgroundImage}source={{uri: background}}>
         <TouchableOpacity onPress= {()=>props.navigation.navigate("Home")} style={{width: 40, paddingLeft:5, paddingTop: 5}}>
             <MaterialCommunityIcons name = "arrow-left" color="white" size ={30}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress= {()=>props.navigation.navigate("Home")} style={{width: 40, paddingLeft:5, paddingTop: 5, position:'absolute', alignSelf:'flex-end'}}>
-            <MaterialCommunityIcons name = "cog" color="white" size ={30}/>
+        { props.route.params.uid === firebase.auth().currentUser.uid &&
+          <View style={{position:'absolute', alignSelf: 'flex-end'}}>
+          <TouchableOpacity onPress= {()=>onLogout()} style={{width: 40, paddingLeft:5, paddingTop: 5, alignSelf:'flex-end', bottom: 0}}>
+            <MaterialCommunityIcons name = "logout" color="white" size ={30}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress= {()=>props.navigation.navigate("AddBackground")} style={{width: 40, paddingLeft:5, paddingTop: 5, position:'absolute', alignSelf:'flex-end', bottom:0}}>
+        </View>
+        }
+        {props.route.params.uid === firebase.auth().currentUser.uid &&
+        <View style={{position:'absolute', alignSelf: 'flex-end',bottom: 0}}>
+        <TouchableOpacity onPress= {()=>props.navigation.navigate("AddBackground")} style={{width: 40, paddingLeft:5, paddingTop: 5, alignSelf:'flex-end'}}>
             <MaterialCommunityIcons name = "pencil-box-outline" color="white" size ={30}/>
         </TouchableOpacity>
+        </View>
+        }
+        
+        
         <Image source={{uri: user.downloadURL==null?"https://bit.ly/fcc-running-cats":image}} style={{height: 150, width: 150, marginTop: 100, alignSelf: 'center', borderRadius: 150/2}}/>
         {props.route.params.uid !== firebase.auth().currentUser.uid ? (
           <View style={{alignSelf:'center'}}>
@@ -211,7 +230,8 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     height: 250, 
-    alignSelf:'stretch'
+    alignSelf:'stretch',
+    position: 'relative'
   }
 
 })
