@@ -28,7 +28,7 @@ const Flex = ({navigation}) => {
     return (
       <SafeAreaView style = {styles.testContainer}>
         <View style={{flexDirection: 'row', height: Dimensions.get("window").height, justifyContent:'space-around'}}>
-            <View style={[{flex: 1}, styles.container, {flexDirection: 'column',  backgroundColor: 'blue', borderRadius:100}]}>
+            <View style={[{flex: 1}, styles.container, {flexDirection: 'column', borderRadius:100}]}>
                 <View style={{flex: 1, backgroundColor: 'grey', borderTopLeftRadius: 150, borderTopRightRadius: 150}} />
                 <View style = {{flex:2, backgroundColor: 'grey'}}>
                   <TouchableOpacity component = {ProfileScreen} onPress= {()=>navigation.navigate("Profile",{uid: firebase.auth().currentUser.uid})}
