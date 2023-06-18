@@ -4,8 +4,6 @@ import {View, Text, StyleSheet, TouchableOpacity, Pressable, Dimensions, SafeAre
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-
-
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 //import { fetchUser , fetchUserPosts, fetchUserFollowing, clearData} from '../redux/actions/index'
@@ -100,21 +98,13 @@ const Flex = ({navigation}) => {
                         />
                     </View>
                 </View>
-                <View style={{flex: 18, backgroundColor: 'grey'}} />
-                <View style={{flex: 2, backgroundColor: 'grey', borderBottomLeftRadius: 150, borderBottomRightRadius: 150, alignItems: "center"}}>
-                    <TouchableOpacity onPress= {()=>navigation.navigate()}>
-                        <MaterialCommunityIcons name = "arrow-right" color="white" size ={30}/>
-                    </TouchableOpacity>
+                <View style = {styles.spaces}/>
+                <View style={{flex: 6}}>
+                    <TopTab.Navigator initialLayout="Yourself" screenOptions={{tabBarLabelStyle: {fontSize: 12, textAlign:"left"}, tabBarIndicatorStyle: {backgroundColor: '#1CD69D'}}}>
+                        <TopTab.Screen name="Yourself" component={YourselfScreen} options={{ tabBarLabel: 'Yourself' }}/>
+                        <TopTab.Screen name="Feeds" component={FeedScreen} options={{ tabBarLabel: 'Feeds' }}/>
+                    </TopTab.Navigator>
                 </View>
-            </View>
-            <View style = {{flex: 0.2}}></View>
-            <View style={{flex: 6}}>
-              
-                <TopTab.Navigator initialLayout="Yourself" screenOptions={{tabBarLabelStyle: {fontSize: 12, textAlign:"left"}}}>
-                    <TopTab.Screen name="Yourself" component={YourselfScreen} options={{ tabBarLabel: 'Yourself' }}/>
-                    <TopTab.Screen name="Feeds" component={FeedScreen} options={{ tabBarLabel: 'Feeds' }}/>
-                </TopTab.Navigator>
-                
             </View>
         </SafeAreaView>
     );
