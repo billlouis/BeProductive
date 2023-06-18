@@ -106,6 +106,7 @@ export class App extends Component {
             <Stack.Screen name = "AddProfile" component={AddProfileScreen} navigation = {this.props.navigation}/>
             <Stack.Screen name = "AddBackground" component={AddBackground} navigation = {this.props.navigation}/>
             <Stack.Screen name = "Save" component={SaveScreen} navigation = {this.props.navigation}/>
+            <Stack.Screen name = "SaveProfile" component={SaveProfileScreen} navigation = {this.props.navigation}/>
             <Stack.Screen name = "SaveBackground" component={SaveBackground} navigation = {this.props.navigation}/>
             <Stack.Screen name = "Comment" component={CommentScreen} navigation = {this.props.navigation}/>
             <Stack.Screen name = "Chat" component={ChatScreen} navigation = {this.props.navigation}/>

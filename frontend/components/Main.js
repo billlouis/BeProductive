@@ -1,10 +1,4 @@
 import React, { Component, } from 'react'
-import {
-    BrowserRouter as Router,
-    Route,
-    Link,
-    Routes
-} from 'react-router-dom'
 import {View,Text, Dimensions} from 'react-native'
 import Icon from '@mdi/react'
 import { mdiHomeOutline, mdiSetCenter, mdiSolid } from '@mdi/js';
@@ -25,8 +19,6 @@ import ChatScreen from './main/Chat'
 import AddTaskScreen from './main/Addtask';
 import CommentScreen from './main/Comments';
 import { shadow } from 'react-native-paper';
-
-
 
 const Tab = createBottomTabNavigator();
 const EmptyScreen = () =>{
@@ -97,8 +89,7 @@ export class main extends Component {
                     })}
                     options = {{headerShown :false}}
                 />
-                <Tab.Screen name="Agenda" component={AgendaScreen} options = {{headerShown :false}}/>
-
+                <Tab.Screen name="Agenda" component={AgendaScreen} />
             </Tab.Navigator>
         )
     }
