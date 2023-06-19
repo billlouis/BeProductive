@@ -7,6 +7,7 @@ import 'firebase/compat/firestore';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { sendNotification } from '../../redux/actions';
 import { bindActionCreators } from 'redux';
+import { tasksListed } from './Yourself';
 function Profile(props) {
   const [userPost, setUserPosts] = useState([])
   const [user, setUser] = useState(null)
@@ -18,6 +19,8 @@ function Profile(props) {
   const [taskAmount, setTaskAmount] = useState(0)
 
   const calcTask=()=>{
+
+    //console.log(props)
     firebase.firestore()
     .collection('users')
     .doc(props.route.params.uid)
@@ -380,7 +383,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (store) => ({
   currentUser: store.userState.currentUser,
   posts: store.userState.posts,
-  following: store.userState.following
+  following: store.userState.following,
 })
 const mapDispatchProps = (dispatch) => bindActionCreators({ sendNotification }, dispatch);
 
