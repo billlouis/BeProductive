@@ -1,12 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {Component} from 'react'
-import {View,Text} from 'react-native'
-
+import {View,Text, Image} from 'react-native'
+import { container } from './components/styles';
 import firebase from 'firebase/compat/app'
 import {Provider} from 'react-redux'
 import {createStore, applyMiddleware} from 'redux'
 import rootReducer from './redux/reducers'
 import thunk from 'redux-thunk'
+
 const store = createStore(rootReducer,applyMiddleware(thunk)) 
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     const firebaseConfig = {
@@ -49,7 +50,7 @@ import FriendScreen  from './components/main/Friendlist';
 
 const Stack = createStackNavigator();
 
-
+const logo = require('./assets/logo.png')
 export class App extends Component {
   constructor (props){
     super(props);
@@ -79,9 +80,7 @@ export class App extends Component {
     const {loggedIn, loaded} = this.state;
     if(!loaded){
       return(
-        <View style ={{flex : 1, justifyContent: 'center'}}>
-          <Text>Loading</Text>
-        </View>
+        <Image style={container.splash} source={logo} />
       )
     }
     if(!loggedIn){
@@ -100,7 +99,7 @@ export class App extends Component {
       <Provider store ={store}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName = "Main">
-            <Stack.Screen name = "Main" component = {MainScreen} options = {{headerShown :false}} />
+            <Stack.Screen name = "Main" component = {MainScreen} navigation = {this.props.navigation} options = {{headerShown :false}} />
             <Stack.Screen name = "Add" component={AddScreen} navigation = {this.props.navigation}/>
             
             <Stack.Screen name = "Addtask" component={AddtaskScreen} navigation = {this.props.navigation}/>
