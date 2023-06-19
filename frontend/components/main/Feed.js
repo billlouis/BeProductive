@@ -39,6 +39,7 @@ function Feed(props) {
             .doc(firebase.auth().currentUser.uid)
             .delete()
     }
+
     return (
         <View style={styles.container}>
             <View style={styles.containerGallery}>
@@ -46,6 +47,7 @@ function Feed(props) {
                     numColumns={1}
                     horizontal={false}
                     data={posts}
+                    ListFooterComponent={posts.length > 0 ? <View style={{height:175}}/> : null}
                     renderItem={({ item }) => (
                         <View style={styles.containerImage}>
                             <Text style={styles.container}>{item.user.name}</Text>
@@ -53,7 +55,7 @@ function Feed(props) {
                                 style={styles.image}
                                 source={{ uri: item.downloadURL }}
                             />
-                            <Text style={styles.container}>PLACE THE DESCRIPTIOND</Text>
+                            <Text style={styles.container}>{item.caption}</Text>
                             <View style = {{flexDirection: 'row', justifyContent: 'space-between'}}>
                                 
                                 <View style = {{flex:2}}><Text
@@ -80,13 +82,17 @@ function Feed(props) {
                                     }
                                 </View>
                             </View>
-
+                            
+                            
+                            
                         </View>
-
+                        
+                        
                     )}
 
                 />
             </View>
+
             <TouchableOpacity onPress= {()=>props.navigation.navigate("Add")}>
                 <MaterialCommunityIcons name = "camera" style = {styles.add} color="white" size ={40}/>
             </TouchableOpacity>
@@ -99,14 +105,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding:5,
-        paddingLeft:10,
         fontSize:20,
     },
     containerInfo: {
-        margin: 20
+        margin: 20,
+        padding : 15
     },
     containerGallery: {
-        flex: 1
+        flex: 1,
     },
     containerImage: {
         flex: 1 / 3,
@@ -119,6 +125,7 @@ const styles = StyleSheet.create({
         margin: 10,
         borderStyle: 'solid',
         borderColor: 'black', borderWidth: 1,
+        padding : 5
 
     },
     image: {

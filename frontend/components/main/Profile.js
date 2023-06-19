@@ -5,8 +5,8 @@ import {connect} from 'react-redux'
 import { container, text, utils } from '../styles';
 import 'firebase/compat/firestore';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-
-
+import { sendNotification } from '../../redux/actions';
+import { bindActionCreators } from 'redux';
 function Profile(props) {
   const [userPost, setUserPosts] = useState([])
   const [user, setUser] = useState(null)
@@ -140,7 +140,7 @@ function Profile(props) {
       }
 
     })
-      //props.sendNotification(user.notificationToken, "New Follower", `${props.currentUser.name} Started following you`, { type: 'profile', user: firebase.auth().currentUser.uid })
+      props.sendNotification(user.notificationToken, "New Follower", `${props.currentUser.name} Started following you`, { type: 'profile', user: firebase.auth().currentUser.uid })
   }
   
   const onUnfollow = () => {
@@ -336,5 +336,5 @@ const mapStateToProps = (store) => ({
   posts: store.userState.posts,
   following: store.userState.following
 })
-
-export default connect(mapStateToProps, null)(Profile)
+const mapDispatchProps = (dispatch) => bindActionCreators({ sendNotification }, dispatch);
+export default connect(mapStateToProps, mapDispatchProps)(Profile)

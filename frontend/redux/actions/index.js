@@ -1,11 +1,93 @@
 import firebase from 'firebase/compat/app'
 import { USER_STATE_CHANGE, USER_POSTS_STATE_CHANGE, USER_FOLLOWING_STATE_CHANGE,USERS_DATA_STATE_CHANGE ,USERS_POSTS_STATE_CHANGE, CLEAR_DATA, USERS_LIKES_STATE_CHANGE} from '../constants/index'
-
+import { Constants } from 'react-native-unimodules';
+import * as Notifications from 'expo-notifications';
 export function clearData() {
     return ((dispatch) => {
         dispatch({type: CLEAR_DATA})
     })
 }
+export function reload() {
+    return ((dispatch) => {
+        dispatch(clearData())
+        dispatch(fetchUser())
+        dispatch(setNotificationService())
+        dispatch(fetchUserPosts())
+        dispatch(fetchUserFollowing())
+
+    })
+}
+export const setNotificationService = () => async dispatch => {
+    let token;
+    if (Constants.isDevice) {
+        const existingStatus = await Notifications.getPermissionsAsync();
+        let finalStatus = existingStatus;
+        if (existingStatus.status !== 'granted') {
+            const status = await Notifications.requestPermissionsAsync();
+            finalStatus = status;
+        }
+
+        if (finalStatus.status !== 'granted') {
+            alert('Failed to get push token for push notification!');
+            return;
+        }
+        token = (await Notifications.getExpoPushTokenAsync());
+    } else {
+        alert('Must use physical device for Push Notifications');
+    }
+
+    if (Platform.OS === 'android') {
+        Notifications.setNotificationChannelAsync('default', {
+            name: 'default',
+            importance: Notifications.AndroidImportance.MAX,
+            vibrationPattern: [0, 250, 250, 250],
+            lightColor: '#FF231F7C',
+        });
+    }
+
+    Notifications.setNotificationHandler({
+        handleNotification: async () => ({
+            shouldShowAlert: true,
+            shouldPlaySound: false,
+            shouldSetBadge: false,
+        }),
+    });
+
+    if (token != undefined) {
+        firebase.firestore()
+            .collection("users")
+            .doc(firebase.auth().currentUser.uid)
+            .update({
+                notificationToken: token.data,
+            })
+    }
+
+}
+
+export const sendNotification = (to, title, body, data) => dispatch => {
+    if (to == null) {
+        return;
+    }
+
+    let response = fetch('https://exp.host/--/api/v2/push/send', {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            to,
+            sound: 'default',
+            title,
+            body,
+            data
+        })
+    })
+    console.log(response)
+
+}
+
+
 export function fetchUser() {
     return ((dispatch) => {
         firebase.firestore()
