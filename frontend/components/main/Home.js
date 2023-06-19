@@ -53,6 +53,7 @@ const Flex = ({navigation}) => {
                 </TopTab.Navigator>
                 
             </View>
+          </View>
         </SafeAreaView>
     );
 };

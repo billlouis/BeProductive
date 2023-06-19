@@ -98,8 +98,8 @@ function Feed(props) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding:5,
-        paddingLeft:10,
+        padding:10,
+        paddingLeft:20,
         fontSize:20,
     },
     containerInfo: {
