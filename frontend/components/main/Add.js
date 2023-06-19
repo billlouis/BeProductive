@@ -22,9 +22,9 @@ export default function Add({navigation}){
   if (hasCameraPermission === null || hasGalleryPermission === null){
     return <View/>;
   }
-  if(hasCameraPermission === false){
-    //return <Text>No access</Text>
-  }
+  // if(hasCameraPermission === false){
+  //   //return <Text>No access</Text>
+  // }
 
   const takePicture = async () => {
     if(camera){
