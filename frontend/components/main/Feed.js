@@ -43,6 +43,7 @@ function Feed(props) {
         <View style={styles.container}>
             <View style={styles.containerGallery}>
                 <FlatList
+                    padding = {400}
                     numColumns={1}
                     horizontal={false}
                     data={posts}
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         margin: 10,
         borderStyle: 'solid',
-        borderColor: 'black', borderWidth: 1,
+        borderColor: 'black', borderWidth: 1
 
     },
     image: {
