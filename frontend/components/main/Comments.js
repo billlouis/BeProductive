@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {View, Text, FlatList, Button, TextInput} from 'react-native'
+import {View, Text, FlatList, Button, TextInput, StyleSheet} from 'react-native'
 
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/firestore'
@@ -72,19 +72,19 @@ function Comments(props) {
                 horizontal={false}
                 data={comments}
                 renderItem={({ item }) => (
-                    <View>
+                    <View style={{paddingVertical:"3", fontSize:'15', paddingLeft:10}}>
                         {item.user !== undefined ?
-                            <Text>
+                            <Text style={styles.username}>
                                 {item.user.name}
                             </Text>
                             : null}
-                        <Text>{item.text}</Text>
+                        <Text style={styles.content}>{item.text}</Text>
                     </View>
                 )}
             />
 
             <View>
-                <TextInput
+                <TextInput style={styles.comment}
                     placeholder='comment...'
                     onChangeText={(text) => setText(text)} />
                 <Button
@@ -103,3 +103,29 @@ const mapStateToProps = (store) => ({
 const mapDispatchProps = (dispatch) => bindActionCreators({ fetchUsersData }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchProps)(Comments);
+
+const styles=StyleSheet.create({
+    username:{
+        flex: 1,
+        fontWeight:'bold',
+        //padding:5,
+
+    },
+    content:{
+        //marginTop: 20,
+        color:'grey',
+       //paddingVertical: 10,
+        textAlign: 'left',
+ 
+    },
+    comment:{
+        borderColor: 'black',
+        borderWidth: 1,
+        borderRadius: 20,
+        padding: 10,
+        margin: 10,
+        backgroundColor: 'lightgrey',
+        paddingLeft:10, 
+        paddingBottom:5
+    }
+})

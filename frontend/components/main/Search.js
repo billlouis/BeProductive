@@ -1,7 +1,9 @@
 import React , { useState }from 'react'
-import { Button, View, Text, TextInput, FlatList, TouchableOpacity } from 'react-native'
+import { Button, View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet } from 'react-native'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
+
+
 export default function Search(props) {
     const [users, setUsers] = useState([])
 
@@ -22,7 +24,7 @@ export default function Search(props) {
     }
     return(
         <View>
-            <TextInput placeholder='Type Here' onChangeText={(search)=>fetchUsers(search)}/>
+            <TextInput style={styles.searchbar} placeholder='Type Here...' onChangeText={(search)=>fetchUsers(search)}/>
 
             <FlatList
                 numColumns={1}  
@@ -41,3 +43,14 @@ export default function Search(props) {
         </View>
     )
 }
+
+const styles=StyleSheet.create({
+    searchbar:{
+        borderColor: 'black',
+        borderWidth: 1,
+        borderRadius: 20,
+        padding: 10,
+        margin: 10,
+        backgroundColor: 'lightgrey',
+    }
+})

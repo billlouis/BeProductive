@@ -5,8 +5,8 @@ import {connect} from 'react-redux'
 import { container, text, utils } from '../styles';
 import 'firebase/compat/firestore';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-
-
+import { sendNotification } from '../../redux/actions';
+import { bindActionCreators } from 'redux';
 function Profile(props) {
   const [userPost, setUserPosts] = useState([])
   const [user, setUser] = useState(null)
@@ -41,6 +41,21 @@ function Profile(props) {
       }
       setLoading(false)
       })
+      firebase.firestore()
+        .collection('posts')
+        .doc(props.route.params.uid)
+        .collection('userPosts')
+        .orderBy("creation","desc")
+        .get()
+        .then((snapshot) => {
+            let posts = snapshot.docs.map(doc => {
+                const data = doc.data();
+                const id = doc.id;
+                return {id, ...data}
+            })
+            //console.log(posts)
+            setUserPosts(posts)
+        })
       }
 
     else{
@@ -93,6 +108,9 @@ function Profile(props) {
     // .collection('users')
     // .
   }, [props.route.params.uid, props.following, props.currentUser, props.posts])
+  
+  
+
   const onFollow = () => {
     //console.log("followed")
     firebase.firestore()
@@ -140,7 +158,7 @@ function Profile(props) {
       }
 
     })
-      //props.sendNotification(user.notificationToken, "New Follower", `${props.currentUser.name} Started following you`, { type: 'profile', user: firebase.auth().currentUser.uid })
+      props.sendNotification(user.notificationToken, "New Follower", `${props.currentUser.name} Started following you`, { type: 'profile', user: firebase.auth().currentUser.uid })
   }
   
   const onUnfollow = () => {
@@ -336,5 +354,5 @@ const mapStateToProps = (store) => ({
   posts: store.userState.posts,
   following: store.userState.following
 })
-
-export default connect(mapStateToProps, null)(Profile)
+const mapDispatchProps = (dispatch) => bindActionCreators({ sendNotification }, dispatch);
+export default connect(mapStateToProps, mapDispatchProps)(Profile)

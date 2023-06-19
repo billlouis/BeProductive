@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { Component, useState, useEffect } from 'react'
 import {View, Text, StyleSheet, TouchableOpacity, Pressable, Dimensions, SafeAreaView, StatusBar,Image} from 'react-native'
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -38,21 +38,22 @@ const popuplist = [
         name: "Note"
     }
 ]
-
 const Flex = ({navigation}) => {
 
     let popref = React.createRef()
 
     const onShowPopup = () => {
+        checkProfile();
         popref.show()
     }
 
     const onClosePopup = () => {
+        checkProfile();
         popref.close()
     }
 
     const [image, setImage] = useState("https://bit.ly/fcc-running-cats")
-     useState(()=>{
+     useEffect(()=>{
          firebase.firestore()
      .collection('users')
     .doc(firebase.auth().currentUser.uid)
@@ -62,7 +63,18 @@ const Flex = ({navigation}) => {
          if(snapshot.data().downloadURL!=null){
            setImage(snapshot.data().downloadURL)
          }}})
-    },[])
+    })
+    const checkProfile=()=>{
+        firebase.firestore()
+     .collection('users')
+    .doc(firebase.auth().currentUser.uid)
+     .get()
+     .then((snapshot) => {
+      if (snapshot.exists) {
+         if(snapshot.data().downloadURL!=null){
+           setImage(snapshot.data().downloadURL)
+         }}})
+    }
     
     return (
         <SafeAreaView style = {styles.testContainer}>
@@ -70,7 +82,7 @@ const Flex = ({navigation}) => {
                 <View style = {styles.spaces}/>
                 <View style={styles.sidebar}>
                     <View style = {styles.sidebar_top}>
-                        <TouchableOpacity component = {ProfileScreen} onPress= {()=>navigation.navigate("Profile",{uid: firebase.auth().currentUser.uid})}
+                        <TouchableOpacity component = {ProfileScreen} onPress= {()=>{checkProfile();navigation.navigate("Profile",{uid: firebase.auth().currentUser.uid})}}
                             style = {styles.accountIcon}>
                                 <Image style={{flex:1, aspectRatio: 1/1, borderRadius:50}}source={{uri: image}}/>
                         </TouchableOpacity>
@@ -79,7 +91,7 @@ const Flex = ({navigation}) => {
                         <View style = {styles.sidebar_innermiddle}>
                             <View style={{flex: 10}}/>
                             <View style={styles.addIcon}>
-                                <TouchableOpacity onPress= {()=>navigation.navigate("Search")}>
+                                <TouchableOpacity onPress= {()=>{checkProfile();navigation.navigate("Search")}}>
                                     <MaterialCommunityIcons name = "account-multiple-plus-outline" color="white" size ={20}/>
                                 </TouchableOpacity>
                             </View>

@@ -1,14 +1,18 @@
 import React ,{useState, useEffect} from 'react';
 import {StyleSheet,Text, SafeAreaView,View, Button, Image,KeyboardAvoidingView,ScrollView,TextInput,TouchableOpacity,Alert} from 'react-native';
-
+import {connect} from 'react-redux'
 //added for date picker
 import DateTimePicker from '@react-native-community/datetimepicker';
-
 //added for suggestion group
 import { ButtonGroup } from '@rneui/themed';
+import { bindActionCreators } from 'redux'
+//the actions to update the state
+import { addTasks } from '../../redux/actions';
 
-import firebase from 'firebase/compat/app'
-export default function Add_task({navigation}){
+
+
+
+function Add_task(props){
   //this is the default setting of the suggestion
   //the suggestion category for the user should be updated in the useEffect
   const [categorySuggestion,setCategorySuggestion] = useState(['Signals', 'Software\n studio', 'Linear']);
@@ -85,18 +89,26 @@ export default function Add_task({navigation}){
 
   ///not yet done
   const handleaddtask = ()=>{
-    console.log(title,notes,category);
-    firebase.firestore()
-            .collection('users')
-            .doc(firebase.auth().currentUser.uid)
-            .collection('task')
-            .add({
-                title,
-                notes,
-                date,
-                category,
-            })
+    //console.log(notes);
+
+    //the firebase updating db action call is moved to the actions/index.js
+
+    props.dispatch(addTasks(
+      [{
+        title:title,
+        notes: notes,
+        date:date,
+        category: category,
+        done:false,
+      }]
+      ));
+            //then call then dispatch changes to pass the item to it 
+            //by right we should do async in actions
+            //for now we use a flag in the state to tell other people that there is a new item in there
+            //so that they know when to reload
   }
+
+  
 
 
 
@@ -225,3 +237,14 @@ const styles=StyleSheet.create({
 
 })
 
+const mapStateToProps = (store) => {
+  return {
+    tasklist: store.tasksState.tasklist,
+  }
+  
+}
+// const mapDispatchProps = (dispatch) => bindActionCreators({addTasks},dispatch)
+
+// export default connect(mapStateToProps, mapDispatchProps)(Add_task);
+
+export default connect(mapStateToProps)(Add_task);
