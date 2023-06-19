@@ -14,7 +14,7 @@ export default function Add({navigation}){
       setHasCameraPermission(cameraStatus === true);
       
       const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      setHasGalleryPermission(galleryStatus === 'granted');
+      setHasGalleryPermission(cameraStatus!=={}&&galleryStatus.status === 'granted');
 
     })();
   }, []);

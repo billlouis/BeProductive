@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { fetchUser , fetchUserPosts, fetchUserFollowing, clearData} from '../redux/actions/index'
+import { fetchUser , fetchUserPosts, fetchUserFollowing, clearData,fetchTasks} from '../redux/actions/index'
 import firebase from 'firebase/compat/app'
 import SearchScreen from './main/Search'
 import HomeScreen from './main/Home'
