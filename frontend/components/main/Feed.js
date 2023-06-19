@@ -14,7 +14,7 @@ function Feed(props) {
             props.feed.sort(function (x, y) {
                 return x.creation - y.creation;
             })
-
+            console.log(props);
             setPosts(props.feed);
         }
         //console.log(posts)

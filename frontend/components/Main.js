@@ -45,7 +45,7 @@ export class main extends Component {
                         backgroundColor: "#3BE2B0", 
                         width: 230, height: 70,
                         position: 'absolute',
-                        marginBottom: 40,
+                        marginBottom: 43,
                         borderRadius: 50, 
                         marginLeft: (Dimensions.get('window').width / 2) - 115,
                         borderColor: "white", borderWidth: 2, borderTopWidth:3,

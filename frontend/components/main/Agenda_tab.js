@@ -4,13 +4,30 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 
+import {connect} from 'react-redux';
 import {Agenda} from 'react-native-calendars';
 import {Card, Avatar} from 'react-native-paper';
 
 
-export default function Calendarr() {
+function Calendarr(){
 
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState();
+
+  useEffect(()=>{
+    const fetchEvents= (date) => {
+      firebase.firestore()
+      .collection('users')
+      .doc(firebase.auth().currentUser.uid)
+      .collection('task')
+      .get()
+      .then((snapshot)=>{
+        // let events = snapshot.docs.map(doc => {
+        //   const cate=doc.category();
+        //   console.log(cate);
+        // })
+      })
+    }
+  },)
 
   const timeToString = (time) => {
     const date = new Date(time);
@@ -19,27 +36,29 @@ export default function Calendarr() {
   
   
 
-  const loadItems = (day) => {
-    for (let i = -15; i < 85; i++) {
-      const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-      const strTime = timeToString(time);
-      if (!items[strTime]) {
-        items[strTime] = [];
-        const numItems = Math.floor(Math.random() * 3 + 1);
-        for (let j = 0; j < numItems; j++) {
-          items[strTime].push({
-            name: 'Item for ' + strTime + ' #' + j,
-            height: Math.max(50, Math.floor(Math.random() * 150)),
-          });
-        }
-      }
-    }
-    const newItems = {};
-    Object.keys(items).forEach((key) => {
-      newItems[key] = items[key];
-    });
-    setItems(newItems);
-  };
+  // const loadItems = (day) => {
+  //   for (let i = -4; i < 5; i++) {
+  //     const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+  //     const strTime = timeToString(time);
+  //     if (!items[strTime]) {
+  //       console.log(strTime);
+  //       items[strTime] = [];
+  //       const numItems = Math.floor(Math.random() * 3 + 1);
+  //       for (let j = 0; j < numItems; j++) {
+  //         items[strTime].push({
+  //           name: 'Item for ' + strTime + ' #' + j,
+  //           height: Math.max(50, Math.floor(Math.random() * 150)),
+  //         });
+  //       }
+  //     }
+  //     console.log(strTime);
+  //   }
+  //   const newItems = {};
+  //   Object.keys(items).forEach((key) => {
+  //     newItems[key] = items[key];
+  //   });
+  //   setItems(newItems);
+  // };
 
   const renderItem = (item) => {
     return (
@@ -65,10 +84,18 @@ export default function Calendarr() {
     <View style={{flex: 1}}>
       <Agenda
         items={items}
-        loadItemsForMonth={loadItems}
+        //loadItemsForMonth={loadItems}
         selected={(new Date()).toISOString().split('T')[0]}
         renderItem={renderItem}
       />
     </View>
   );
 }
+
+const mapStateToProps = (store) => ({
+  currentUser: store.userState.currentUser
+
+
+})
+
+export default connect(mapStateToProps, null)(Calendarr);

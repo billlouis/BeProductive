@@ -4,8 +4,6 @@ import {View, Text, StyleSheet, TouchableOpacity, Pressable, Dimensions, SafeAre
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-
-
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 //import { fetchUser , fetchUserPosts, fetchUserFollowing, clearData} from '../redux/actions/index'
@@ -15,7 +13,7 @@ import FeedScreen from './Feed'
 import ProfileScreen from './Profile'
 import YourselfScreen from './Yourself'
 import ChatScreen from './Chat'
-import FriendDrawer from './Friendlist'
+import {Friendlist} from './Friendlist'
 import { Button } from 'react-native-paper';
 //import AddTaskScreen from './main/Addtask';
 import firebase from 'firebase/compat/app'
@@ -26,34 +24,88 @@ const EmptyScreen = () =>{
 
 const TopTab = createMaterialTopTabNavigator();
 
+const popuplist = [
+    {
+        id:1,
+        name: "Task"
+    },
+    {
+        id:2,
+        name: "Message"
+    },
+    {
+        id:3,
+        name: "Note"
+    }
+]
+
 const Flex = ({navigation}) => {
+
+    let popref = React.createRef()
+
+    const onShowPopup = () => {
+        popref.show()
+    }
+
+    const onClosePopup = () => {
+        popref.close()
+    }
+
+    const [image, setImage] = useState("https://bit.ly/fcc-running-cats")
+     useState(()=>{
+         firebase.firestore()
+     .collection('users')
+    .doc(firebase.auth().currentUser.uid)
+     .get()
+     .then((snapshot) => {
+      if (snapshot.exists) {
+         if(snapshot.data().downloadURL!=null){
+           setImage(snapshot.data().downloadURL)
+         }}})
+    },[])
+    
     return (
-      <SafeAreaView style = {styles.testContainer}>
-        <View style={{flexDirection: 'row', height: Dimensions.get("window").height, justifyContent:'space-around'}}>
-            <View style={[{flex: 1}, styles.container, {flexDirection: 'column', borderRadius:100}]}>
-                <View style={{flex: 1, backgroundColor: 'grey', borderTopLeftRadius: 150, borderTopRightRadius: 150}} />
-                <View style = {{flex:2, backgroundColor: 'grey'}}>
-                  <TouchableOpacity component = {ProfileScreen} onPress= {()=>navigation.navigate("Profile",{uid: firebase.auth().currentUser.uid})}
-                  style = {{borderRadius: 100, backgroundColor:'red', width:50, height:50, alignSelf: 'center'}}>
-                  </TouchableOpacity>
+        <SafeAreaView style = {styles.testContainer}>
+            <View style={styles.toptab_flexbox}>
+                <View style = {styles.spaces}/>
+                <View style={styles.sidebar}>
+                    <View style = {styles.sidebar_top}>
+                        <TouchableOpacity component = {ProfileScreen} onPress= {()=>navigation.navigate("Profile",{uid: firebase.auth().currentUser.uid})}
+                            style = {styles.accountIcon}>
+                                <Image style={{flex:1, aspectRatio: 1/1, borderRadius:50}}source={{uri: image}}/>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.sidebar_middle}>
+                        <View style = {styles.sidebar_innermiddle}>
+                            <View style={{flex: 10}}/>
+                            <View style={styles.addIcon}>
+                                <TouchableOpacity onPress= {()=>navigation.navigate("Search")}>
+                                    <MaterialCommunityIcons name = "account-multiple-plus-outline" color="white" size ={20}/>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={styles.sidebar_bottom}>
+                        <TouchableOpacity onPress= {onShowPopup}>
+                            <MaterialCommunityIcons name = "arrow-right" color="white" size ={30}/>
+                        </TouchableOpacity>
+                        <Friendlist
+                            title="Demo Popup"
+                            ref={(target) => popref = target}
+                            onTouchOutside={onClosePopup}
+                            data={popuplist}
+                            navigation = {navigation}
+                        />
+                    </View>
                 </View>
-                <View style={{flex: 18, backgroundColor: 'grey'}} />
-                <View style={{flex: 2, backgroundColor: 'grey', borderBottomLeftRadius: 150, borderBottomRightRadius: 150, alignItems: "center"}}>
-                    <TouchableOpacity onPress= {()=>navigation.navigate()}>
-                        <MaterialCommunityIcons name = "arrow-right" color="white" size ={30}/>
-                    </TouchableOpacity>
+                <View style = {styles.spaces}/>
+                <View style={{flex: 6}}>
+                    <TopTab.Navigator initialLayout="Yourself" screenOptions={{tabBarLabelStyle: {fontSize: 12, textAlign:"left"}, tabBarIndicatorStyle: {backgroundColor: '#1CD69D'}}}>
+                        <TopTab.Screen name="Yourself" component={YourselfScreen} options={{ tabBarLabel: 'Yourself' }}/>
+                        <TopTab.Screen name="Feeds" component={FeedScreen} options={{ tabBarLabel: 'Feeds' }}/>
+                    </TopTab.Navigator>
                 </View>
             </View>
-            <View style = {{flex: 0.2}}></View>
-            <View style={{flex: 6}}>
-              
-                <TopTab.Navigator initialLayout="Yourself" screenOptions={{tabBarLabelStyle: {fontSize: 12, textAlign:"left"}}}>
-                    <TopTab.Screen name="Yourself" component={YourselfScreen} options={{ tabBarLabel: 'Yourself' }}/>
-                    <TopTab.Screen name="Feeds" component={FeedScreen} options={{ tabBarLabel: 'Feeds' }}/>
-                </TopTab.Navigator>
-                
-            </View>
-          </View>
         </SafeAreaView>
     );
 };
@@ -62,7 +114,9 @@ const styles = StyleSheet.create({
     sidebar: {
       flex: 1,
       marginTop: 30,
-      backgroundColor: 'white',
+      marginBottom: 40,
+      backgroundColor: '#9C9C9C',
+      borderRadius:100,
       flexDirection: 'column', 
       borderRadius:100
     },
@@ -79,15 +133,12 @@ const styles = StyleSheet.create({
         flex: 0.2
     },
     sidebar_top:{
-        flex:1.3, 
-        backgroundColor: 'grey', 
+        flex:1.3,  
         borderTopLeftRadius: 150, 
         borderTopRightRadius: 150, 
-        borderColor:"grey"
     },
     sidebar_middle:{
         flex: 15, 
-        backgroundColor: 'grey',
     },
     sidebar_innermiddle:{
         flex:1, 
@@ -101,12 +152,10 @@ const styles = StyleSheet.create({
         flexDirection: "column"
     },
     sidebar_bottom:{
-        flex: 1, 
-        backgroundColor: 'grey', 
+        flex: 1,  
         borderBottomLeftRadius: 150, 
         borderBottomRightRadius: 150, 
         alignItems: "center", 
-        borderColor:"grey"
     },
     accountIcon:{
         borderRadius: 100, 
