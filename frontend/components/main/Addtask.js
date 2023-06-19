@@ -123,7 +123,7 @@ function Add_task(props){
 
           <Text style={styles.title}>Task Title</Text>
           <TextInput style={styles.titleinput} 
-            placeholder={'  Title'} 
+            placeholder={'Title'} 
             placeholderTextColor={"#00000050"} 
             value={title} 
             onChangeText={text => handletitlechange(text)}>
@@ -133,7 +133,7 @@ function Add_task(props){
           <TextInput
             style={styles.titleinput}
             value={notes}
-            placeholder={'  Add some notes here...'}
+            placeholder={'Add some notes here...'}
             placeholderTextColor={"#00000050"}
             multiline={true}
             numberOfLines={4}
@@ -170,8 +170,8 @@ function Add_task(props){
 
           <Text style={styles.title}>Category</Text>
           <View style={styles.category}>
-          <TextInput  placeholder={'Choose...'} value={category} onChangeText={text => handlecategorychange(text)} placeholderTextColor={"#00000050"} textStyle={{paddingleft:10}}></TextInput>
-          <View>
+            <TextInput style={styles.categoryinput} placeholder={'Choose...'} value={category} onChangeText={text => handlecategorychange(text)} placeholderTextColor={"#00000050"}></TextInput>
+            <View>
             <ButtonGroup
               buttons={categorySuggestion}
               selectedIndex={selectedIndex}
@@ -222,8 +222,10 @@ const styles=StyleSheet.create({
   titleinput:{
     justifyContent:"center",
     marginLeft:20,
-    marginRight:10,
+    marginRight:20,
     paddingVertical: 10,
+    paddingLeft:13,
+    paddingRight:13,
     backgroundColor: '#f3f7ff',
     textAlign: 'left',
     textAlignVertical: "top",
@@ -237,7 +239,7 @@ const styles=StyleSheet.create({
   // the continue button
   continuebutton:{
     paddingVertical: 20,
-    backgroundColor: "#187C04",
+    backgroundColor: "#3BE2B0",
   },
   continuetext:{
     color:"white",
@@ -251,7 +253,7 @@ const styles=StyleSheet.create({
     flexDirection:'row',
     alignContent:"space-between",
     marginLeft:10,
-    marginRight:10,
+    marginRight:20,
   },
   pickerbutton:{
     marginLeft:10,
@@ -270,10 +272,11 @@ const styles=StyleSheet.create({
 
 
   category:{
-    paddingVertical: 20,
     width:"auto",
+    top:5,
     marginLeft:20,
-    marginRight:10,
+    marginRight:20,
+    marginBottom:10,
     paddingVertical: 10,
     backgroundColor: "#f3f7ff",
     borderRadius:20,
@@ -285,7 +288,7 @@ const styles=StyleSheet.create({
     padding:5,
     marginLeft:10,
     marginRight:10,
-    backgroundColor: "#f3f7ff",
+    backgroundColor: "white",
     borderRadius:20,
     borderColor:"#50505050",
     borderWidth:1
@@ -294,7 +297,23 @@ const styles=StyleSheet.create({
     color:"#00000050",
     textAlign: 'center',
     fontSize: 12,
-  }
+  },
+  categoryinput:{
+    justifyContent:"center",
+    marginLeft:20,
+    marginRight:20,
+    paddingTop:10,
+    paddingVertical: 0,
+    paddingLeft:13,
+    paddingRight:13,
+    backgroundColor: 'white',
+    textAlign: 'left',
+    textAlignVertical: "top",
+    fontSize: 15,
+    borderRadius:20,
+    borderColor:"#50505050",
+    borderWidth:1
+  },
 
 
 })
