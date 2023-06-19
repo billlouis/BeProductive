@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import {View, Text, StyleSheet, TouchableOpacity, Pressable, Dimensions, SafeAreaView, StatusBar,Image} from 'react-native'
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -52,16 +52,16 @@ const Flex = ({navigation}) => {
     }
 
     const [image, setImage] = useState("https://bit.ly/fcc-running-cats")
-     useState(()=>{
-         firebase.firestore()
-     .collection('users')
-    .doc(firebase.auth().currentUser.uid)
-     .get()
-     .then((snapshot) => {
-      if (snapshot.exists) {
-         if(snapshot.data().downloadURL!=null){
-           setImage(snapshot.data().downloadURL)
-         }}})
+    useEffect(()=>{
+        firebase.firestore()
+        .collection('users')
+        .doc(firebase.auth().currentUser.uid)
+        .get()
+        .then((snapshot) => {
+        if (snapshot.exists) {
+            if(snapshot.data().downloadURL!=null){
+            setImage(snapshot.data().downloadURL)
+        }}})
     },[])
     
     return (
@@ -93,7 +93,7 @@ const Flex = ({navigation}) => {
                             title="Demo Popup"
                             ref={(target) => popref = target}
                             onTouchOutside={onClosePopup}
-                            data={popuplist}
+                            data={{popuplist,"image":image}}
                             navigation = {navigation}
                         />
                     </View>

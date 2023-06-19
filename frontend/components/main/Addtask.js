@@ -170,16 +170,12 @@ export default function Add_task({navigation}){
 
 const styles=StyleSheet.create({
 
-
-
-  
   container:{
     flex:1
   },
   //title
   AddTaskWrapper:{
     flex:1,
-
   },
 
   title:{

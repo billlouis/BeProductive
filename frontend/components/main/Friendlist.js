@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import {Modal, Dimensions, TouchableWithoutFeedback, View, Text, StyleSheet, TouchableOpacity} from 'react-native'
+import {Modal, Dimensions, TouchableWithoutFeedback, View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native'
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import SearchScreen from './Search'
 import FeedScreen from './Feed'
 import ProfileScreen from './Profile'
-import YourselfScreen from './Yourself';
+import YourselfScreen from './Yourself'
 import { FlatList } from 'react-native-gesture-handler'
+import firebase from 'firebase/compat/app'
 
 
 const deviceHeight = Dimensions.get("window").height
@@ -16,7 +17,8 @@ export class Friendlist extends Component {
     constructor(props){
         super(props)
         this.state = {
-            show: false
+            show: false,
+            image: "",
         }
     }
 
@@ -95,6 +97,7 @@ export class Friendlist extends Component {
         let {show} = this.state
         const {onTouchOutside, title} = this.props
         const {navigation} = this.props
+        {() => this.getimage()}
         return(
             <View>
                 <Modal 
@@ -106,7 +109,12 @@ export class Friendlist extends Component {
                     <View style={{flex:1, backgroundColor:"#00000090", justifyContent: "flex-end"}}>
                         {this.renderOusideTouchable(onTouchOutside)}
                         <View style={styles.primary_popup}>
-                            {this.renderTitle()}
+                            <View style={styles.top}>
+                                <TouchableOpacity component = {ProfileScreen} onPress= {()=>navigation.navigate("Profile",{uid: firebase.auth().currentUser.uid})}
+                                    style = {styles.accountIcon}>
+                                        <Image style={{flex:1, aspectRatio: 1/1, borderRadius:50}}source={{uri: this.props.data.image}}/>
+                                </TouchableOpacity>
+                            </View>
                             <View style={{flex: 14}}>
                                 <View style={styles.middle}>
                                     <View style={{flex: 10}}/>
@@ -144,6 +152,9 @@ const styles = StyleSheet.create({
         borderRadius: 20, 
         flexDirection: "column"
     },
+    top:{
+        flex:2.3,  
+    },
     middle:{
         flex:1, 
         borderRadius: 20, 
@@ -162,6 +173,13 @@ const styles = StyleSheet.create({
         alignItems: "flex-end", 
         marginTop: 10,
         marginRight: 10
+    },
+    accountIcon:{
+        borderRadius: 100, 
+        backgroundColor:'red', 
+        width:40, height:40, 
+        alignSelf: 'center', 
+        marginTop:10
     },
     addIcon:{
         backgroundColor:"#3BE2B0", 
