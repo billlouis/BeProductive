@@ -3,73 +3,102 @@ import {StyleSheet,View, Text, Image, FlatList, Button, TouchableOpacity} from '
 import firebase from 'firebase/compat/app'
 import {connect} from 'react-redux'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { doneTask } from '../../redux/actions'
 
 import 'firebase/compat/firestore';
 function yourself(props) {
-    const [posts, setPosts] = useState([]);
+    const [tasklist, setPosts] = useState([]);
 
     useEffect(() => {
-        if (props.usersFollowingLoaded == props.following.length && props.following.length !== 0) {
-
-            props.feed.sort(function (x, y) {
-                return x.creation - y.creation;
+            props.tasklist.sort(function (x, y) {
+                return x.date - y.date;
             })
+            console.log(props.tasklist);
+            setPosts(props.tasklist);
+            console.log("update");
+    }, [props.tasklist]);
 
-            setPosts(props.feed);
+
+    //on done press
+       const onDonePress = (postId,doneval) => {
+            console.log("hello");
+            console.log(postId)
+            props.dispatch(doneTask(postId,doneval));
+
+
+
+
+
+
+
         }
-        //console.log(posts)
-    }, [props.usersFollowingLoaded,props.feed]);
 
-    const onSomething = (userId, postId) => {
-        firebase.firestore()
-            .collection("users")
-            .doc(userId)
-            .collection("task")
-            .doc(postId)
-            .collection("likes")
-            .doc(firebase.auth().currentUser.uid)
-            .set({})
-    }
-
+    //this is try to add the likes
+    // const onSomething = (userId, postId) => {
+    //     firebase.firestore()
+    //         .collection("users")
+    //         .doc(userId)
+    //         .collection("task")
+    //         .doc(postId)
+    //         .collection("likes")
+    //         .doc(firebase.auth().currentUser.uid)
+    //         .set({})
+    // }
 
 
 
-    const onLikePress = (userId, postId) => {
-        firebase.firestore()
-            .collection("posts")
-            .doc(userId)
-            .collection("userPosts")
-            .doc(postId)
-            .collection("likes")
-            .doc(firebase.auth().currentUser.uid)
-            .set({})
-    }
-    const onDislikePress = (userId, postId) => {
-        firebase.firestore()
-            .collection("posts")
-            .doc(userId)
-            .collection("userPosts")
-            .doc(postId)
-            .collection("likes")
-            .doc(firebase.auth().currentUser.uid)
-            .delete()
-    }
+
+    // const onLikePress = (userId, postId) => {
+    //     firebase.firestore()
+    //         .collection("posts")
+    //         .doc(userId)
+    //         .collection("userPosts")
+    //         .doc(postId)
+    //         .collection("likes")
+    //         .doc(firebase.auth().currentUser.uid)
+    //         .set({})
+    // }
+
+    // const onDislikePress = (userId, postId) => {
+    //     firebase.firestore()
+    //         .collection("posts")
+    //         .doc(userId)
+    //         .collection("userPosts")
+    //         .doc(postId)
+    //         .collection("likes")
+    //         .doc(firebase.auth().currentUser.uid)
+    //         .delete()
+    // }
+    
     return (
         <View style={styles.container}>
             <View style={styles.containerGallery}>
-                <FlatList
+                <FlatList  
                     numColumns={1}
                     horizontal={false}
-                    data={posts}
-                    renderItem={({ item }) => (
+                    data={tasklist}
+                    renderItem={({ item }) => {
+                        console.log(item,"render addtask");
+                        return (
                         <View
                             style={styles.containerImage}>
-                            <Text style={styles.container}>{item.user.name}</Text>
-                            <Image
+                            <View ><Text style={styles.container}>{item.title}</Text></View>
+                            <View ><Text style={styles.container}>{item.notes}</Text></View>
+                            <View ><Text style={styles.container}>{'asdf'}</Text></View>
+
+                            <Button 
+                                        title ="Done"
+                                        onPress={() => onDonePress(item.id,!item.done)}
+                                        
+                                    />
+
+                            {/* the next two part maybe the pop up and focusing */}
+                            {/* <Image
                                 style={styles.image}
                                 source={{ uri: item.downloadURL }}
-                            />
-                            { item.currentUserLike ? 
+                            /> */}
+
+                            {/* { item.currentUserLike ? 
                                 (
                                     <Button 
                                         title ="Dislike"
@@ -83,14 +112,14 @@ function yourself(props) {
                                         onPress={() => onLikePress(item.user.uid, item.id)}
                                     />
                                 )
-                            }
-                            <Text
+                            } */}
+                            {/* <Text
                                 onPress={() => props.navigation.navigate('Comment', { postId: item.id, uid: item.user.uid })}>
                                 View Comments...
-                                </Text>
+                            </Text> */}
                         </View>
 
-                    )}
+                    )}}
 
                 />
             </View>
@@ -103,8 +132,17 @@ function yourself(props) {
 }
 
 const styles = StyleSheet.create({
+
+    flat:{
+        flexDirection:'column',
+        alignItems:'center',
+    },
+
+
     container: {
         flex: 1,
+        backgroundColor: '#3ba000',
+        
     },
     containerInfo: {
         margin: 20
@@ -113,7 +151,10 @@ const styles = StyleSheet.create({
         flex: 1
     },
     containerImage: {
-        flex: 1 / 3
+        flex: 1 / 3,
+        justifyContent:'space-around',
+         borderWidth:1,
+         padding:10,
 
     },
     image: {
@@ -130,11 +171,6 @@ const styles = StyleSheet.create({
     },
 })
 const mapStateToProps = (store) => ({
-    currentUser: store.userState.currentUser,
-    following: store.userState.following,
-    feed: store.usersState.feed,
-    usersFollowingLoaded: store.usersState.usersFollowingLoaded,
-
-
+    tasklist: store.tasksState.tasklist,
 })
-export default connect(mapStateToProps, null)(yourself);
+export default connect(mapStateToProps)(yourself);

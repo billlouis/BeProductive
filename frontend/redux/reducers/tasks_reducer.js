@@ -5,7 +5,7 @@ const initialState = {
 }
 
 export const tasks = (state = initialState, action) => {
-    console.log(action.type,"hello");
+    console.log(action.type,"action reducers");
     switch (action.type) {//WANTED A ACTION WITH THE .posts as array
         case USERS_ADD_TASKS:
             return {

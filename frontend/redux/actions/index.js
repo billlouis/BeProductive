@@ -10,72 +10,120 @@ const taskdefaultaction={
 
 }
 export function addTasks(newtaskarray) {
-    
     return((dispatch) =>{
         //can give a sequence of dispatches
         //this method is for async actions
+        console.log(newtaskarray,"action addtasks");
 
         //1. dispatch the changing
-        console.log(title,notes,category);
         firebase.firestore()
             .collection('users')
             .doc(firebase.auth().currentUser.uid)
             .collection('task')
-            .add(...newtaskarray);
+            .add(...newtaskarray).then((snapshot)=>{
+                dispatch({
+                type:USERS_ADD_TASKS,
+                posts:[{...(newtaskarray[0]),id:snapshot._delegate._key.path.segments[3]}],
+                });
+
+                console.log("the added tasks",snapshot._delegate._key.path.segments[3]);
+        });
 
         //2. async call to store in database
         //3. after succesful write we will update our state(for ui site)
-        dispatch({
-            type:USERS_ADD_TASKS,
-            posts:newtaskarray,
-        });
+        
         //4. think about error handling
         //5. after done remove the changing state
     }
     );
 }
 
-export function doneTask(taskid) {//toggle
+//not yet done
+export function doneTask(taskid,doneval) {//toggle
+    console.log(taskid);
+    console.log(typeof taskid);
+    console.log(doneval)
     return((dispatch) =>{
         //getting a ref
-        let refoftask=firebase.firestore()
+        firebase.firestore()
         .collection('users')
         .doc(firebase.auth().currentUser.uid)
         .collection('task')
-        .doc(taskid);
+        .doc(taskid).update({done:doneval});
+
+        dispatch({
+            type:USERS_DONE_TASKS,
+            postId:taskid,
+            done:doneval,
+        })
+    })
+
+    //need to dispatch something to update the the tasklist
+
+
+
+
+
+    // return((dispatch) =>{
+    //     //getting a ref
+    //     let refoftask=firebase.firestore()
+    //     .collection('users')
+    //     .doc(firebase.auth().currentUser.uid)
+    //     .collection('task')
+    //     .doc(taskid);
 
         
-        //toggle the done in db
-        //also return the newest done (true false value)
-        refoftask.get()
-        .then(async targettask => {
-          // Processing 1st data
-          let updated = {
-            ...targettask,
-            done: !targettask.done
-          };
+    //     //toggle the done in db
+    //     //also return the newest done (true false value)
+    //     refoftask.get()
+    //     .then(async targettask => {
+    //       // Processing 1st data
+    //       let updated = {
+    //         ...targettask,
+    //         done: !targettask.done
+    //       };
       
-          let original = targettask;
+    //       let original = targettask;
       
-          // Return a new Promise for the second Firestore API call
-          return new Promise((resolve, reject) => {
-            refoftask
-              .update(updated)
-              .then(() => resolve(updated))
-              .catch(() => resolve(original));
-          });
-        })
-        .then(updatedData => {
-          // Process the updated data in the last .then() callback
-          console.log('Updated Data:', updatedData);
+    //       // Return a new Promise for the second Firestore API call
+    //       return new Promise((resolve, reject) => {
+    //         refoftask
+    //           .update(updated)
+    //           .then(() => resolve(updated))
+    //           .catch(() => resolve(original));
+    //       });
+    //     })
+    //     .then(updatedData => {
+    //       // Process the updated data in the last .then() callback
+    //       console.log('Updated Data:', updatedData);
 
-          ///try to dispatch actionshere
-          dispatch({
-            type:USERS_DONE_TASKS,
-            postId:taskid,//a single target taskid
-            posts:[updatedData]
-            });
-        });
+    //       ///try to dispatch actionshere
+    //       dispatch({
+    //         type:USERS_DONE_TASKS,
+    //         postId:taskid,//a single target taskid
+    //         posts:[updatedData]
+    //         });
+    //     });
+    // })
+}
+
+//fetch tasks
+export function fetchTasks() {
+    return ((dispatch) => {
+        firebase.firestore()
+            .collection("users")
+            .doc(firebase.auth().currentUser.uid)
+            .collection("task")
+            .orderBy("date", "asc")
+            .get()
+            .then((snapshot) => {
+                let posts = snapshot.docs.map(doc => {
+                    const data = doc.data();
+                    const id = doc.id;
+                    return { id, ...data,date:data.date.toDate() };
+                });
+                dispatch({ type: USERS_ADD_TASKS, posts });
+            })
     })
 }
 
