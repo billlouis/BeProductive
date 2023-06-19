@@ -26,42 +26,6 @@ function yourself(props) {
             props.dispatch(doneTask(postId,doneval));
         }
 
-    //this is try to add the likes
-    // const onSomething = (userId, postId) => {
-    //     firebase.firestore()
-    //         .collection("users")
-    //         .doc(userId)
-    //         .collection("task")
-    //         .doc(postId)
-    //         .collection("likes")
-    //         .doc(firebase.auth().currentUser.uid)
-    //         .set({})
-    // }
-
-
-
-
-    // const onLikePress = (userId, postId) => {
-    //     firebase.firestore()
-    //         .collection("posts")
-    //         .doc(userId)
-    //         .collection("userPosts")
-    //         .doc(postId)
-    //         .collection("likes")
-    //         .doc(firebase.auth().currentUser.uid)
-    //         .set({})
-    // }
-
-    // const onDislikePress = (userId, postId) => {
-    //     firebase.firestore()
-    //         .collection("posts")
-    //         .doc(userId)
-    //         .collection("userPosts")
-    //         .doc(postId)
-    //         .collection("likes")
-    //         .doc(firebase.auth().currentUser.uid)
-    //         .delete()
-    // }
     
     return (
         <View style={styles.container}>
@@ -73,46 +37,20 @@ function yourself(props) {
                     renderItem={({ item }) => {
                         console.log(item,"render addtask");
                         return (
-                        <View
-                            style={styles.containerImage}>
-                            <View ><Text style={styles.container}>{item.title}</Text></View>
-                            <View ><Text style={styles.container}>{item.notes}</Text></View>
-                            <View ><Text style={styles.container}>{'asdf'}</Text></View>
-
-                            <Button 
-                                        title ="Done"
-                                        onPress={() => onDonePress(item.id,!item.done)}
-                                        
-                                    />
-
-                            {/* the next two part maybe the pop up and focusing */}
-                            {/* <Image
-                                style={styles.image}
-                                source={{ uri: item.downloadURL }}
-                            /> */}
-
-                            {/* { item.currentUserLike ? 
-                                (
-                                    <Button 
-                                        title ="Dislike"
-                                        onPress={() => onDislikePress(item.user.uid, item.id)}
-                                    />
-                                )
-                                :
-                                (
-                                    <Button 
-                                        title ="Like"
-                                        onPress={() => onLikePress(item.user.uid, item.id)}
-                                    />
-                                )
-                            } */}
-                            {/* <Text
-                                onPress={() => props.navigation.navigate('Comment', { postId: item.id, uid: item.user.uid })}>
-                                View Comments...
-                            </Text> */}
-                        </View>
-
-                    )}}
+                            <View style={styles.containerImage}>
+                                <View style={{flex:3, flexDirection:"column"}}>
+                                    <View style={{flex:1, flexDirection:"row", backgroundColor:"red", alignItems:"flex-end"}}>
+                                        <Text style={[styles.title, {flex:1, justifyContent:"flex-start"}]}>{item.title}</Text>
+                                        <Text style={[styles.cate, {flex:1, justifyContent:"flex-end"}]}>{item.category}</Text>
+                                    </View>
+                                    <View style={[{flex:2} , styles.desc]}><Text style={styles.container}>{item.notes}</Text></View>
+                                </View>
+                                <View style={{flex:1}}>
+                                    <Text style={styles.container}>{item.date.toLocaleString()}</Text>
+                                    <Button title ="Done" onPress={() => onDonePress(item.id,!item.done)}/>
+                                </View>
+                            </View>
+                        )}}
 
                 />
             </View>
@@ -130,25 +68,50 @@ const styles = StyleSheet.create({
         flexDirection:'column',
         alignItems:'center',
     },
+    title:{
+        fontSize:20,
+        marginLeft:10,
+        marginTop:5,
+        backgroundColor:"blue"
+    },
+    cate:{
+        fontSize:8,
+        marginLeft:10,
+    },
+    desc:{
+        fontSize:8,
+        paddingTop:10,
+        paddingRight:10,
+        justifyContent:"flex-start"
+    },
+    date:{
 
+    },
+    doneIcon:{
 
+    },
+    deleteIcon:{
+
+    },
+    containerImage: {
+        flex: 1 / 3,
+        justifyContent:'space-around',
+        flexDirection: "row",       
+        borderWidth:1,
+        borderRadius:20,
+        borderColor: "grey",
+        padding:10,
+    },
     container: {
         flex: 1,
-        backgroundColor: '#3ba000',
-        
+        backgroundColor: 'transparent',
+        padding:10
     },
     containerInfo: {
         margin: 20
     },
     containerGallery: {
         flex: 1
-    },
-    containerImage: {
-        flex: 1 / 3,
-        justifyContent:'space-around',
-         borderWidth:1,
-         padding:10,
-
     },
     image: {
         flex: 1,

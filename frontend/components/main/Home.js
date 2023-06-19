@@ -115,8 +115,8 @@ const Flex = ({navigation}) => {
                 <View style={{flex: 6}}>
                     <TopTab.Navigator initialLayout="Yourself" screenOptions={{
                         tabBarLabelStyle: {fontSize: 13, textAlign:"left", marginRight:10},  
-                        tabBarItemStyle: {alignItems:"flex-start", paddingRight:10, paddingTop:30},
-                        tabBarStyle: {marginRight:140, height:55, shadowColor:"transparent", backgroundColor: "transparent"}
+                        tabBarItemStyle: {alignItems:"flex-start", paddingRight:10, paddingTop:10},
+                        tabBarStyle: {marginRight:140, height:35, shadowColor:"transparent", backgroundColor: "transparent"}
                     }}
                     
                     >
@@ -132,7 +132,7 @@ const Flex = ({navigation}) => {
 const styles = StyleSheet.create({
     sidebar: {
       flex: 1,
-      marginTop: 30,
+      marginTop: 10,
       marginBottom: 40,
       backgroundColor: '#9C9C9C',
       borderRadius:100,
