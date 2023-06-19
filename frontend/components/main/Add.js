@@ -10,8 +10,8 @@ export default function Add({navigation}){
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   useEffect(() => {
     (async ()=> {
-      const cameraStatus = await Camera.requestCameraPermissionsAsync();
-      setHasCameraPermission(cameraStatus!=={}&&cameraStatus.status === 'granted');
+      const cameraStatus = await Camera.requestPermissionsAsync();
+      setHasCameraPermission(cameraStatus === true);
       
       const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
       setHasGalleryPermission(cameraStatus!=={}&&galleryStatus.status === 'granted');
@@ -22,8 +22,8 @@ export default function Add({navigation}){
   if (hasCameraPermission === null || hasGalleryPermission === null){
     return <View/>;
   }
-  else if(hasCameraPermission === false){
-    return <Text>No access</Text>
+  if(hasCameraPermission === false){
+    //return <Text>No access</Text>
   }
 
   const takePicture = async () => {

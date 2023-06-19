@@ -31,6 +31,7 @@ import RegisterScreen from './components/auth/Register'
 import LoginScreen from './components/auth/Login'
 import MainScreen from './components/Main'
 import AddScreen from './components/main/Add'
+import AddtaskScreen from './components/main/Addtask'
 import SaveScreen from './components/main/Save'
 import AddProfileScreen from './components/main/AddProfile'
 import SaveProfileScreen from './components/main/SaveProfile'
@@ -41,6 +42,8 @@ import ChatScreen from './components/main/Chat'
 import CommentScreen from './components/main/Comments'
 import ProfileScreen from './components/main/Profile'
 import TaskScreen from './components/main/Addtask'
+import SearchScreen from './components/main/Search'
+import FriendScreen  from './components/main/Friendlist';
 
 
 
@@ -99,14 +102,19 @@ export class App extends Component {
           <Stack.Navigator initialRouteName = "Main">
             <Stack.Screen name = "Main" component = {MainScreen} options = {{headerShown :false}} />
             <Stack.Screen name = "Add" component={AddScreen} navigation = {this.props.navigation}/>
+            
+            <Stack.Screen name = "Addtask" component={AddtaskScreen} navigation = {this.props.navigation}/>
             <Stack.Screen name = "AddProfile" component={AddProfileScreen} navigation = {this.props.navigation}/>
             <Stack.Screen name = "AddBackground" component={AddBackground} navigation = {this.props.navigation}/>
             <Stack.Screen name = "Save" component={SaveScreen} navigation = {this.props.navigation}/>
+            <Stack.Screen name = "SaveProfile" component={SaveProfileScreen} navigation = {this.props.navigation}/>
             <Stack.Screen name = "SaveBackground" component={SaveBackground} navigation = {this.props.navigation}/>
             <Stack.Screen name = "Comment" component={CommentScreen} navigation = {this.props.navigation}/>
             <Stack.Screen name = "Chat" component={ChatScreen} navigation = {this.props.navigation}/>
             <Stack.Screen name = "Profile" component={ProfileScreen} navigation = {this.props.navigation} options = {{headerShown :false}}/>
             <Stack.Screen name = "Task" component={TaskScreen} navigation = {this.props.navigation}/>
+            <Stack.Screen name = "Search" component={SearchScreen} navigation = {this.props.navigation}/>
+            {/* <Stack.Screen name = "FriendList" component={FriendScreen} navigation = {this.props.navigation}/> */}
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
