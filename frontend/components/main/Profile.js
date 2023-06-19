@@ -316,8 +316,10 @@ function Profile(props) {
         />
       </View>
       </View>: 
-      
-      <Text>Current Task: {taskAmount} </Text>
+      <View style={{width: 130, height: 130, borderWidth:1, borderColor:'black', alignItems:"center", marginLeft:10}}>
+        <Text>Current Task: {taskAmount} </Text>
+      </View>
+
       }
     </View>
   )
