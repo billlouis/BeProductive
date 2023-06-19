@@ -15,7 +15,7 @@ export default function Add({navigation}){
   useEffect(() => {
     (async ()=> {
       const cameraStatus = await Camera.requestPermissionsAsync();
-      setHasCameraPermission(cameraStatus === true);
+      setHasCameraPermission(cameraStatus === 'granted');
       
       const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
       setHasGalleryPermission(cameraStatus!=={}&&galleryStatus.status === 'granted');

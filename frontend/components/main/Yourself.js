@@ -13,6 +13,7 @@ function yourself(props) {
             props.tasklist.sort(function (x, y) {
                 return x.date - y.date;
             })
+
             console.log(props.tasklist);
             setPosts(props.tasklist);
             console.log("update");
@@ -71,7 +72,7 @@ function yourself(props) {
                     horizontal={false}
                     data={tasklist}
                     renderItem={({ item }) => {
-                        console.log(item,"render addtask");
+                        console.log(props,"render addtask");
                         return (
                         <View
                             style={styles.containerImage}>
