@@ -9,7 +9,7 @@ function Feed(props) {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        if (props.usersFollowingLoaded === props.following.length && props.following.length !== 0) {
+        if (props.usersFollowingLoaded == props.following.length && props.following.length !== 0) {
 
             props.feed.sort(function (x, y) {
                 return x.creation - y.creation;
@@ -44,7 +44,6 @@ function Feed(props) {
         <View style={styles.container}>
             <View style={styles.containerGallery}>
                 <FlatList
-                    padding = {400}
                     numColumns={1}
                     horizontal={false}
                     data={posts}

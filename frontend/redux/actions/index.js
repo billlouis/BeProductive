@@ -141,6 +141,7 @@ export function reload() {
         dispatch(setNotificationService())
         dispatch(fetchUserPosts())
         dispatch(fetchUserFollowing())
+        dispatch(fetchTasks())
 
     })
 }
