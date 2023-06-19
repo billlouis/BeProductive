@@ -7,19 +7,33 @@ import 'firebase/compat/firestore';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { sendNotification } from '../../redux/actions';
 import { bindActionCreators } from 'redux';
+import { tasksListed } from './Yourself';
 function Profile(props) {
   const [userPost, setUserPosts] = useState([])
   const [user, setUser] = useState(null)
   const [following, setFollowing] = useState(false)
   const [background, setBackground] = useState("https://bit.ly/fcc-running-cats")
   const [image, setImage] = useState("https://bit.ly/fcc-running-cats")
-  
+  const [scene, setScene] = useState(true)
   const [loading, setLoading] = useState(true)
+  const [taskAmount, setTaskAmount] = useState(0)
+
+  const calcTask=()=>{
+
+    //console.log(props)
+    firebase.firestore()
+    .collection('users')
+    .doc(props.route.params.uid)
+    .collection('task')
+    .get()
+    .then((snapshot) => {
+      setTaskAmount(snapshot.docs.length)
+    })
     
+  }
 
   useEffect(()=> {
     const {currentUser, posts} = props;
-    //console.log({currentUser,posts})
     if(props.route.params.uid === firebase.auth().currentUser.uid){
       setUser(currentUser)
       setUserPosts(posts)
@@ -36,11 +50,11 @@ function Profile(props) {
           if(snapshot.data().backgroundURL!=null)
           {
             setBackground(snapshot.data().backgroundURL)
-          }
-          
-      }
-      setLoading(false)
+          }}
+
+          setLoading(false)
       })
+
       firebase.firestore()
         .collection('posts')
         .doc(props.route.params.uid)
@@ -53,7 +67,6 @@ function Profile(props) {
                 const id = doc.id;
                 return {id, ...data}
             })
-            //console.log(posts)
             setUserPosts(posts)
         })
       }
@@ -77,9 +90,10 @@ function Profile(props) {
             {
               setBackground(snapshot.data().backgroundURL)
             }
-        }
+            }
         setLoading(false)
         })
+
       firebase.firestore()
         .collection('posts')
         .doc(props.route.params.uid)
@@ -92,25 +106,18 @@ function Profile(props) {
                 const id = doc.id;
                 return {id, ...data}
             })
-            //console.log(posts)
             setUserPosts(posts)
-        })
-      
-    }
+          })
+      }
+
     if(props.following.indexOf(props.route.params.uid)>-1){
       setFollowing(true);
-
     }
     else{
       setFollowing(false);
     }
-    // firebase.firestore()
-    // .collection('users')
-    // .
   }, [props.route.params.uid, props.following, props.currentUser, props.posts])
   
-  
-
   const onFollow = () => {
     //console.log("followed")
     firebase.firestore()
@@ -210,6 +217,7 @@ function Profile(props) {
         </View>
     )
   }
+
   if (user === null) {
     return (
         <View style={{ height: '100%', justifyContent: 'center', margin: 'auto' }}>
@@ -223,71 +231,62 @@ function Profile(props) {
     <View style = {styles.container}>
       
       <ImageBackground style={styles.backgroundImage}source={{uri: background}}>
-        <TouchableOpacity onPress= {()=>props.navigation.navigate("Home")} style={{width: 40, paddingLeft:5, paddingTop: 5}}>
+        <TouchableOpacity onPress= {()=>props.navigation.navigate("Home")} style={styles.backIcon}>
             <MaterialCommunityIcons name = "arrow-left" color="white" size ={30}/>
         </TouchableOpacity>
-        { props.route.params.uid === firebase.auth().currentUser.uid &&
+
+        { props.route.params.uid === firebase.auth().currentUser.uid?
           <View style={{position:'absolute', alignSelf: 'flex-end'}}>
-          <TouchableOpacity onPress= {()=>onLogout()} style={{width: 40, paddingLeft:5, paddingTop: 5, alignSelf:'flex-end', bottom: 0}}>
-            <MaterialCommunityIcons name = "logout" color="white" size ={30}/>
-        </TouchableOpacity>
-        </View>
-        }
+            <TouchableOpacity onPress= {()=>onLogout()} style={styles.logOut}>
+              <MaterialCommunityIcons name = "logout" color="white" size ={30}/>
+            </TouchableOpacity>
+          </View>
+        :<View style={{position:'absolute',right:0,top:0}}>
+        {following ? (
+            <Button
+                title="Following"
+               onPress={() => onUnfollow()}
+            />
+        ) :
+            (
+                <Button
+                    title="Follow"
+                    onPress={() => onFollow()}
+                />
+            )}
+    </View>}
+
         {props.route.params.uid === firebase.auth().currentUser.uid &&
         <View style={{position:'absolute', alignSelf: 'flex-end',bottom: 0}}>
-        <TouchableOpacity onPress= {()=>props.navigation.navigate("AddBackground")} style={{width: 40, paddingLeft:5, paddingTop: 5, alignSelf:'flex-end'}}>
-            <MaterialCommunityIcons name = "pencil-box-outline" color="white" size ={30}/>
-        </TouchableOpacity>
+          <TouchableOpacity onPress= {()=>props.navigation.navigate("AddBackground")} style={styles.EditBackground}>
+              <MaterialCommunityIcons name = "pencil-box-outline" color="white" size ={30}/>
+          </TouchableOpacity>
         </View>
         }
-        <Image source={{uri: user.downloadURL==null?"https://bit.ly/fcc-running-cats":image}} style={{height: 150, width: 150, marginTop: 100, alignSelf: 'center', borderRadius: 150/2}}/>
+
+        <Image source={{uri: user.downloadURL==null?"https://bit.ly/fcc-running-cats":image}} style={styles.profilePict}/>
         {props.route.params.uid !== firebase.auth().currentUser.uid ? (
           <View style={{alignSelf:'center'}}>
           <Text> {user.name}</Text> 
           </View>
         ):
-        <TouchableOpacity onPress= {()=>props.navigation.navigate("AddProfile")} style={{alignSelf: 'center', height: 40}}>
-        <Text> {user.name} <MaterialCommunityIcons name = "pencil" color="grey" size ={15}/></Text>
-        </TouchableOpacity> }
         
+        <TouchableOpacity onPress= {()=>props.navigation.navigate("AddProfile")} style={{alignSelf: 'center', height: 40}}>
+          <Text> {user.name} <MaterialCommunityIcons name = "pencil" color="grey" size ={15}/></Text>
+        </TouchableOpacity> }
       </ImageBackground>
-      <View style = {styles.containerInfo}>
-        {props.route.params.uid !== firebase.auth().currentUser.uid ? (
-                    <View style={{position:'absolute',right:0,top:0}}>
-                        {following ? (
-                            <Button
-                                title="Following"
-                               onPress={() => onUnfollow()}
-                            />
-                        ) :
-                            (
-                                <Button
-                                    title="Follow"
-                                    onPress={() => onFollow()}
-                                />
-                            )}
-                    </View>
-                ) : null}
-                
-                {/*<View>
-                    <Button
-                        title="Logout"
-                        onPress={() => onLogout()}
-                    />
-                            </View>*/}
-      </View>
-      {/* <View style = {[utils.borderTopGray]}>
-        <FlatList 
-        numColumns={3}
-        horizontal={false}
-        data = {userPost}
-        renderItem={({item}) => (
-          <View style ={styles.containerImage}>
-            <Image style = {styles.imagetoday} source ={{uri: item.downloadURL}}/>
-          </View>
-        )}
-        />
-      </View> */}
+
+        <TouchableOpacity onPress= {()=>{setScene(true);calcTask()}} style={{width: 40, left:30, position: 'absolute', top:270}}>
+            <Text>Feeds</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress= {()=>{setScene(false);calcTask()}} style={{width: 60, right:30, position: 'absolute', top:270}}>
+            <Text>Statistics</Text>
+        </TouchableOpacity>
+        
+      <View style = {styles.containerInfo}/>
+      {scene?
+      <View>
       <Text style={{paddingLeft: 10}}>Today</Text>
       <View style = {[utils.borderTopGray]}>
         <FlatList 
@@ -316,6 +315,10 @@ function Profile(props) {
         )}
         />
       </View>
+      </View>: 
+      
+      <Text>Current Task: {taskAmount} </Text>
+      }
     </View>
   )
 }
@@ -346,13 +349,42 @@ const styles = StyleSheet.create({
     height: 250, 
     alignSelf:'stretch',
     position: 'relative'
-  }
+  },
+  backIcon: {
+    width: 40, 
+    paddingLeft:5, 
+    paddingTop: 5
+  },
+  logOut: {
+    width: 40, 
+    paddingLeft:5, 
+    paddingTop: 5, 
+    alignSelf:'flex-end', 
+    bottom: 0
+  },
+  EditBackground: {
+    width: 40, 
+    paddingLeft:5, 
+    paddingTop: 5, 
+    alignSelf:'flex-end'
+  },
+  profilePict: {
+    height: 150,
+    width: 150, 
+    marginTop: 100, 
+    alignSelf: 'center', 
+    borderRadius: 150/2
+  },
+
+
+
 
 })
 const mapStateToProps = (store) => ({
   currentUser: store.userState.currentUser,
   posts: store.userState.posts,
-  following: store.userState.following
+  following: store.userState.following,
 })
 const mapDispatchProps = (dispatch) => bindActionCreators({ sendNotification }, dispatch);
+
 export default connect(mapStateToProps, mapDispatchProps)(Profile)
