@@ -24,13 +24,6 @@ function yourself(props) {
             //console.log("hello");
             // console.log(postId)
             props.dispatch(doneTask(postId,doneval));
-
-
-
-
-
-
-
         }
 
     //this is try to add the likes

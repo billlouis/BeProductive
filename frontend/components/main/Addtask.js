@@ -8,6 +8,7 @@ import { ButtonGroup } from '@rneui/themed';
 import { bindActionCreators } from 'redux'
 //the actions to update the state
 import { addTasks } from '../../redux/actions';
+import { color } from '@rneui/themed/dist/config';
 
 
 
@@ -121,53 +122,72 @@ function Add_task(props){
           <ScrollView>
 
           <Text style={styles.title}>Task Title</Text>
-          <TextInput style={styles.titleinput} placeholder={'Title'} value={title} onChangeText={text => handletitlechange(text)}></TextInput>
+          <TextInput style={styles.titleinput} 
+            placeholder={'  Title'} 
+            placeholderTextColor={"#00000050"} 
+            value={title} 
+            onChangeText={text => handletitlechange(text)}>
+          </TextInput>
 
           <Text style={styles.title}>Notes</Text>
           <TextInput
             style={styles.titleinput}
             value={notes}
-            placeholder={'Add some notes here...'}
+            placeholder={'  Add some notes here...'}
+            placeholderTextColor={"#00000050"}
             multiline={true}
             numberOfLines={4}
             onChangeText={text => handlenoteschange(text)}
           />
 
-          <Text>Due</Text>
+          <Text style={styles.title}>Due</Text>
           <View style={styles.datepicker}>
-            <Button onPress={showDatepicker} title={date.toLocaleString().split(", ")[0]} />
-            <Button onPress={showTimepicker} title={date.toLocaleString().split(", ")[1]} />
-            {show && (
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={date}
-                mode={mode}
-                is24Hour={true}
-                onChange={onChangeDate}
-              />
-            )}
+            <View style={[styles.pickerbutton, {flex:1}]}>
+              <TouchableOpacity onPress={showDatepicker}> 
+                <Text style={styles.pickertext}>{date.toLocaleString().split(", ")[0]}</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={[styles.pickerbutton, {flex:1}]}>
+              <TouchableOpacity onPress={showTimepicker}> 
+                <Text style={styles.pickertext}>{date.toLocaleString().split(", ")[1]}</Text>
+              </TouchableOpacity>
+            </View>
+
+              {/* <View><Button onPress={showDatepicker} color="#f3f7ff" title={date.toLocaleString().split(", ")[0]} /> </View>
+              <View><Button onPress={showTimepicker} color="#50505050" title={date.toLocaleString().split(", ")[1]} /> </View> */}
+              {show && (
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={date}
+                  mode={mode}
+                  is24Hour={true}
+                  onChange={onChangeDate}
+                />
+              )}
           </View>
 
-          <Text>Category</Text>
+
+          <Text style={styles.title}>Category</Text>
           <View style={styles.category}>
-          <TextInput  placeholder={'Choose...'} value={category} onChangeText={text => handlecategorychange(text)}></TextInput>
-          
+          <TextInput  placeholder={'Choose...'} value={category} onChangeText={text => handlecategorychange(text)} placeholderTextColor={"#00000050"} textStyle={{paddingleft:10}}></TextInput>
           <View>
-    <ButtonGroup
-      buttons={categorySuggestion}
-      selectedIndex={selectedIndex}
-      onPress={(value) => {
-        ontapcategorybutton(value);
-      }}
-      containerStyle={{ marginBottom: 20 }}
-    />
-
-  </View>
+            <ButtonGroup
+              buttons={categorySuggestion}
+              selectedIndex={selectedIndex}
+              onPress={(value) => {
+                ontapcategorybutton(value);
+              }}
+              containerStyle={{ marginBottom: 10, backgroundColor:"#f3f7ff", borderColor:"transparent"}}
+              buttonStyle={styles.categorybuttons}
+              textStyle={styles.categorytext}
+            />
           </View>
+        </View>
 
 
 
-          </ScrollView>
+        </ScrollView>
 
           {/* placed outside of scroll view to fix the position */}
           <TouchableOpacity onPress={()=>handleaddtask()}> 
@@ -182,37 +202,43 @@ function Add_task(props){
 
 const styles=StyleSheet.create({
 
-
-
-  
   container:{
     flex:1
   },
   //title
   AddTaskWrapper:{
     flex:1,
-
   },
+
 
   title:{
-
+    fontSize:25,
+    color: "#000000AF",
+    top:7,
+    marginLeft:15,
+    marginRight:10,
+    paddingVertical: 10,
   },
-
   titleinput:{
-    marginTop: 20,
+    justifyContent:"center",
+    marginLeft:20,
+    marginRight:10,
     paddingVertical: 10,
     backgroundColor: '#f3f7ff',
     textAlign: 'left',
+    textAlignVertical: "top",
     fontSize: 20,
+    borderRadius:20,
+    borderColor:"#50505050",
+    borderWidth:1
   },
+
 
   // the continue button
   continuebutton:{
-    marginTop: 40,
     paddingVertical: 20,
     backgroundColor: "#187C04",
   },
-
   continuetext:{
     color:"white",
     textAlign: 'center',
@@ -223,16 +249,52 @@ const styles=StyleSheet.create({
   //date picker
   datepicker:{
     flexDirection:'row',
-    justifyContent:'center',
+    alignContent:"space-between",
+    marginLeft:10,
+    marginRight:10,
+  },
+  pickerbutton:{
+    marginLeft:10,
+    marginright:10,
+    paddingVertical: 10,
+    backgroundColor: "#f3f7ff",
+    borderRadius:20,
+    borderColor:"#50505050",
+    borderWidth:1
+  },
+  pickertext:{
+    color:"#00000050",
+    textAlign: 'center',
+    fontSize: 30,
   },
 
+
   category:{
-    marginTop: 20,
+    paddingVertical: 20,
+    width:"auto",
+    marginLeft:20,
+    marginRight:10,
     paddingVertical: 10,
-    backgroundColor: '#f3f7ff',
-    textAlign: 'left',
-    fontSize: 20,
+    backgroundColor: "#f3f7ff",
+    borderRadius:20,
+    borderColor:"#50505050",
+    borderWidth:1
   },
+  categorybuttons:{
+    paddingVertical: 10,
+    padding:5,
+    marginLeft:10,
+    marginRight:10,
+    backgroundColor: "#f3f7ff",
+    borderRadius:20,
+    borderColor:"#50505050",
+    borderWidth:1
+  },
+  categorytext:{
+    color:"#00000050",
+    textAlign: 'center',
+    fontSize: 12,
+  }
 
 
 })

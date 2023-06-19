@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import {View, Text, StyleSheet, TouchableOpacity, Pressable, Dimensions, SafeAreaView, StatusBar,Image} from 'react-native'
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -105,7 +105,7 @@ const Flex = ({navigation}) => {
                             title="Demo Popup"
                             ref={(target) => popref = target}
                             onTouchOutside={onClosePopup}
-                            data={popuplist}
+                            data={{popuplist,"image":image}}
                             navigation = {navigation}
                         />
                     </View>

@@ -1,7 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet,Text, View, Button, Image} from 'react-native'
+import {StyleSheet,Text, View, Button, Image, TouchableOpacity} from 'react-native'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import {Camera} from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker'
+import { Positions } from 'react-native-calendars/src/expandableCalendar';
+
+
 export default function Add({navigation}){
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.Back);
@@ -50,40 +54,109 @@ export default function Add({navigation}){
   };
 
   return (
-    <View style = {{flex : 1}}>
-      <View style = {styles.cameraContainer}>
-        <Camera 
-          ref = {ref => setCamera(ref)}
-          style = {styles.fixedRatio}
-          type = {type}
-          ratio = {'1:1'}
-        />
-      </View>
-      <Button
-        title = "Flip Image"
-        onPress = {() => {
-          setType(
-            type === Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back
-          );
-        }}>
+    <View>
+      <View style = {styles.layout}>
 
-      </Button>
-      <Button title = "Take Picture" onPress={()=> takePicture()}/>
-      <Button title = "Pick Image" onPress={()=> pickImage()}/>
-      <Button title = "Save" onPress = {() => navigation.navigate('Save',{image})}/>
-      {image && <Image source = {{uri:image}} style = {{flex: 1}}/>}
+        <Camera 
+            ref = {ref => setCamera(ref)}
+            style = {styles.fixedRatio}
+            type = {type}
+            ratio = {'1:1'}
+        />
+
+        <View style = {styles.buttons}>
+
+          <View style={{flex:1}}>
+            <TouchableOpacity onPress= {() => { setType(type === Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back);}}>
+                <MaterialCommunityIcons name = "camera-flip-outline" color="white" size ={40} style={styles.flipimage}/>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{flex:1}}>
+            <TouchableOpacity onPress= {() => takePicture()}>
+                <MaterialCommunityIcons name = "camera" color="#FFFFFFC0" size ={60} style={styles.takepicture}/>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{flex:1}}>
+            <TouchableOpacity onPress= {() => pickImage()}>
+                <MaterialCommunityIcons name = "image" color="white" size ={40} style={styles.pickimage}/>
+            </TouchableOpacity>
+          </View>
+        </View>
+        
+        <View style={styles.save}><Button title = "Done" color="#3BE2B0" onPress = {() => navigation.navigate('Save',{image})}/></View>
+      </View>
+      
+      {image && <Image source = {{uri:image}} style = {styles.afterpicture}/>}
     </View>
   )
 
 }
 
 const styles = StyleSheet.create({
-  cameraContainer:{
-    flex:1,
-    flexDirection: 'row'
+  layout:{
+    flexDirection: 'column',
   },
   fixedRatio:{
+    flex:10,
+    aspectRatio:0.75,
+    marginTop:20,
+    paddingBottom:450,
+    alignSelf:"center",
+  },
+  afterpicture:{
+    height:150,
+    width:120,
+    left:235,
+    bottom:375,
+    borderRadius:10,
+    borderColor:"white",
+    borderWidth:1,
+  },
+  buttons:{
     flex:1,
-    aspectRatio:1
+    flexDirection: 'row',
+    margin:0,
+    marginTop:30
+  },
+  flipimage:{
+    backgroundColor:"#3BE2B0", 
+    borderRadius:100, 
+    width:60, 
+    height:60,
+    alignSelf:"center",
+    padding:10,
+    borderColor:"white",
+    borderWidth: 1,
+    shadowColor: "black", shadowRadius: 10, shadowOffset: {width: 0, height: 4}, shadowOpacity: 0.6
+  },
+  takepicture:{
+    backgroundColor:"#3BE2B0", 
+    borderRadius:100, 
+    width:100, 
+    height:100,
+    alignSelf:"center",
+    padding:20,
+    borderColor:"white",
+    borderWidth: 1,
+    shadowColor: "black", shadowRadius: 10, shadowOffset: {width: 0, height: 4}, shadowOpacity: 0.6
+  },
+  pickimage:{
+    backgroundColor:"#3BE2B0", 
+    borderRadius:100, 
+    width:60, 
+    height:60,
+    alignSelf:"center",
+    padding:10,
+    borderColor:"white",
+    borderWidth: 1,
+    shadowColor: "black", shadowRadius: 10, shadowOffset: {width: 0, height: 4}, shadowOpacity: 0.6
+  },
+  save:{
+    marginTop: 150,
+    paddingLeft:40,
+    marginleft:40,
+    marginRight:40
   }
 })
