@@ -49,7 +49,7 @@
     "react-native-calendar-events": "^2.2.0",
     "react-native-calendars": "^1.1298.0",
     "react-native-fab": "^1.0.18",
-    "react-native-gesture-handler": "^2.12.0",
+    "react-native-gesture-handler": "~2.9.0",
     "react-native-modal": "^13.0.1",
     "react-native-pager-view": "^6.2.0",
     "react-native-paper": "^5.8.0",
