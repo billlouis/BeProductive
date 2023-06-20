@@ -134,8 +134,9 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        backgroundColor: '#3ba000',
-        
+        backgroundColor: '#ffffff',
+        color:"#000000",
+
     },
     containerInfo: {
         margin: 20
