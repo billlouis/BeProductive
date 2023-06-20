@@ -15,7 +15,7 @@ export default function Add({navigation}){
   useEffect(() => {
     (async ()=> {
       const cameraStatus = await Camera.requestPermissionsAsync();
-      setHasCameraPermission(cameraStatus === true);
+      setHasCameraPermission(cameraStatus === 'granted');
       
       const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
       setHasGalleryPermission(cameraStatus!=={}&&galleryStatus.status === 'granted');
@@ -34,7 +34,7 @@ export default function Add({navigation}){
     if(camera){
       const data = await camera.takePictureAsync(null);
       setImage(data.uri); 
-      console.log(data.uri)
+      //console.log(data.uri)
     }
   }
 
@@ -46,7 +46,7 @@ export default function Add({navigation}){
       quality: 1,
     });
 
-    console.log(result);
+    //console.log(result);
 
     if (!result.canceled){
       setImage(result.uri);

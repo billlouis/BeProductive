@@ -17,6 +17,7 @@ import {Friendlist} from './Friendlist'
 import { Button } from 'react-native-paper';
 //import AddTaskScreen from './main/Addtask';
 import firebase from 'firebase/compat/app'
+import { setStatusBarHidden, setStatusBarStyle } from 'expo-status-bar';
 
 const EmptyScreen = () =>{
     return(null)
@@ -112,9 +113,16 @@ const Flex = ({navigation}) => {
                 </View>
                 <View style = {styles.spaces}/>
                 <View style={{flex: 6}}>
-                    <TopTab.Navigator initialLayout="Yourself" screenOptions={{tabBarLabelStyle: {fontSize: 12, textAlign:"left"}, tabBarIndicatorStyle: {backgroundColor: '#1CD69D'}}}>
-                        <TopTab.Screen name="Yourself" component={YourselfScreen} options={{ tabBarLabel: 'Yourself' }}/>
-                        <TopTab.Screen name="Feeds" component={FeedScreen} options={{ tabBarLabel: 'Feeds' }}/>
+                    <TopTab.Navigator initialLayout="Yourself" screenOptions={{
+                        tabBarLabelStyle: {fontSize: 13, textAlign:"left", marginRight:10},  
+                        tabBarItemStyle: {alignItems:"flex-start", paddingRight:10, paddingTop:10},
+                        tabBarStyle: {marginRight:130, height:35, shadowColor:"transparent", backgroundColor: "transparent"},
+                        tabBarActiveTintColor: "#3BE2B0", tabBarInactiveTintColor: "grey"
+                    }}
+                    
+                    >
+                        <TopTab.Screen name="Yourself" component={YourselfScreen} options={{ tabBarLabel: 'Yourself', tabBarIndicatorStyle: {backgroundColor: '#1CD69D', width:80}}}/>
+                        <TopTab.Screen name="Feeds" component={FeedScreen} options={{ tabBarLabel: 'Feeds', tabBarIndicatorStyle: {backgroundColor: '#1CD69D', width:60}}}/>
                     </TopTab.Navigator>
                 </View>
             </View>
@@ -125,7 +133,7 @@ const Flex = ({navigation}) => {
 const styles = StyleSheet.create({
     sidebar: {
       flex: 1,
-      marginTop: 30,
+      marginTop: 10,
       marginBottom: 40,
       backgroundColor: '#9C9C9C',
       borderRadius:100,

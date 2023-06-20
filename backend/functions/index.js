@@ -1,5 +1,4 @@
 const functions = require("firebase-functions");
-
 const admin = require("firebase-admin");
 admin.initializeApp();
 
@@ -17,6 +16,7 @@ exports.addLike = functions.firestore
             likesCount: admin.firestore.FieldValue.increment(1),
           });
     });
+
 exports.removeLike = functions.firestore
     .document("/posts/{creatorId}/userPosts/{postId}/likes/{userId}")
     .onDelete((snap, context) => {
