@@ -13,16 +13,17 @@ function yourself(props) {
             props.tasklist.sort(function (x, y) {
                 return x.date - y.date;
             })
-            console.log(props.tasklist);
+
+            // console.log(props.tasklist);
             setPosts(props.tasklist);
-            console.log("update");
+            // console.log("update");
     }, [props.tasklist]);
 
 
     //on done press
        const onDonePress = (postId,doneval) => {
-            console.log("hello");
-            console.log(postId)
+            // console.log("hello");
+            // console.log(postId)
             props.dispatch(doneTask(postId,doneval));
         }
 
@@ -35,7 +36,7 @@ function yourself(props) {
                     horizontal={false}
                     data={tasklist}
                     renderItem={({ item }) => {
-                        console.log(item,"render addtask");
+                        // console.log(props,"render addtask");
                         return (
                             <View style={styles.containerImage}>
                                 <View style={{flex:3, flexDirection:"column"}}>

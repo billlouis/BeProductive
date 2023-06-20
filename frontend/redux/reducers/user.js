@@ -1,9 +1,10 @@
-import { USER_STATE_CHANGE, USER_POSTS_STATE_CHANGE, USER_FOLLOWING_STATE_CHANGE, CLEAR_DATA } from "../constants"
+import { USER_STATE_CHANGE, USER_POSTS_STATE_CHANGE, USER_FOLLOWING_STATE_CHANGE, CLEAR_DATA, USER_STREAK_STATE_CHANGE } from "../constants"
 
 const initialState = {
     currentUser: null,
     posts: [],
     following: [],
+    streak: 0,
 }
 
 export const user = (state = initialState, action) => {
@@ -23,6 +24,11 @@ export const user = (state = initialState, action) => {
             return {
                 ...state,
                 following: action.following
+            }
+        case USER_STREAK_STATE_CHANGE:
+            return{
+                ...state,
+                streak: action.streak
             }
         case CLEAR_DATA:
             return{

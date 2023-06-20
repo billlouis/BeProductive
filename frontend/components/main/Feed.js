@@ -58,6 +58,7 @@ function Feed(props) {
         <View style={{flex:1}}>
             <View style={styles.containerGallery}>
                 <FlatList
+                    
                     numColumns={1}
                     horizontal={false}
                     data={posts}
