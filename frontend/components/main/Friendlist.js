@@ -19,8 +19,30 @@ export class Friendlist extends Component {
         this.state = {
             show: false,
             image: "",
+            frenids: [],
+            frenimgs: [],
+        }
+        
+        this.fun = () => {
+            firebase.firestore()
+        .collection('users')
+        .doc(firebase.auth().currentUser.uid)
+        .collection('friends')
+        .get()
+        .then((snapshot) => {
+
+         snapshot.docs.map(doc => {
+            
+            this.state({'frenids':[...frenids, doc.id]})
+
+
+         })
+        })
+        
+        
         }
     }
+    
 
     show = ()=>{
         this.setState({show: true})
@@ -63,9 +85,8 @@ export class Friendlist extends Component {
             <FlatList 
                 style={{marginBottom:20}}
                 showsVerticalScrollIndicator={false}
-                data={data}
+                data={this.state.frenids}
                 renderItem={this.renderItem}
-                extraData={data}
                 keyExtractor={(item, index) => index.toString()}
                 ItemSeparatorComponent={this.renderSeparator}
                 contentContainerStyle={{
@@ -98,6 +119,7 @@ export class Friendlist extends Component {
         const {onTouchOutside, title} = this.props
         const {navigation} = this.props
         {() => this.getimage()}
+        {() => this.fun()}
         return(
             <View>
                 <Modal 

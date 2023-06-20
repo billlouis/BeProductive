@@ -63,10 +63,10 @@ function Feed(props) {
                     horizontal={false}
                     data={posts}
                     ListFooterComponent={posts.length > 0 ? <View style={{height:175}}/> : null}
-                    renderItem={({ item }) => (
+                    renderItem={({ item }) => {return(
                         <View style={styles.containerImage}>
                             <View style={styles.usericon}>
-                                <TouchableOpacity component = {ProfileScreen} onPress= {()=>{checkProfile();props.navigation.navigate("Profile",{uid: item.id})}}
+                                <TouchableOpacity component = {ProfileScreen} onPress= {()=>{checkProfile();props.navigation.navigate("Profile",{uid: item.user.uid})}}
                                     style = {styles.accountIcon}>
                                     <Image style={{flex:1, aspectRatio: 1/1, borderRadius:50}}source={{uri: item.user.downloadURL}}/>
                                 </TouchableOpacity>
@@ -111,7 +111,7 @@ function Feed(props) {
                         </View>
                         
                         
-                    )}
+                    )}}
 
                 />
             </View>
