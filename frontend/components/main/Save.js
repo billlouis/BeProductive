@@ -4,7 +4,7 @@ import firebase from 'firebase/compat/app'
 import 'firebase/compat/firestore'
 import 'firebase/compat/storage'
 import { NavigationContainer } from '@react-navigation/native'
-
+import moment from "moment";
 
 
 export default function Save(props) {
@@ -28,12 +28,12 @@ export default function Save(props) {
         const taskCompleted = () => {
             task.snapshot.ref.getDownloadURL().then((snapshot) => {
                 savePostData(snapshot);
-                console.log(snapshot)
+               // console.log(snapshot)
             })
         }
 
         const taskError = snapshot => {
-            console.log(snapshot)
+           // console.log(snapshot)
         }
 
         task.on("state_changed",taskProgress,  taskError, taskCompleted);
@@ -49,9 +49,50 @@ export default function Save(props) {
             caption,
             creation: firebase.firestore.FieldValue.serverTimestamp(),
             likesCount : 0
-        }).then((function () {
-            props.navigation.popToTop()
-        })) 
+        })
+        firebase.firestore()
+                            .collection('users')
+                            .doc(firebase.auth().currentUser.uid)
+                            .get()
+                            .then((snapshot) => {
+                              
+                                //get the current
+                                let userobj={...snapshot.data()};
+                                var currentDate = moment().format("DD/MM/YYYY");
+                                if(userobj.lastFeed==null){
+                                    firebase.firestore()
+                                    .collection('users')
+                                    .doc(firebase.auth().currentUser.uid).update({lastFeed:currentDate});
+                                    firebase.firestore()
+                                    .collection('users')
+                                    .doc(firebase.auth().currentUser.uid).update({streak:1});
+                                    firebase.firestore()
+                                    .collection('users')
+                                    .doc(firebase.auth().currentUser.uid).update({todayPhoto:downloadURL});
+                                }
+                                else{
+                                    if(userobj.lastFeed != currentDate){
+                                        firebase.firestore()
+                                        .collection('users')
+                                        .doc(firebase.auth().currentUser.uid).update({lastFeed:currentDate});
+                    
+                                        firebase.firestore()
+                                        .collection('users')
+                                        .doc(firebase.auth().currentUser.uid).update({todayPhoto:downloadURL});
+                    
+                                        const streaknum = userobj.streak + 1
+                    
+                                        firebase.firestore()
+                                        .collection('users')
+                                        .doc(firebase.auth().currentUser.uid).update({streak:streaknum});
+                    
+                                    }
+                                    else{
+                                        firebase.firestore()
+                                        .collection('users')
+                                        .doc(firebase.auth().currentUser.uid).update({todayPhoto:downloadURL});
+                                    }}})
+                props.navigation.popToTop()
     }
 
     return (
@@ -61,7 +102,9 @@ export default function Save(props) {
                 placeholder='Write your caption...'
                 onChangeText={(caption)=> setCaption(caption)}
             />
-            <Button title = "Upload" onPress={()=>uploadImage()}/>
+            <Button title = "Upload" onPress={()=>{
+                            
+                uploadImage()}}/>
         </View>
     )
 }

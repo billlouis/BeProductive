@@ -17,17 +17,26 @@ function Profile(props) {
   const [scene, setScene] = useState(true)
   const [loading, setLoading] = useState(true)
   const [taskAmount, setTaskAmount] = useState(0)
-
+  const [taskDone, setTaskDone] = useState(0)
+  const [streak, setStreak] = useState(0)
   const calcTask=()=>{
 
     //console.log(props)
     firebase.firestore()
     .collection('users')
     .doc(props.route.params.uid)
-    .collection('task')
     .get()
     .then((snapshot) => {
-      setTaskAmount(snapshot.docs.length)
+
+        //get the current
+        let userobj={...snapshot.data()};
+        if(userobj.numTask!==null){
+        setTaskAmount(userobj.numTask);}
+        if(userobj.taskDone!==null){
+        setTaskDone(userobj.taskDone);}
+        if(userobj.streak!==null){
+          setStreak(userobj.streak);}
+        //dispatch({ type: USERS_ADD_TASKS, posts });
     })
     
   }
@@ -317,9 +326,18 @@ function Profile(props) {
         )}
         />
       </View>
-      </View>: 
-      
-      <Text>Current Task: {taskAmount} </Text>
+      </View>: <View>
+      <View style={{width: 130, height: 130, borderWidth:1, borderColor:'black', alignItems:"center", marginLeft:10}}>
+        <Text textAlign={ 'center'}>Current Task: {taskAmount} </Text>
+      </View>
+      <View style={{width: 130, height: 130, borderWidth:1, borderColor:'black', alignItems:"center", marginLeft:10}}>
+      <Text textAlign={ 'center'}>Done Task: {taskDone} / {taskAmount}</Text>
+    </View>
+    <View style={{width: 130, height: 130, borderWidth:1, borderColor:'black', alignItems:"center", marginLeft:10}}>
+      <Text textAlign={ 'center'}>Streak: {streak}</Text>
+    </View>
+    </View>
+    
       }
     </View>
   )
