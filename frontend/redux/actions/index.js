@@ -1,5 +1,5 @@
 import firebase from 'firebase/compat/app'
-import { USER_STATE_CHANGE, USER_POSTS_STATE_CHANGE, USER_FOLLOWING_STATE_CHANGE,USERS_DATA_STATE_CHANGE ,USERS_POSTS_STATE_CHANGE, CLEAR_DATA, USERS_LIKES_STATE_CHANGE,USERS_ADD_TASKS, USERS_DONE_TASKS, CLEAR_TASKS_DATA} from '../constants/index'
+import { NOTIF_ADD,CLEAR_NOTIF,USER_STATE_CHANGE, USER_POSTS_STATE_CHANGE, USER_FOLLOWING_STATE_CHANGE,USERS_DATA_STATE_CHANGE ,USERS_POSTS_STATE_CHANGE, USER_STREAK_STATE_CHANGE, CLEAR_DATA, USERS_LIKES_STATE_CHANGE,USERS_ADD_TASKS, USERS_DONE_TASKS, CLEAR_TASKS_DATA} from '../constants/index'
 import * as Notifications from 'expo-notifications';
 import { Constants } from 'react-native-unimodules';
 //this is tasks action generator dummy
@@ -14,7 +14,7 @@ export function addTasks(newtaskarray) {
     return((dispatch) =>{
         //can give a sequence of dispatches
         //this method is for async actions
-        console.log(newtaskarray,"action addtasks");
+        // console.log(newtaskarray,"action addtasks");
 
         //1. dispatch the changing
         firebase.firestore()
@@ -27,7 +27,7 @@ export function addTasks(newtaskarray) {
                 posts:[{...(newtaskarray[0]),id:snapshot._delegate._key.path.segments[3]}],
                 });
 
-                console.log("the added tasks",snapshot._delegate._key.path.segments[3]);
+               // console.log("the added tasks",snapshot._delegate._key.path.segments[3]);
         });
 
         //2. async call to store in database
@@ -41,9 +41,9 @@ export function addTasks(newtaskarray) {
 
 //not yet done
 export function doneTask(taskid,doneval) {//toggle
-    console.log(taskid);
-    console.log(typeof taskid);
-    console.log(doneval)
+    // console.log(taskid);
+    // console.log(typeof taskid);
+    // console.log(doneval)
     return((dispatch) =>{
         //getting a ref
         firebase.firestore()
@@ -143,6 +143,7 @@ export function reload() {
         dispatch(fetchUserPosts())
         dispatch(fetchUserFollowing())
         dispatch(fetchTasks())
+        dispatch(fetchNotif())
 
     })
 }
@@ -212,7 +213,6 @@ export const sendNotification = (to, title, body, data) => dispatch => {
             data
         })
     })
-    console.log(response)
 
 }
 
@@ -253,10 +253,65 @@ export function fetchUserPosts() {
     })
 }
 
+export function addNotif(newtaskarray) {
+    return((dispatch) =>{
+        firebase.firestore()
+            .collection('notif')
+            .doc(firebase.auth().currentUser.uid)
+            .collection('userNotif')
+            .add(...newtaskarray).then((snapshot)=>{
+                dispatch({
+                type:NOTIF_ADD,
+                notif:[{...(newtaskarray[0]),id:snapshot._delegate._key.path.segments[3]}],
+                });
+        });
+
+    }
+    );
+}
+export function fetchNotif(){
+    return ((dispatch) => {
+        firebase.firestore()
+        .collection('notif')
+        .doc(firebase.auth().currentUser.uid)
+        .collection("userNotif")
+        .get()
+        .then((snapshot) => {
+            let notif = snapshot.docs.map(doc => {
+                const data = doc.data();
+                
+  
+                return {...data};
+            });
+            //console.log(notif)
+            dispatch({type : NOTIF_ADD, notif});
+        })
+    })
+}
+
 export function fetchUserFollowing() {
     return ((dispatch) => {
         firebase.firestore()
             .collection("following")
+            .doc(firebase.auth().currentUser.uid)
+            .collection("userFollowing")
+            .onSnapshot((snapshot) => {
+                let following = snapshot.docs.map(doc => {
+                    const id = doc.id;
+                    return id
+                })
+                dispatch({ type: USER_FOLLOWING_STATE_CHANGE, following });
+                for(let i = 0; i < following.length; i++){
+                    dispatch(fetchUsersData(following[i], true));
+                }
+            })
+    })
+}
+
+export function fetchUserStreak() {
+    return ((dispatch) => {
+        firebase.firestore()
+            .collection("users")
             .doc(firebase.auth().currentUser.uid)
             .collection("userFollowing")
             .onSnapshot((snapshot) => {

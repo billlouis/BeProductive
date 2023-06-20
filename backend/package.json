@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "react-native-splash-screen": "^3.3.0"
+  }
+}

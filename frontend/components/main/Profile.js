@@ -120,6 +120,8 @@ function Profile(props) {
   
   const onFollow = () => {
     //console.log("followed")
+
+    props.sendNotification(user.notificationToken, "New Follower", `${props.currentUser.name} Started following you`, { type: 'profile', user: firebase.auth().currentUser.uid })
     firebase.firestore()
     .collection("users")
     .doc(firebase.auth().currentUser.uid)
@@ -165,7 +167,7 @@ function Profile(props) {
       }
 
     })
-      props.sendNotification(user.notificationToken, "New Follower", `${props.currentUser.name} Started following you`, { type: 'profile', user: firebase.auth().currentUser.uid })
+    
   }
   
   const onUnfollow = () => {
