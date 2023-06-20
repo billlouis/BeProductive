@@ -119,7 +119,7 @@ function Main(props){
                         navigation.navigate("Notification")
                     }
                 })}
-                options = {{headerShown :false}}
+                options = {{headerShown :true}}
             />
             <Tab.Screen name="Agenda" component={Calendarr} />
             

@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   textentry:{
     height: 50,
-    backgroundColor: 'gray',
+    backgroundColor: 'lightgray',
     alignItems: 'center',
     marginHorizontal: 40,
     borderRadius: 20,
