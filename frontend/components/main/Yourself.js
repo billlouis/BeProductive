@@ -63,7 +63,7 @@ function yourself(props) {
                                 </View>
                             </View>
                         )}
-                        }
+                        }}
 
                 />
                 <FlatList  

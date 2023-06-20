@@ -66,7 +66,7 @@ function Feed(props) {
                     renderItem={({ item }) => {return(
                         <View style={styles.containerImage}>
                             <View style={styles.usericon}>
-                                <TouchableOpacity component = {ProfileScreen} onPress= {()=>{checkProfile();props.navigation.navigate("Profile",{uid: item.user.uid})}}
+                                <TouchableOpacity component = {ProfileScreen} onPress= {()=>{checkProfile();props.navigation.navigate("Profile",{uid: item.user.user.uid})}}
                                     style = {styles.accountIcon}>
                                     <Image style={{flex:1, aspectRatio: 1/1, borderRadius:50}}source={{uri: item.user.downloadURL}}/>
                                 </TouchableOpacity>

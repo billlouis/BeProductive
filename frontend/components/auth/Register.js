@@ -71,22 +71,22 @@ const styles = StyleSheet.create({
     title:{
         padding: 10,
         marginVertical: 100,
-        backgroundColor: 'gray',
-        fontSize: 40,
+        top:50,
+        fontSize: 50,
         textAlign: 'center',
         fontStyle: 'italic',
         color: 'black',
     },
     textentry:{
         height: 50,
-        backgroundColor: 'gray',
+        backgroundColor: 'lightgray',
         alignItems: 'center',
         alignSelf: 'center',
         marginHorizontal: 40,
         borderRadius: 20,
         marginBottom:30,
         padding: 15,
-        width: 400,
+        width: 350,
       },
     block_signup:{
         height:70,
@@ -99,7 +99,8 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         elevation: 3,
         backgroundColor: 'gray',
-        width: 400,
+        width: 200,
+        marginTop:50
     },
     allow_signup:{
         height:70,
@@ -111,8 +112,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 32,
         borderRadius: 20,
         elevation: 3,
-        backgroundColor: '#1CD69D',
-        width: 400,
+        backgroundColor: '#3BE2B0',
+        width: 200,
+        marginTop:50
     }
 
 })
