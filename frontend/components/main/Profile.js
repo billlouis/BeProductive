@@ -255,13 +255,13 @@ function Profile(props) {
         :<View style={{position:'absolute',right:0,top:0}}>
         {following ? (
             <Button
-                title="Following"
+                title="Following" style={styles.followbutton} color={"#3BE2B0"}
                onPress={() => onUnfollow()}
             />
         ) :
             (
                 <Button
-                    title="Follow"
+                    title="Follow" style={styles.followbutton}
                     onPress={() => onFollow()}
                 />
             )}
@@ -395,7 +395,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center', 
     borderRadius: 150/2
   },
-
+  followbutton:{
+    backgroundColor:"#3BE2B0",
+    color:"white",
+    borderRadius:20,
+    borderColor:"white",
+    borderWidth:1
+  }
 
 
 

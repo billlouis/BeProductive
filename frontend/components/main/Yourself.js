@@ -35,7 +35,7 @@ function yourself(props) {
                     numColumns={1}
                     horizontal={false}
                     data={tasklist}
-                    ListHeaderComponent={<Text>Active Task</Text> }
+                    ListHeaderComponent={<Text fontSize={20}>Active Task</Text> }
                     renderItem={({ item }) => {
                         // console.log(props,"render addtask");
                         if(item.done){return <View/>}
@@ -70,7 +70,7 @@ function yourself(props) {
                     numColumns={1}
                     horizontal={false}
                     data={tasklist}
-                    ListHeaderComponent={<Text>Done</Text> }
+                    ListHeaderComponent={<Text fontSize={30}>Done</Text> }
                     ListFooterComponent={tasklist.length > 0 ? <View /> : null}
                     renderItem={({ item }) => {
                         // console.log(props,"render addtask");
