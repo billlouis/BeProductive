@@ -13,26 +13,16 @@ function yourself(props) {
             props.tasklist.sort(function (x, y) {
                 return x.date - y.date;
             })
-<<<<<<< HEAD
-            //console.log(props.tasklist);
-            setPosts(props.tasklist);
-            //console.log("update");
-=======
 
             // console.log(props.tasklist);
             setPosts(props.tasklist);
             // console.log("update");
->>>>>>> ca034924b5a93047dd890e3c5cd840db093f7b91
     }, [props.tasklist]);
 
 
     //on done press
        const onDonePress = (postId,doneval) => {
-<<<<<<< HEAD
-            //console.log("hello");
-=======
             // console.log("hello");
->>>>>>> ca034924b5a93047dd890e3c5cd840db093f7b91
             // console.log(postId)
             props.dispatch(doneTask(postId,doneval));
         }
@@ -46,11 +36,7 @@ function yourself(props) {
                     horizontal={false}
                     data={tasklist}
                     renderItem={({ item }) => {
-<<<<<<< HEAD
-                        // console.log(item,"render addtask");
-=======
                         // console.log(props,"render addtask");
->>>>>>> ca034924b5a93047dd890e3c5cd840db093f7b91
                         return (
                             <View style={styles.containerImage}>
                                 <View style={{flex:3, flexDirection:"column"}}>
