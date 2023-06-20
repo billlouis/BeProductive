@@ -9,7 +9,9 @@ import { bindActionCreators } from 'redux'
 //the actions to update the state
 import { addTasks } from '../../redux/actions';
 import { color } from '@rneui/themed/dist/config';
-
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/firestore'
+import 'firebase/compat/storage'
 
 
 
@@ -190,7 +192,31 @@ function Add_task(props){
         </ScrollView>
 
           {/* placed outside of scroll view to fix the position */}
-          <TouchableOpacity onPress={()=>handleaddtask()}> 
+          <TouchableOpacity onPress={()=>{            firebase.firestore()
+        .collection('users')
+        .doc(firebase.auth().currentUser.uid)
+        .get()
+        .then((snapshot) => {
+
+            //get the current
+            let userobj={...snapshot.data()};
+
+            let taskdonenum=userobj.numTask;
+
+            console.log(taskdonenum);
+
+            if(taskdonenum==null){
+              taskdonenum = 0;
+            }
+            taskdonenum=taskdonenum+1;
+            
+
+            //update
+            firebase.firestore()
+            .collection('users')
+            .doc(firebase.auth().currentUser.uid).update({numTask:taskdonenum});
+            //dispatch({ type: USERS_ADD_TASKS, posts });
+        });handleaddtask()}}> 
             <View style={styles.continuebutton}>
               <Text style={styles.continuetext}>{"Continue >>>"}</Text>
             </View>

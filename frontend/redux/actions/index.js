@@ -2,6 +2,8 @@ import firebase from 'firebase/compat/app'
 import { USER_STATE_CHANGE, USER_POSTS_STATE_CHANGE, USER_FOLLOWING_STATE_CHANGE,USERS_DATA_STATE_CHANGE ,USERS_POSTS_STATE_CHANGE, CLEAR_DATA, USERS_LIKES_STATE_CHANGE,USERS_ADD_TASKS, USERS_DONE_TASKS, CLEAR_TASKS_DATA} from '../constants/index'
 import * as Notifications from 'expo-notifications';
 import { Constants } from 'react-native-unimodules';
+import { doc } from 'firebase/firestore';
+
 //this is tasks action generator dummy
 //dont use this
 const taskdefaultaction={
@@ -51,12 +53,41 @@ export function doneTask(taskid,doneval) {//toggle
         .doc(firebase.auth().currentUser.uid)
         .collection('task')
         .doc(taskid).update({done:doneval});
+        
+        firebase.firestore()
+        .collection('users')
+        .doc(firebase.auth().currentUser.uid)
+        .get()
+        .then((snapshot) => {
+
+            //get the current
+            let userobj={...snapshot.data()};
+
+            let taskdonenum=userobj.taskDone;
+
+            console.log(taskdonenum);
+
+            if(taskdonenum==null){
+                taskdonenum = 0;
+            }
+            taskdonenum=taskdonenum+1;
+            
+
+            //update
+            firebase.firestore()
+            .collection('users')
+            .doc(firebase.auth().currentUser.uid).update({taskDone:taskdonenum});
+            //dispatch({ type: USERS_ADD_TASKS, posts });
+        })
+
+    
 
         dispatch({
             type:USERS_DONE_TASKS,
             postId:taskid,
             done:doneval,
         })
+        firebase.firestore()
     })
 
     //need to dispatch something to update the the tasklist

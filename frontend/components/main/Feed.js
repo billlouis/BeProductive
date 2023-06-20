@@ -44,6 +44,7 @@ function Feed(props) {
         <View style={styles.container}>
             <View style={styles.containerGallery}>
                 <FlatList
+                    
                     numColumns={1}
                     horizontal={false}
                     data={posts}
