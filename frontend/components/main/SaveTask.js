@@ -24,18 +24,18 @@ export default function SaveTodo(props) {
         //snapshot log to show that it is transfering
         //might not be working correctly but it's ok just to show that it is sending
         const taskProgress = snapshot => {
-            console.log(`Transferred: ${snapshot.byteTransferred}`)
+            // console.log(`Transferred: ${snapshot.byteTransferred}`)
         }
 
         const taskCompleted = () => {
             task.snapshot.ref.getDownloadURL().then((snapshot) => {
                 savePostData(snapshot);
-                console.log(snapshot)
+                // console.log(snapshot)
             })
         }
 
         const taskError = snapshot => {
-            console.log(snapshot)
+            // console.log(snapshot)
         }
 
         task.on("state_changed",taskProgress,  taskError, taskCompleted);

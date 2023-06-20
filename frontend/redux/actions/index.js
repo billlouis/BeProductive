@@ -164,6 +164,8 @@ export function fetchTasks() {
 export function clearData() {
     return ((dispatch) => {
         dispatch({type: CLEAR_DATA})
+        dispatch({type: CLEAR_TASKS_DATA})
+        dispatch({type: CLEAR_NOTIF})
     })
 }
 export function reload() {
@@ -224,7 +226,6 @@ export const setNotificationService = () => async dispatch => {
     }
 
 }
-
 export const sendNotification = (to, title, body, data) => dispatch => {
     if (to == null) {
         return;
