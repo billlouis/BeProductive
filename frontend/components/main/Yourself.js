@@ -39,15 +39,24 @@ function yourself(props) {
                         return (
                             <View style={styles.containerImage}>
                                 <View style={{flex:3, flexDirection:"column"}}>
-                                    <View style={{flex:1, flexDirection:"row", backgroundColor:"red", alignItems:"flex-end"}}>
-                                        <Text style={[styles.title, {flex:1, justifyContent:"flex-start"}]}>{item.title}</Text>
-                                        <Text style={[styles.cate, {flex:1, justifyContent:"flex-end"}]}>{item.category}</Text>
+                                    <View style={{flex:1, flexDirection:"row", justifyContent:"center"}}>
+                                        <Text style={[styles.title, {flex:4}]}>{item.title}</Text>
+                                        <View style={{flex:1}}/>
+                                        <Text style={[styles.cate, {flex:2}]}>{item.category}</Text>
+                                        <View style={{flex:1}}/>
                                     </View>
                                     <View style={[{flex:2} , styles.desc]}><Text style={styles.container}>{item.notes}</Text></View>
                                 </View>
-                                <View style={{flex:1}}>
-                                    <Text style={styles.container}>{item.date.toLocaleString()}</Text>
-                                    <Button title ="Done" onPress={() => onDonePress(item.id,!item.done)}/>
+                                <View style={{flex:1, justifyContent:"flex-end", marginTop:10}}>
+                                    <Text style={[styles.date, {flex:1}]}>{item.date.toLocaleString()}</Text>
+                                    <View style={[styles.Icongroup, {marginBottom: 5, marginTop:10}]}>
+                                        <TouchableOpacity onPress= {() => onDonePress(item.id,!item.done)} style={styles.Icon}>
+                                            <MaterialCommunityIcons name = "check-bold" color="white" size ={20}/>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress= {() => onDonePress(item.id,!item.done)} style={styles.Icon}>
+                                            <MaterialCommunityIcons name = "trash-can" color="white" size ={20}/>
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
                             </View>
                         )}}
@@ -70,13 +79,30 @@ const styles = StyleSheet.create({
     },
     title:{
         fontSize:20,
-        marginLeft:10,
-        marginTop:5,
-        backgroundColor:"blue"
+        //backgroundColor:"blue",
+         
+        justifyContent:"flex-start",
+        alignSelf:"center",
+        padding:5,
+        textAlign:"left",
+        paddingLeft:10,
+        paddingRight:10,
     },
     cate:{
         fontSize:8,
-        marginLeft:10,
+        //backgroundColor: "green",
+        justifyContent:"center",
+        alignSelf:"center",
+        paddingRight:10,
+        paddingTop:5,
+        backgroundColor:"darkgrey",
+        color: "white",
+        borderColor:"grey",
+        borderRadius:20,
+        borderWidth:1,
+        padding:5,
+        textAlign:"center",
+        paddingRight:5
     },
     desc:{
         fontSize:8,
@@ -85,21 +111,44 @@ const styles = StyleSheet.create({
         justifyContent:"flex-start"
     },
     date:{
-
+        fontSize:12,
+        alignSelf:"center",
+        justifyContent:"center",
+        backgroundColor:"lightgrey",
+        borderColor:"grey",
+        borderRadius:20,
+        borderWidth:1,
+        padding:10,
+        marginLeft:30,
+        bottom:5,
+        marginBottom:10,
+        width: 100
     },
-    doneIcon:{
-
+    Icon:{
+        backgroundColor:"#3BE2B0", 
+        borderRadius:100, 
+        width:35, 
+        alignSelf:"center",
+        justifyContent:"flex-end",
+        padding:7,
+        flex:0.35,
+        marginBottom:10,
+        borderColor:"white",
+        borderWidth: 1,
     },
-    deleteIcon:{
-
+    Icongroup:{
+        marginLeft:40,
+        
     },
     containerImage: {
         flex: 1 / 3,
         justifyContent:'space-around',
         flexDirection: "row",       
+        backgroundColor: "#0F0F0F10",
         borderWidth:1,
         borderRadius:20,
         borderColor: "grey",
+        marginBottom:10,
         padding:10,
     },
     container: {

@@ -116,7 +116,8 @@ const Flex = ({navigation}) => {
                     <TopTab.Navigator initialLayout="Yourself" screenOptions={{
                         tabBarLabelStyle: {fontSize: 13, textAlign:"left", marginRight:10},  
                         tabBarItemStyle: {alignItems:"flex-start", paddingRight:10, paddingTop:10},
-                        tabBarStyle: {marginRight:140, height:35, shadowColor:"transparent", backgroundColor: "transparent"}
+                        tabBarStyle: {marginRight:130, height:35, shadowColor:"transparent", backgroundColor: "transparent"},
+                        tabBarActiveTintColor: "#3BE2B0", tabBarInactiveTintColor: "grey"
                     }}
                     
                     >
