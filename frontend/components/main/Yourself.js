@@ -35,9 +35,11 @@ function yourself(props) {
                     numColumns={1}
                     horizontal={false}
                     data={tasklist}
+                    ListHeaderComponent={<Text>Active Task</Text> }
                     renderItem={({ item }) => {
                         // console.log(props,"render addtask");
-                        return (
+                        if(item.done){return <View/>}
+                        else{return (
                             <View style={styles.containerImage}>
                                 <View style={{flex:3, flexDirection:"column"}}>
                                     <View style={{flex:1, flexDirection:"row", justifyContent:"center"}}>
@@ -60,7 +62,47 @@ function yourself(props) {
                                     </View>
                                 </View>
                             </View>
-                        )}}
+                        )}
+                        }}
+
+                />
+                <FlatList  
+                    numColumns={1}
+                    horizontal={false}
+                    data={tasklist}
+                    ListHeaderComponent={<Text>Done</Text> }
+                    ListFooterComponent={tasklist.length > 0 ? <View /> : null}
+                    renderItem={({ item }) => {
+                        // console.log(props,"render addtask");
+                        console.log(item);
+                        if(!item.done){return(<View/>)}
+                        else{
+                            return (
+                                <View style={styles.containerImage}>
+                                    <View style={{flex:3, flexDirection:"column"}}>
+                                        <View style={{flex:1, flexDirection:"row", justifyContent:"center"}}>
+                                            <Text style={[styles.title, {flex:4}]}>{item.title}</Text>
+                                            <View style={{flex:1}}/>
+                                            <Text style={[styles.cate, {flex:2}]}>{item.category}</Text>
+                                            <View style={{flex:1}}/>
+                                        </View>
+                                        <View style={[{flex:2} , styles.desc]}><Text style={styles.container}>{item.notes}</Text></View>
+                                    </View>
+                                    <View style={{flex:1, justifyContent:"flex-end", marginTop:10}}>
+                                        <Text style={[styles.date, {flex:1}]}>{item.date.toLocaleString()}</Text>
+                                        <View style={[styles.Icongroup, {marginBottom: 5, marginTop:10}]}>
+                                            <TouchableOpacity onPress= {() => onDonePress(item.id,!item.done)} style={styles.Icon}>
+                                                <MaterialCommunityIcons name = "check-bold" color="white" size ={20}/>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress= {() => onDonePress(item.id,!item.done)} style={styles.Icon}>
+                                                <MaterialCommunityIcons name = "trash-can" color="white" size ={20}/>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                </View>
+                            )
+                        }
+                        }}
 
                 />
             </View>
